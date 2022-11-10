@@ -7,7 +7,7 @@ using System.IO;
 
 namespace FinalProject
 {
-    class GameBoard
+    public class GameBoard
     {
         //Attribut
         char[,] board;

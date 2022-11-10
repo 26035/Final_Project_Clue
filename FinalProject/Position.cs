@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    class Position
+    public class Position
     {
         int row;
         int column;

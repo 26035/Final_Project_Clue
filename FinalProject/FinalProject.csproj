@@ -44,9 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cards.cs" />
+    <Compile Include="CardsManager.cs" />
+    <Compile Include="CardsRooms.cs" />
+    <Compile Include="CardsSuspects.cs" />
+    <Compile Include="CardsWeapons.cs" />
     <Compile Include="GameBoard.cs" />
     <Compile Include="Hypothesis.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerManager.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

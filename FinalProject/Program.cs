@@ -10,29 +10,23 @@ namespace FinalProject
     class Program
     {
         
+        public readonly static Random random = new Random();
+        
+        static void Main(string[] args)
+        {
+            Game();
+            Console.ReadKey();
+        }
         /// <summary>
         /// Code distribuer les cartes après avoir enlevé les cartes du meurtier
         /// </summary>
-        static Player CardsDistribution(int round, int nbPlayers,GameBoard game)
-        {
-            Cards cards = new Cards();
-            Random rdm = new Random();
-            Console.WriteLine("What's your piece player {0} (Col Mustard, Mr Green, Prof Prune, Mme Blue, Miss Scarlet, Mme White)?", round);
-            string piece = Console.ReadLine();
-            Player p = new Player(piece, round, nbPlayers,game);
-                for (int i = 0; i < p.NumberOfCards; i++)
-                {
-                    int index = rdm.Next(cards.RemainingCards.Count());
-                    string card = cards.RemainingCards[index];
-                    p.Handtrail.Add(card);
-                    cards.RemainingCards.Remove(card);
-                }
-            return p;
-        }
+        
+        /*
         static void ThreadProc()
         {
             Thread.Sleep(1000);
-        }
+        }*/
+        /*
         /// <summary>
         /// Test dés random pour mouvement non fonctionnel surement les thread
         /// </summary>
@@ -46,39 +40,36 @@ namespace FinalProject
             int die2 = Die(new Random());
             Console.WriteLine("Dice results : " + die1 + " + " + die2 + " = " + (die1 + die2) + " moves");
             return die1 + die2;
-        }
+        }*/
         /// <summary>
         /// Code début du jeu
         /// </summary>
-        static void Game()
+       static void Game()
         {
             // Début de partie : affichage plateau
             GameBoard board = new GameBoard("ColorBoard.csv");
             board.PrintBoard(board);
 
-            
+
             //Initialisation du jeu...
-            Console.WriteLine("How many players are going to play ?");
-            int nbPlayers = Convert.ToInt32(Console.ReadLine());
-            if (nbPlayers >= 2) {
-                Player p1 = CardsDistribution(1, nbPlayers, board);
-                Player p2 = CardsDistribution(2, nbPlayers, board);
-                Console.WriteLine(p1.ToString() + "\n" + p2.ToString());
-            }
-            if (nbPlayers >= 3){ Player p3 = CardsDistribution(3, nbPlayers,board); }
-            if (nbPlayers >= 4) { Player p4 = CardsDistribution(4, nbPlayers,board); }
-            if (nbPlayers >= 5) { Player p5 = CardsDistribution(5, nbPlayers,board); }
-            if (nbPlayers == 6) { Player p6 = CardsDistribution(6, nbPlayers,board); }
+            List<string> remainingCards = CardsManager.Initialization();
+            int nbPlayers = 0;
+            do
+            {
+                Console.WriteLine("How many players are going to play (1,2,3,4,5,6) ?");
+                nbPlayers = Convert.ToInt32(Console.ReadLine());
+            } while (nbPlayers < 2 || nbPlayers >= 7);
+            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
             //...jusqu'à distribution des cartes
 
             
 
         }
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
             //Game();
 
-
+            
             //Test mouvement fonctionnel  
             GameBoard board = new GameBoard("ColorBoard.csv");
             
@@ -103,7 +94,7 @@ namespace FinalProject
 
 
 
-            Console.ReadKey();
-        }
+            //Console.ReadKey();
+        }*/
     }
 }

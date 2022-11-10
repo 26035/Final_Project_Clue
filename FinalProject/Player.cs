@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace FinalProject
 {
-    class Player
+    public class Player
     {
         string name;
         int numberOfCards;
@@ -43,8 +43,10 @@ namespace FinalProject
         }
         public Player() { }
         //Properties
+        public string Name => name;
         public List<string> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
+
         //Methods
         public void NextMove(int move)
         {
