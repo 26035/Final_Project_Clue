@@ -11,9 +11,9 @@ namespace FinalProject
         List<string> handtrail;
         Position pos;
         GameBoard game;
-        List<List<string>> StillSuspected;
-        List<Hypothesis> AllHypothesis;
-        bool accusation = false;
+        List<string> stillSuspected;
+        List<List<string>> allHypothesis;
+        bool accusation;
         //Constructor
         public Player(string name,int player,int nbPlayers,GameBoard game)
         {
@@ -33,12 +33,13 @@ namespace FinalProject
                         (name == "Prof Plum" && game.Board[i, j] == 'P')||
                         (name == "Mrs Blue" && game.Board[i, j] == 'B')||
                         (name == "Miss Scarlet" && game.Board[i, j] == 'R')||
-                        (name == "Mrs White" && game.Board[i, j] == 'W'))this.pos=new Position(i,j) ;
+                        (name == "Mrs White" && game.Board[i, j] == 'W')) this.pos=new Position(i,j) ;
                     
                 }
             }
-            
-
+            this.stillSuspected = CardsManager.Initialization();
+            this.allHypothesis = new List<List<string>>();
+            this.accusation = false;
 
         }
         public Player() { }
@@ -47,6 +48,8 @@ namespace FinalProject
         public List<string> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
 
+        public List<string> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
+        public List<List<string>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
         //Methods
         public void NextMove(int move)
         {
@@ -70,8 +73,8 @@ namespace FinalProject
                         if (direction == 'R') next = new Position(pos.Row, pos.Column + 1);
                         if (direction == 'L') next = new Position(pos.Row, pos.Column - 1);
                         if(game.ValidPos(next) == false) { Console.WriteLine("You can't go there : it's outside the board game"); }
-                        if (game.IsOccupied(next)==true) { Console.WriteLine("You can't go there : it's occupied"); }
-                        if (game.IsWallOrStairs(next) == true) { Console.WriteLine("You can't go there : it's a wall or stairs"); }
+                        else if (game.IsOccupied(next)==true) { Console.WriteLine("You can't go there : it's occupied"); }
+                        else if(game.IsWallOrStairs(next) == true) { Console.WriteLine("You can't go there : it's a wall or stairs"); }
                     
                     } while ((direction != 'U' && direction != 'D' && direction != 'R' && direction != 'L') || game.ValidPos(next) != true || game.IsOccupied(next) != false || game.IsWallOrStairs(next) != false);
                     game.MarkMove(this.pos, next);
@@ -106,7 +109,7 @@ namespace FinalProject
         }
         public override string ToString()
         {
-            return "Player : "+this.name+"\tHandrail: "+ PrintList(handtrail)+"\nPosition : "+pos.ToString();
+            return "Player : "+this.name+"\tHandrail: "+ PrintList(this.handtrail)+"\nPosition : "+pos.ToString()+"\nStill suspected : "+PrintList(this.stillSuspected);
         }
     }
 }

@@ -12,6 +12,10 @@ namespace FinalProject
     //montrer une carte 
     public static class CardsManager
     {
+        public static CardsSuspects cardsSuspects = new CardsSuspects();
+        public static CardsWeapons cardsWeapons = new CardsWeapons();
+        public static CardsRooms cardsRooms = new CardsRooms();
+
         // initialisation of cards 
         /// <summary>
         /// initialization of cardsSuspects, cardsWeapons, cardsrooms
@@ -20,16 +24,10 @@ namespace FinalProject
         /// <returns></returns>
         public static List<string> Initialization()
         {
-            
-            CardsSuspects cardsSuspects = new CardsSuspects();
-            CardsWeapons cardsWeapons = new CardsWeapons();
-            CardsRooms cardsRooms = new CardsRooms();
-
             cardsSuspects.NameMurderer = cardsSuspects.Suspects[Program.random.Next(cardsSuspects.Suspects.Count)];
             cardsWeapons.MurderWeapon = cardsWeapons.Weapons[Program.random.Next(cardsWeapons.Weapons.Count)];
             cardsRooms.CrimeScene = cardsRooms.Rooms[Program.random.Next(cardsRooms.Rooms.Count)];
-            List<string> remainingCards;
-            remainingCards = cardsSuspects.Suspects.Concat(cardsWeapons.Weapons.Concat(cardsRooms.Rooms.ToList())).ToList();
+            List<string> remainingCards = cardsSuspects.Suspects.Concat(cardsWeapons.Weapons.Concat(cardsRooms.Rooms.ToList())).ToList();
             remainingCards.Remove(cardsSuspects.NameMurderer);
             remainingCards.Remove(cardsWeapons.MurderWeapon);
             remainingCards.Remove(cardsRooms.CrimeScene);
@@ -51,6 +49,7 @@ namespace FinalProject
                 int index = Program.random.Next(remainingCards.Count());
                 string card = remainingCards[index];
                 p.Handtrail.Add(card);
+                p.StillSuspected.Remove(card);
                 remainingCards.Remove(card);
             }
             return remainingCards;

@@ -11,7 +11,6 @@ namespace FinalProject
     {
         
         public readonly static Random random = new Random();
-        
         static void Main(string[] args)
         {
             Game();
@@ -56,10 +55,11 @@ namespace FinalProject
             int nbPlayers = 0;
             do
             {
-                Console.WriteLine("How many players are going to play (1,2,3,4,5,6) ?");
+                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
                 nbPlayers = Convert.ToInt32(Console.ReadLine());
             } while (nbPlayers < 2 || nbPlayers >= 7);
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
+            
             //...jusqu'à distribution des cartes
 
             
