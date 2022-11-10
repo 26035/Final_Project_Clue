@@ -5,3 +5,10 @@ C:\Users\Margaux\Documents\ESILV\A3\C#\FinalProject\FinalProject\obj\Debug\Final
 C:\Users\Margaux\Documents\ESILV\A3\C#\FinalProject\FinalProject\obj\Debug\FinalProject.csproj.CoreCompileInputs.cache
 C:\Users\Margaux\Documents\ESILV\A3\C#\FinalProject\FinalProject\obj\Debug\FinalProject.exe
 C:\Users\Margaux\Documents\ESILV\A3\C#\FinalProject\FinalProject\obj\Debug\FinalProject.pdb
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\bin\Debug\FinalProject.exe.config
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\bin\Debug\FinalProject.exe
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\bin\Debug\FinalProject.pdb
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\obj\Debug\FinalProject.csprojAssemblyReference.cache
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\obj\Debug\FinalProject.csproj.CoreCompileInputs.cache
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\obj\Debug\FinalProject.exe
+C:\Users\Laury\OneDrive\Documents\A3 ESILV\S5 Dublin\C#\Final_Project_Clue\FinalProject\obj\Debug\FinalProject.pdb

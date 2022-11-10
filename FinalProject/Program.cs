@@ -111,7 +111,7 @@ namespace FinalProject
             Console.Clear();
             board.PrintBoard(board);
 
-           
+            Console.WriteLine("changement");
 
 
 
