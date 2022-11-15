@@ -8,6 +8,14 @@ namespace FinalProject
 {
     public static class PlayerManager
     {
+        /// <summary>
+        /// Creation of a list of Players 
+        /// distribution of cards for each player
+        /// </summary>
+        /// <param name="nbPlayers"></param>
+        /// <param name="remainingCards"></param>
+        /// <param name="board"></param>
+        /// <returns></returns>
         public static List<Player> Initialization(int nbPlayers, List<string> remainingCards, GameBoard board)
         {
             int round = 1;
