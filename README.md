@@ -19,4 +19,5 @@ Avancement du jeu
          * Enregistrement du jeu
          * Reprendre une partie en cours
          * modifier le board.printboard(board) quand Margaux finira classes board+cases
+         * thread timer
          
