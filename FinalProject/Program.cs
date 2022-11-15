@@ -47,8 +47,8 @@ namespace FinalProject
        static void Game()
         {
             // Début de partie : affichage plateau
-            GameBoard board = new GameBoard("ColorBoard.csv");
-            board.PrintBoard(board);
+            GameBoard board = new GameBoard();
+            board.PrintBoard();
 
 
             //Initialisation du jeu...

@@ -9,7 +9,7 @@ namespace FinalProject
     // a faire ici 
     //initialisation cartes 
     // distribution cards
-    public static class CardsManager
+    static class CardsManager
     {
         public static CardsSuspects cardsSuspects = new CardsSuspects();
         public static CardsWeapons cardsWeapons = new CardsWeapons();

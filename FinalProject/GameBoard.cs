@@ -7,30 +7,26 @@ using System.IO;
 
 namespace FinalProject
 {
-    public class GameBoard
+    class GameBoard
     {
         //Attribut
-        char[,] board;
+        Square[,] board;
         //Constructor
-        public GameBoard(string filename)
+        public GameBoard()
         {
-            this.board = new char[24, 24];
-            StreamReader lecture = new StreamReader(filename);
-            int i = 0;
-            while (!lecture.EndOfStream)
+            char[,] game = ReadFile("Game.csv");
+            char[,] room = ReadFile("RoomNames.csv");
+            this.board = new Square[24, 24];
+            for (int i = 0; i < 24; i++)
             {
-                string line = lecture.ReadLine();
-                string[] list = line.Split(';');
-                for(int j=0;j<24;j++)
+                for (int j = 0; j < 24; j++)
                 {
-                    this.board[i, j] = Convert.ToChar(list[j]);
+                    this.board[i, j] = new Square(game[i, j], room[i, j]);
                 }
-                i++;
             }
-            
         }
         //Properties
-        public char[,] Board
+        public Square[,] Board
         {
             get
             {
@@ -43,99 +39,132 @@ namespace FinalProject
         }
 
         //Methods
-        public void PrintBoard(GameBoard board)
+        public char[,] ReadFile(string fileName)
         {
-            GameBoard room = new GameBoard("RoomNames.csv");
+            char[,] file = new char[24, 24];
+            StreamReader lecture = new StreamReader(fileName);
+            int i = 0;
+            while (!lecture.EndOfStream)
+            {
+                string line = lecture.ReadLine();
+                string[] list = line.Split(';');
+                for (int j = 0; j < 24; j++)
+                {
+                    file[i, j] = Convert.ToChar(list[j]);
+                }
+                i++;
+            }
+            return file;
+        }
+        public void PrintBoard()
+        {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             string column = "1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 ";
             Console.WriteLine(column);
             int row = 1;
-            for (int i = 1; i < board.ToString().Length + 1; i++)
+            for (int i = 0; i < board.GetLength(0); i++)
             {
-                char color = board.ToString()[i - 1];
-
-                Console.BackgroundColor = ConsoleColor.Black;
-                if (color == 'R')
+                for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.Write("   ");
-                }
-                if (color == 'G')
-                {
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    Console.Write("   ");
-                }
-                if (color == 'B')
-                {
-                    Console.BackgroundColor = ConsoleColor.Blue;
-                    Console.Write("   ");
-                }
-                if (color == 'Y')
-                {
-                    Console.BackgroundColor = ConsoleColor.Yellow;
-                    Console.Write("   ");
-                }
-                if (color == 'W')
-                {
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write("   ");
-                }
-                if (color == 'P')
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write("   ");
-                }
-                if (color == '.')
-                {
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.Write(room.ToString()[i - 1] + "  ");
-                }
-                if (color == 'X')
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    Console.Write(room.ToString()[i - 1] + "  ");
-                }
-                if (color == '_')
-                {
-                    if (room.ToString()[i - 1] == '!')
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    }
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(color + "  ");
-                }
-                if (i % 24 == 0)
-                {
-                    Console.BackgroundColor = ConsoleColor.White;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    if(row<10)
-                    {
-                        Console.WriteLine(" "+row+" ");
-                    }
-                    else
-                    {
-                        Console.WriteLine(row+" ");
-                    }
+                    char path = board[i, j].Path;
+                    char roomName = board[i, j].RoomName;
                     Console.BackgroundColor = ConsoleColor.Black;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    row++;
+                    if (path == 'R')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.Write("   ");
+                    }
+                    if (path == 'G')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write("   ");
+                    }
+                    if (path == 'B')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.Write("   ");
+                    }
+                    if (path == 'Y')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.Write("   ");
+                    }
+                    if (path == 'W')
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("   ");
+                    }
+                    if (path == 'P')
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                        Console.Write("   ");
+                    }
+                    if (path == '.')
+                    {
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        if (roomName == '?')
+                        {
+
+                            Console.BackgroundColor = ConsoleColor.DarkGray;
+                            Console.Write("   ");
+                        }
+                        else
+                        {
+                            Console.Write(roomName + "  ");
+                        }
+
+                    }
+                    if (path == 'X')
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.Write(roomName + "  ");
+                    }
+
+                    if (path == '_')
+                    {
+                        if (roomName == '!')
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(path + "  ");
+
+                    }
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Black;
                 }
+
+                if (row < 10)
+                {
+                    Console.Write(" " + row + " ");
+                }
+                else
+                {
+                    Console.Write(row + " ");
+                }
+                row++;
+                Console.WriteLine();
             }
+            Console.ResetColor();
+
         }
-       
-        public bool IsSecretPassage()
+
+        public bool IsSecretPassage(Position pos)
         {
             bool res = false;
-
+            if (pos.IsEquals(new Position(3, 5)) == true || pos.IsEquals(new Position(20, 5)) == true || pos.IsEquals(new Position(4, 18)) == true || pos.IsEquals(new Position(3, 20)) == true)
+            {
+                res = true;
+            }
             return res;
-        }//A terminer 
+        }
         public bool IsOccupied(Position pos)
         {
             bool occupied = false;
-            if (board[pos.Row,pos.Column]=='R'|| board[pos.Row, pos.Column] == 'G' || board[pos.Row, pos.Column] == 'B' 
-                || board[pos.Row, pos.Column] == 'W' || board[pos.Row, pos.Column] == 'P' || board[pos.Row, pos.Column] == 'Y' )
+            if (board[pos.Row,pos.Column].Path=='R'|| board[pos.Row, pos.Column].Path == 'G' || board[pos.Row, pos.Column].Path == 'B' 
+                || board[pos.Row, pos.Column].Path == 'W' || board[pos.Row, pos.Column].Path == 'P' || board[pos.Row, pos.Column].Path == 'Y' )
             {
                 occupied = true;
             }
@@ -145,7 +174,7 @@ namespace FinalProject
         public bool IsWallOrStairs(Position pos)
         {
             bool blocked = false;
-            if(board[pos.Row, pos.Column] == '.' || board[pos.Row, pos.Column] == 'X')
+            if(board[pos.Row, pos.Column].Path == '.' || board[pos.Row, pos.Column].Path == 'X')
             {
                 blocked = true;
             }
@@ -153,9 +182,8 @@ namespace FinalProject
         }
         public bool InsideRoom(Position pos)
         {
-            GameBoard room = new GameBoard("RoomNames.csv");
             bool inside = false;
-            if (room.Board[pos.Row, pos.Column] == '!')
+            if (board[pos.Row, pos.Column].RoomName == '!')
             {
                 inside = true;
             }
@@ -166,13 +194,13 @@ namespace FinalProject
         
         public void MarkMove(Position currentPos, Position futurePos)
         {
-            if (board[currentPos.Row, currentPos.Column] == 'Y') this.board[futurePos.Row, futurePos.Column] = 'Y';
-            if (board[currentPos.Row, currentPos.Column] == 'G') this.board[futurePos.Row, futurePos.Column] = 'G';
-            if (board[currentPos.Row, currentPos.Column] == 'P') this.board[futurePos.Row, futurePos.Column] = 'P';
-            if (board[currentPos.Row, currentPos.Column] == 'B') this.board[futurePos.Row, futurePos.Column] = 'B';
-            if (board[currentPos.Row, currentPos.Column] == 'R') this.board[futurePos.Row, futurePos.Column] = 'R';
-            if (board[currentPos.Row, currentPos.Column] == 'W') this.board[futurePos.Row, futurePos.Column] = 'W';
-            this.board[currentPos.Row, currentPos.Column] = '_';
+            if (board[currentPos.Row, currentPos.Column].Path == 'Y') this.board[futurePos.Row, futurePos.Column].Path = 'Y';
+            if (board[currentPos.Row, currentPos.Column].Path == 'G') this.board[futurePos.Row, futurePos.Column].Path = 'G';
+            if (board[currentPos.Row, currentPos.Column].Path == 'P') this.board[futurePos.Row, futurePos.Column].Path = 'P';
+            if (board[currentPos.Row, currentPos.Column].Path == 'B') this.board[futurePos.Row, futurePos.Column].Path = 'B';
+            if (board[currentPos.Row, currentPos.Column].Path == 'R') this.board[futurePos.Row, futurePos.Column].Path = 'R';
+            if (board[currentPos.Row, currentPos.Column].Path == 'W') this.board[futurePos.Row, futurePos.Column].Path = 'W';
+            this.board[currentPos.Row, currentPos.Column].Path = '_';
             
         }
         public override string ToString()
@@ -182,7 +210,7 @@ namespace FinalProject
             {
                 for (int j = 0; j < 24; j++)
                 {
-                    test = test + board[i, j];
+                    test = test + board[i, j].Path;
                 }
                 
             }

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace FinalProject
 {
-    public class Player
+    class Player
     {
         string name;
         int numberOfCards;
@@ -28,12 +28,12 @@ namespace FinalProject
             {
                 for(int j=0;j<24;j++)
                 {
-                    if ((name == "Col Mustard" && game.Board[i, j] == 'Y')||
-                        (name == "Mr Green" && game.Board[i, j] == 'G')||
-                        (name == "Prof Plum" && game.Board[i, j] == 'P')||
-                        (name == "Mrs Blue" && game.Board[i, j] == 'B')||
-                        (name == "Miss Scarlet" && game.Board[i, j] == 'R')||
-                        (name == "Mrs White" && game.Board[i, j] == 'W')) this.pos=new Position(i,j) ;
+                    if ((name == "Col Mustard" && game.Board[i, j].Path == 'Y')||
+                        (name == "Mr Green" && game.Board[i, j].Path == 'G')||
+                        (name == "Prof Plum" && game.Board[i, j].Path == 'P')||
+                        (name == "Mrs Blue" && game.Board[i, j].Path == 'B')||
+                        (name == "Miss Scarlet" && game.Board[i, j].Path == 'R')||
+                        (name == "Mrs White" && game.Board[i, j].Path == 'W')) this.pos=new Position(i,j) ;
                     
                 }
             }
@@ -64,11 +64,11 @@ namespace FinalProject
             {
                 for(int i=0; i<move;i++)
                 {
-                    board.PrintBoard(board);
+                    board.PrintBoard();
                     do
                     {
                         
-                        Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left");
+                        Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left)");
                         direction = Convert.ToChar(Console.ReadLine().ToUpper());
                         if (direction == 'U') next = new Position(pos.Row - 1, pos.Column);
                         if (direction == 'D') next = new Position(pos.Row + 1, pos.Column);

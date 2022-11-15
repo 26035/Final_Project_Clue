@@ -8,7 +8,7 @@ namespace FinalProject
 {
     //fonction : montrer les cartes du joueur qui lui sont encore inconnus
     //fonction : chercher les cartes possibles et choisir quelle carte montrer 
-    public static class PlayerManager
+    static class PlayerManager
     {
         /// <summary>
         /// Creation of a list of Players 
