@@ -48,6 +48,7 @@
     <Compile Include="CardsRooms.cs" />
     <Compile Include="CardsSuspects.cs" />
     <Compile Include="CardsWeapons.cs" />
+    <Compile Include="Die.cs" />
     <Compile Include="GameBoard.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerManager.cs" />

@@ -11,6 +11,7 @@ namespace FinalProject
     {
         
         public readonly static Random random = new Random();
+        public static int nbAccusations = 0;
         static void Main(string[] args)
         {
             Game();
@@ -59,8 +60,27 @@ namespace FinalProject
                 nbPlayers = Convert.ToInt32(Console.ReadLine());
             } while (nbPlayers < 2 || nbPlayers >= 7);
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            
+            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
             //...jusqu'à distribution des cartes
+
+            //break si nbAccusations == nbplayers ou player.accusation == true à chaque round du joueur
+            int round = 0;
+            while(true)
+            {
+                Console.WriteLine("it's up to {0}", runningOrder[round]);
+                Die dices = new Die();
+                int resultDices = dices.ResultDices();
+                Console.WriteLine(resultDices);
+                //if 66 ou 11 go in a room, choose your room 
+                runningOrder[round].NextMove(resultDices, board);
+
+                if(round<nbPlayers-1)
+                {
+                    round++;
+                }
+                else { round = 0; }
+            }
+            
 
             
 

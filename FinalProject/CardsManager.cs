@@ -9,7 +9,6 @@ namespace FinalProject
     // a faire ici 
     //initialisation cartes 
     // distribution cards
-    //montrer une carte 
     public static class CardsManager
     {
         public static CardsSuspects cardsSuspects = new CardsSuspects();
@@ -55,6 +54,8 @@ namespace FinalProject
             return remainingCards;
             
         }
+
+        
         //methodes tests
         public static string PrintList(List<string> list)
         {

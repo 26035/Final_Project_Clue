@@ -51,7 +51,7 @@ namespace FinalProject
         public List<string> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
         public List<List<string>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
         //Methods
-        public void NextMove(int move)
+        public void NextMove(int move, GameBoard board)
         {
             
             char direction;
@@ -64,8 +64,10 @@ namespace FinalProject
             {
                 for(int i=0; i<move;i++)
                 {
+                    board.PrintBoard(board);
                     do
                     {
+                        
                         Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left");
                         direction = Convert.ToChar(Console.ReadLine().ToUpper());
                         if (direction == 'U') next = new Position(pos.Row - 1, pos.Column);
@@ -79,7 +81,9 @@ namespace FinalProject
                     } while ((direction != 'U' && direction != 'D' && direction != 'R' && direction != 'L') || game.ValidPos(next) != true || game.IsOccupied(next) != false || game.IsWallOrStairs(next) != false);
                     game.MarkMove(this.pos, next);
                     this.pos = next;
+                    Console.Clear();
                 }
+
             }
             
         }

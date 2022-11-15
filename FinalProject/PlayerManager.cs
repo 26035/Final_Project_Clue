@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
+    //fonction : montrer les cartes du joueur qui lui sont encore inconnus
+    //fonction : chercher les cartes possibles et choisir quelle carte montrer 
     public static class PlayerManager
     {
         /// <summary>
@@ -35,5 +37,6 @@ namespace FinalProject
             } while (round <= nbPlayers);
             return players;
         }
+
     }
 }
