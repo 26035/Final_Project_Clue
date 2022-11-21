@@ -47,45 +47,100 @@ namespace FinalProject
         public string Name => name;
         public List<string> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
-
+        public Position Pos { get { return this.pos; } }
         public List<string> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
         public List<List<string>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
         //Methods
         public void NextMove(int move, GameBoard board)
         {
-            
             char direction;
-            Position next=new Position();
+            int choice;
+            Position next=new Position();//Voir constructeur vide
             if (Stuck()==true)
             {
                 Console.WriteLine("You're stuck ! You have to wait for the next round to move");
             }
             else
             {
-                for(int i=0; i<move;i++)
+               
+                for (int i = 0; i < move; i++)
                 {
                     board.PrintBoard();
                     do
                     {
-                        
+
                         Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left)");
                         direction = Convert.ToChar(Console.ReadLine().ToUpper());
                         if (direction == 'U') next = new Position(pos.Row - 1, pos.Column);
                         if (direction == 'D') next = new Position(pos.Row + 1, pos.Column);
                         if (direction == 'R') next = new Position(pos.Row, pos.Column + 1);
                         if (direction == 'L') next = new Position(pos.Row, pos.Column - 1);
-                        if(game.ValidPos(next) == false) { Console.WriteLine("You can't go there : it's outside the board game"); }
-                        else if (game.IsOccupied(next)==true) { Console.WriteLine("You can't go there : it's occupied"); }
-                        else if(game.IsWallOrStairs(next) == true) { Console.WriteLine("You can't go there : it's a wall or stairs"); }
-                    
+                        if (game.ValidPos(next) == false) { Console.WriteLine("You can't go there : it's outside the board game"); }
+                        else if (game.IsOccupied(next) == true) { Console.WriteLine("You can't go there : it's occupied"); }
+                        else if (game.IsWallOrStairs(next) == true) { Console.WriteLine("You can't go there : it's a wall or stairs"); }
+
                     } while ((direction != 'U' && direction != 'D' && direction != 'R' && direction != 'L') || game.ValidPos(next) != true || game.IsOccupied(next) != false || game.IsWallOrStairs(next) != false);
                     game.MarkMove(this.pos, next);
                     this.pos = next;
+                    if(game.InsideRoom(this.pos)==true)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You're in a room");
+                        if (game.IsSecretPassage(this.pos) == true)
+                        {
+                            board.PrintBoard();
+                            Console.WriteLine("Do you want to use it? (1: yes, 2 : no)");
+                            choice = Convert.ToInt32(Console.ReadLine());
+                            if (choice == 1)
+                            {
+                                MoveSecretPassage();
+                            }
+                            Console.Clear();
+                        }
+                        break;
+                    }
                     Console.Clear();
                 }
-
             }
-            
+            Console.Clear();
+            board.PrintBoard();
+
+        }
+        public void MoveSecretPassage()
+        {
+            Position newRoom=new Position();
+            do
+            {
+                Console.WriteLine("Where do you want to go? (1 : Billard Room, 2 : Kitchen, 3 : Greenhouse, 4 : Lounge");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        newRoom = new Position(0, 6);
+                        break;
+                    case 2:
+                        newRoom = new Position(0, 17);
+                        break;
+                    case 3:
+                        newRoom = new Position(23, 6);
+                        break;
+                    case 4:
+                        newRoom = new Position(23, 18);
+                        break;
+                    default:
+                        break;
+                }
+                if (game.IsOccupied(newRoom) == true)
+                {
+                    Console.WriteLine("You can't go inside the room : it's occupied");
+                }
+                else if(this.pos.IsEquals(newRoom) == true)
+                {
+                    Console.WriteLine("Choose another room : you're already inside this room");
+                }
+            } while (this.pos.IsEquals(newRoom)==true|| game.IsOccupied(newRoom) == true);
+            game.MarkMove(this.pos, newRoom);
+            this.pos = newRoom;
         }
         public bool Stuck()
         {

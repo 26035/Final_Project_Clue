@@ -148,15 +148,15 @@ namespace FinalProject
                 Console.WriteLine();
             }
             Console.ResetColor();
-
         }
 
         public bool IsSecretPassage(Position pos)
         {
             bool res = false;
-            if (pos.IsEquals(new Position(3, 5)) == true || pos.IsEquals(new Position(20, 5)) == true || pos.IsEquals(new Position(4, 18)) == true || pos.IsEquals(new Position(3, 20)) == true)
+            if (pos.IsEquals(new Position(3, 5)) == true || pos.IsEquals(new Position(20, 5)) == true || pos.IsEquals(new Position(4, 18)) == true || pos.IsEquals(new Position(18, 20)) == true)
             {
                 res = true;
+                Console.WriteLine("There is a secret passage in this room");
             }
             return res;
         }
@@ -170,7 +170,6 @@ namespace FinalProject
             }
             return occupied;
         }
-        
         public bool IsWallOrStairs(Position pos)
         {
             bool blocked = false;
@@ -194,13 +193,27 @@ namespace FinalProject
         
         public void MarkMove(Position currentPos, Position futurePos)
         {
-            if (board[currentPos.Row, currentPos.Column].Path == 'Y') this.board[futurePos.Row, futurePos.Column].Path = 'Y';
-            if (board[currentPos.Row, currentPos.Column].Path == 'G') this.board[futurePos.Row, futurePos.Column].Path = 'G';
-            if (board[currentPos.Row, currentPos.Column].Path == 'P') this.board[futurePos.Row, futurePos.Column].Path = 'P';
-            if (board[currentPos.Row, currentPos.Column].Path == 'B') this.board[futurePos.Row, futurePos.Column].Path = 'B';
-            if (board[currentPos.Row, currentPos.Column].Path == 'R') this.board[futurePos.Row, futurePos.Column].Path = 'R';
-            if (board[currentPos.Row, currentPos.Column].Path == 'W') this.board[futurePos.Row, futurePos.Column].Path = 'W';
-            this.board[currentPos.Row, currentPos.Column].Path = '_';
+            this.board[futurePos.Row, futurePos.Column].Path = this.board[currentPos.Row, currentPos.Column].Path;
+            
+            if ((board[currentPos.Row, currentPos.Column].Path == 'Y'||
+                board[currentPos.Row, currentPos.Column].Path == 'G'||
+                board[currentPos.Row, currentPos.Column].Path == 'P'||
+                board[currentPos.Row, currentPos.Column].Path == 'B'||
+                board[currentPos.Row, currentPos.Column].Path == 'R'||
+                board[currentPos.Row, currentPos.Column].Path == 'W')&& board[currentPos.Row, currentPos.Column].RoomName != '?')
+            {
+                this.board[currentPos.Row, currentPos.Column].Path = '_';
+            }
+           if((board[currentPos.Row, currentPos.Column].Path == 'Y' ||
+                board[currentPos.Row, currentPos.Column].Path == 'G' ||
+                board[currentPos.Row, currentPos.Column].Path == 'P' ||
+                board[currentPos.Row, currentPos.Column].Path == 'B' ||
+                board[currentPos.Row, currentPos.Column].Path == 'R' ||
+                board[currentPos.Row, currentPos.Column].Path == 'W')&& board[currentPos.Row, currentPos.Column].RoomName == '?')
+            {
+                this.board[currentPos.Row, currentPos.Column].Path = '.';
+            }
+            
             
         }
         public override string ToString()

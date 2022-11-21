@@ -14,7 +14,12 @@ namespace FinalProject
         public static int nbAccusations = 0;
         static void Main(string[] args)
         {
-            Game();
+            //Game();
+            GameBoard board = new GameBoard();
+            List<string> remainingCards = CardsManager.Initialization();
+            List<Player> players = PlayerManager.Initialization(2, remainingCards, board);
+            players[0].NextMove(8,board);
+            Console.WriteLine(players[0].Pos.ToString());
             Console.ReadKey();
         }
         /// <summary>
@@ -106,15 +111,7 @@ namespace FinalProject
             Console.Clear();
             board.PrintBoard(board);
 
-            
-
-
-
-
-
-
-
-            //Console.ReadKey();
+            Console.ReadKey();
         }*/
     }
 }
