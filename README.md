@@ -6,11 +6,10 @@ Avancement du jeu
          * Cartes du meurtier aléatoire + distribution des cartes restantes
          * Affichage plateau
          * Déplacement fonctionnel avec les conditions (murs,occupé,en dehors du plateau) et nouvel affichage
-         * Modification GameBoard + ajout fonction passage secret
+         * Modification GameBoard + ajout fonctions passage secret et teleportation
          
  A faire 
 
-         * Fonction deplacement passage secret (class Player) 
          * Lancement des dés avec des thread
          * Double 6 ou 1 = transporter dans une pièce au choix
          * Plus de fonctions lambda expression
