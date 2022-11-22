@@ -76,6 +76,10 @@ namespace FinalProject
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
                 Console.WriteLine(resultDices);
+                if((dices.DieOne ==dices.DieTwo)&& dices.)
+                {
+
+                }
                 //if 66 ou 11 go in a room, choose your room 
                 runningOrder[round].NextMove(resultDices, board);
 
