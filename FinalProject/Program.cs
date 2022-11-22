@@ -14,8 +14,6 @@ namespace FinalProject
         public static int nbAccusations = 0;
         static void Main(string[] args)
         {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             Game();
             //test
             /*GameBoard board = new GameBoard();
@@ -24,18 +22,7 @@ namespace FinalProject
             players[0].NextMove(8,board);
             Console.WriteLine(players[0].Pos.ToString());
             Console.ReadKey();*/
-=======
-=======
->>>>>>> Stashed changes
-            //Game();
-            GameBoard board = new GameBoard();
 
-            //List<string> remainingCards = CardsManager.Initialization();
-            //List<Player> players = PlayerManager.Initialization(2, remainingCards, board);
-            //players[0].NextMove(8,board);
-            //Console.WriteLine(players[0].Pos.ToString());
-            Console.ReadKey();
->>>>>>> Stashed changes
         }
         /// <summary>
         /// Code distribuer les cartes après avoir enlevé les cartes du meurtier
@@ -91,15 +78,8 @@ namespace FinalProject
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
                 Console.WriteLine(resultDices);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                 if(((dices.DieOne ==dices.DieTwo)&& (dices.DieOne==6))||((dices.DieOne==dices.DieTwo)&&(dices.DieOne==1)))
-=======
-                //if((dices.DieOne ==dices.DieTwo)&& dices.)
->>>>>>> Stashed changes
-=======
-                //if((dices.DieOne ==dices.DieTwo)&& dices.)
->>>>>>> Stashed changes
+
                 {
                     PlayerManager.ChooseRoom(runningOrder[round], board);
                 }
