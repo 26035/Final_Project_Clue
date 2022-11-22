@@ -16,8 +16,10 @@ namespace FinalProject
 
         public Die()
         {
-            dieOne = Program.random.Next(7);
-            dieTwo = Program.random.Next(7);
+            /*dieOne = Program.random.Next(7);
+            dieTwo = Program.random.Next(7);*/
+            dieOne = 6;
+            dieTwo = 6;
 
         }
         public int ResultDices()

@@ -14,13 +14,14 @@ namespace FinalProject
         public static int nbAccusations = 0;
         static void Main(string[] args)
         {
-            //Game();
-            GameBoard board = new GameBoard();
+            Game();
+            //test
+            /*GameBoard board = new GameBoard();
             List<string> remainingCards = CardsManager.Initialization();
             List<Player> players = PlayerManager.Initialization(2, remainingCards, board);
             players[0].NextMove(8,board);
             Console.WriteLine(players[0].Pos.ToString());
-            Console.ReadKey();
+            Console.ReadKey();*/
         }
         /// <summary>
         /// Code distribuer les cartes après avoir enlevé les cartes du meurtier
@@ -76,9 +77,9 @@ namespace FinalProject
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
                 Console.WriteLine(resultDices);
-                if((dices.DieOne ==dices.DieTwo)&& dices.)
+                if(((dices.DieOne ==dices.DieTwo)&& (dices.DieOne==6))||((dices.DieOne==dices.DieTwo)&&(dices.DieOne==1)))
                 {
-
+                    PlayerManager.ChooseRoom(runningOrder[round], board);
                 }
                 //if 66 ou 11 go in a room, choose your room 
                 runningOrder[round].NextMove(resultDices, board);
