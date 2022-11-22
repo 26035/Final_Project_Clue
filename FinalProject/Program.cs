@@ -15,6 +15,7 @@ namespace FinalProject
         static void Main(string[] args)
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             Game();
             //test
             /*GameBoard board = new GameBoard();
@@ -24,6 +25,8 @@ namespace FinalProject
             Console.WriteLine(players[0].Pos.ToString());
             Console.ReadKey();*/
 =======
+=======
+>>>>>>> Stashed changes
             //Game();
             GameBoard board = new GameBoard();
 
@@ -89,7 +92,11 @@ namespace FinalProject
                 int resultDices = dices.ResultDices();
                 Console.WriteLine(resultDices);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 if(((dices.DieOne ==dices.DieTwo)&& (dices.DieOne==6))||((dices.DieOne==dices.DieTwo)&&(dices.DieOne==1)))
+=======
+                //if((dices.DieOne ==dices.DieTwo)&& dices.)
+>>>>>>> Stashed changes
 =======
                 //if((dices.DieOne ==dices.DieTwo)&& dices.)
 >>>>>>> Stashed changes
