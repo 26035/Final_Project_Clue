@@ -11,6 +11,7 @@ namespace FinalProject
     {
         //Attribut
         Square[,] board;
+        List<List<Position>> rooms;
         //Constructor
         public GameBoard()
         {
@@ -24,6 +25,33 @@ namespace FinalProject
                     this.board[i, j] = new Square(game[i, j], room[i, j]);
                 }
             }
+            rooms = new List<List<Position>>();
+            Position billardRoomDoor1 = new Position(3, 5);
+            Position kitchenDoor1 = new Position(4, 18);
+            Position greenhouse1 = new Position(20, 5);
+            Position loungeDoor1 = new Position(18, 20);
+            Position hall1 = new Position(4, 9);
+            Position hall2 = new Position(5, 12);
+            Position hall3 = new Position(6, 13);
+            Position library1 = new Position(8, 6);
+            Position library2 = new Position(10, 2);
+            Position study1 = new Position(12, 2);
+            Position study2 = new Position(15, 5);
+            Position dinningRoom1 = new Position(8, 17);
+            Position dinningRoom2 = new Position(12, 16);
+            Position ballRoom1 = new Position(17, 10);
+            Position ballRoom2 = new Position(17, 13);
+            Position ballRoom3 = new Position(19, 8);
+            Position ballRoom4 = new Position(19, 15);
+            rooms.Add(new List<Position> { billardRoomDoor1 });
+            rooms.Add(new List<Position> { kitchenDoor1 });
+            rooms.Add(new List<Position> { greenhouse1 });
+            rooms.Add(new List<Position> { loungeDoor1 });
+            rooms.Add(new List<Position> { hall1, hall2, hall3 });
+            rooms.Add(new List<Position> { library1, library2 });
+            rooms.Add(new List<Position> { study1, study2 });
+            rooms.Add(new List<Position> { dinningRoom1, dinningRoom2 });
+            rooms.Add(new List<Position> { ballRoom1, ballRoom2, ballRoom3, ballRoom4 });
         }
         //Properties
         public Square[,] Board
@@ -37,6 +65,7 @@ namespace FinalProject
                 board = value;
             }
         }
+        public List<List<Position>> Rooms => this.rooms;
 
         //Methods
         public char[,] ReadFile(string fileName)
