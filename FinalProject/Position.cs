@@ -33,6 +33,10 @@ namespace FinalProject
         {
             return "You are at : column = "+(this.column+1)+" row = " + (this.row+1);
         }
+        public string toString()
+        {
+            return  (this.column + 1) + " ; " + (this.row + 1);
+        }
 
         public bool IsEquals(Position pos)
         {
