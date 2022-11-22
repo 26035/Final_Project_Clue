@@ -216,6 +216,42 @@ namespace FinalProject
             
             
         }
+        public Position MoveSecretPassage(Position current)
+        {
+            Position newRoom = new Position();
+            do
+            {
+                Console.WriteLine("Where do you want to go? (1 : Billard Room, 2 : Kitchen, 3 : Greenhouse, 4 : Lounge");
+                int choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        newRoom = new Position(0, 6);
+                        break;
+                    case 2:
+                        newRoom = new Position(0, 17);
+                        break;
+                    case 3:
+                        newRoom = new Position(23, 6);
+                        break;
+                    case 4:
+                        newRoom = new Position(23, 18);
+                        break;
+                    default:
+                        break;
+                }
+                if (IsOccupied(newRoom) == true)
+                {
+                    Console.WriteLine("You can't go inside the room : it's occupied");
+                }
+                else if (current.IsEquals(newRoom) == true)
+                {
+                    Console.WriteLine("Choose another room : you're already inside this room");
+                }
+            } while (current.IsEquals(newRoom) == true || IsOccupied(newRoom) == true);
+            return newRoom;
+           
+        }
         public override string ToString()
         {
             string test = "";

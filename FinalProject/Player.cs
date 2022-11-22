@@ -93,7 +93,9 @@ namespace FinalProject
                             choice = Convert.ToInt32(Console.ReadLine());
                             if (choice == 1)
                             {
-                                MoveSecretPassage();
+                                next = game.MoveSecretPassage(this.pos);
+                                game.MarkMove(this.pos, next);
+                                this.pos = next;
                             }
                             Console.Clear();
                         }
@@ -106,42 +108,7 @@ namespace FinalProject
             board.PrintBoard();
 
         }
-        public void MoveSecretPassage()
-        {
-            Position newRoom=new Position();
-            do
-            {
-                Console.WriteLine("Where do you want to go? (1 : Billard Room, 2 : Kitchen, 3 : Greenhouse, 4 : Lounge");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                switch (choice)
-                {
-                    case 1:
-                        newRoom = new Position(0, 6);
-                        break;
-                    case 2:
-                        newRoom = new Position(0, 17);
-                        break;
-                    case 3:
-                        newRoom = new Position(23, 6);
-                        break;
-                    case 4:
-                        newRoom = new Position(23, 18);
-                        break;
-                    default:
-                        break;
-                }
-                if (game.IsOccupied(newRoom) == true)
-                {
-                    Console.WriteLine("You can't go inside the room : it's occupied");
-                }
-                else if(this.pos.IsEquals(newRoom) == true)
-                {
-                    Console.WriteLine("Choose another room : you're already inside this room");
-                }
-            } while (this.pos.IsEquals(newRoom)==true|| game.IsOccupied(newRoom) == true);
-            game.MarkMove(this.pos, newRoom);
-            this.pos = newRoom;
-        }
+        
         public bool Stuck()
         {
             bool stuck = false;
