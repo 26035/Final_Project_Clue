@@ -74,17 +74,104 @@ namespace FinalProject
             int round = 0;
             while(true)
             {
-                Console.WriteLine("it's up to {0}", runningOrder[round]);
+                Console.WriteLine("it's up to {0}", runningOrder[round].Name);
+                Console.WriteLine("press enter to continue");
+                Console.ReadKey();
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
                 Console.WriteLine(resultDices);
+                //if 66 or 11, player can choose his room 
                 if(((dices.DieOne ==dices.DieTwo)&& (dices.DieOne==6))||((dices.DieOne==dices.DieTwo)&&(dices.DieOne==1)))
-
                 {
                     PlayerManager.ChooseRoom(runningOrder[round], board);
                 }
-                //if 66 ou 11 go in a room, choose your room 
-                runningOrder[round].NextMove(resultDices, board);
+                else { runningOrder[round].NextMove(resultDices, board); }
+                bool insideARoom = board.InsideRoom(runningOrder[round].Pos);
+                if(insideARoom ==true)
+                {
+                    Console.WriteLine(runningOrder[round].ToString());
+                    int choice=0;
+                    do
+                    {
+                        Console.WriteLine("Do you want to do a \n1: An hypothesis \n2: An accusation");
+                        choice = Convert.ToInt32(Console.ReadLine());
+                    } while (choice < 1 || choice >= 3);
+                    List<string> CardsSuspectedByTheCurrentPlayer = new List<string>();
+                    List<string> CardsSuspectedPresentInTheOtherPlayerHandrail = new List<string>();
+                    if(choice ==1)
+                    {
+                        //cards Suspected by the current player
+                        //find the room of the player
+                        for(int i =0;i<9;i++)
+                        {
+                            foreach(var j in board.Rooms[i])
+                            {
+                                if(runningOrder[round].Pos == j)
+                                {
+                                    string currentRoom = board.NameOfTheRoom[i];
+                                    CardsSuspectedByTheCurrentPlayer.Add(currentRoom);
+                                    break;
+                                }
+                            }
+                        }
+                        //suspect person of the current player
+                        Console.WriteLine("which person do you suspected?");
+                        string cardSuspected = Console.ReadLine();
+                        CardsSuspectedByTheCurrentPlayer.Add(cardSuspected);
+                        //suspect weapon of the current player
+                        Console.WriteLine("which weapon do you suspected?");
+                        cardSuspected = Console.ReadLine();
+                        CardsSuspectedByTheCurrentPlayer.Add(cardSuspected);
+
+                        //search of the cards in handrail of each player to find the suspect card to show at the current player
+                        foreach(Player p in players)
+                        {
+                            if(p != runningOrder[round])
+                            {
+                                foreach(string nameCards in p.Handtrail)
+                                {
+                                    foreach (string hypothesesCards in CardsSuspectedByTheCurrentPlayer)
+                                    {
+                                        if (nameCards == hypothesesCards)
+                                        {
+                                            CardsSuspectedPresentInTheOtherPlayerHandrail.Add(hypothesesCards);
+                                        }
+                                    }
+                                }
+                                foreach(string card in CardsSuspectedPresentInTheOtherPlayerHandrail)
+                                {
+                                    Console.WriteLine(card + " ");
+                                }
+                                int nbOfCardsSuspectedInYourPossession = CardsSuspectedPresentInTheOtherPlayerHandrail.Count;
+                                int response = 0;
+                                for (int i = 0; i < nbOfCardsSuspectedInYourPossession; i++)
+                                {
+
+                                    do
+                                    {
+                                        Console.WriteLine("Do you want to show the card {0}? \n0:yes \n1:no", CardsSuspectedPresentInTheOtherPlayerHandrail[i]);
+                                        response = Convert.ToInt32(Console.ReadLine());
+                                    } while (response < 0 || response >= 2);
+                                    if (response == 0)
+                                    {
+                                        Console.WriteLine("the card is {0}", CardsSuspectedPresentInTheOtherPlayerHandrail[i]);
+                                        for (int n =0;n<runningOrder[round].StillSuspected.Count;n++)
+                                        {
+                                            if(runningOrder[round].StillSuspected[n] ==CardsSuspectedPresentInTheOtherPlayerHandrail[i])
+                                            {
+                                                runningOrder[round].StillSuspected.RemoveAt(n);
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+
 
                 if(round<nbPlayers-1)
                 {

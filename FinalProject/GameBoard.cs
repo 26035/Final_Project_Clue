@@ -12,6 +12,7 @@ namespace FinalProject
         //Attribut
         Square[,] board;
         List<List<Position>> rooms;
+        List<string> nameOfTheRoom; 
         //Constructor
         public GameBoard()
         {
@@ -27,6 +28,7 @@ namespace FinalProject
             }
             rooms = new List<List<Position>>();
             InitializationRooms();
+            nameOfTheRoom = new List<string> { "billardRoom", "kitchen", "greenhouse", "lounge", "hall", "library", "study", "dinningRoom", "ballRoom" };
            
         }
         //Properties
@@ -42,6 +44,7 @@ namespace FinalProject
             }
         }
         public List<List<Position>> Rooms => this.rooms;
+        public List<string> NameOfTheRoom => this.nameOfTheRoom;
 
         //Methods
         public char[,] ReadFile(string fileName)
@@ -73,6 +76,7 @@ namespace FinalProject
             rooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
             rooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
         }
+        
         public void PrintBoard()
         {
             Console.BackgroundColor = ConsoleColor.White;
@@ -199,7 +203,7 @@ namespace FinalProject
         public bool InsideRoom(Position pos)
         {
             bool inside = false;
-            if (board[pos.Row, pos.Column].RoomName == '!')
+            if (board[pos.Row, pos.Column].RoomName == '!' || board[pos.Row, pos.Column].RoomName == '?')
             {
                 inside = true;
             }

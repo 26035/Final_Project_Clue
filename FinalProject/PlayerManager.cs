@@ -74,9 +74,9 @@ namespace FinalProject
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (4,9)" +
-                            "\n1: (5,12)" +
-                            "\n2: (6,13)");
+                            "\n0: (5,10)" +
+                            "\n1: (6,13)" +
+                            "\n2: (7,14)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 3);
                     nextPosition = board.Rooms[4][position];
@@ -85,8 +85,8 @@ namespace FinalProject
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (8,6)" +
-                            "\n1: (10,2)");
+                            "\n0: (9,7)" +
+                            "\n1: (11,3)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 2);
                     nextPosition = board.Rooms[5][position];
@@ -95,8 +95,8 @@ namespace FinalProject
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (12,2)" +
-                            "\n1: (15,5)");
+                            "\n0: (13,3)" +
+                            "\n1: (16,6)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 2);
                     nextPosition = board.Rooms[6][position];
@@ -105,8 +105,8 @@ namespace FinalProject
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (8,17)" +
-                            "\n1: (12,16)");
+                            "\n0: (9,18)" +
+                            "\n1: (13,17)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 2);
                     nextPosition = board.Rooms[7][position];
@@ -115,19 +115,17 @@ namespace FinalProject
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (17,10)" +
-                            "\n1: (17,13)" +
-                            "\n2: (19,8)" +
-                            "\n3: (19,15)");
+                            "\n0: (18,11)" +
+                            "\n1: (18,14)" +
+                            "\n2: (20,9)" +
+                            "\n3: (20,16)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 4);
                     nextPosition = board.Rooms[8][position];
                     break;
 
             }
-            Console.WriteLine(currentPos.ToString() + " " + nextPosition.ToString());
             board.MarkMove(currentPos, nextPosition);
-
         }
 
     }

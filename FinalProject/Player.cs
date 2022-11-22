@@ -135,7 +135,7 @@ namespace FinalProject
         }
         public override string ToString()
         {
-            return "Player : "+this.name+"\tHandrail: "+ PrintList(this.handtrail)+"\nPosition : "+pos.ToString()+"\nStill suspected : "+PrintList(this.stillSuspected);
+            return "\tHandrail: "+ PrintList(this.handtrail)+"\nStill suspected : "+PrintList(this.stillSuspected);
         }
     }
 }
