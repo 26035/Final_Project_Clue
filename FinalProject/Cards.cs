@@ -6,28 +6,24 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    public abstract class Cards
+    abstract class Cards
     {
-        protected string name;
-        public abstract string Name { get; }
-        
-        
-        
-        
-        //Constructor 
-        public Cards()
+        protected List<Card> allCards;
+        protected Card cardMurderer;
+        public abstract List<Card> AllCards { get; }
+        public Card CardMurderer { get; set; }
+        public override string ToString()
         {
-            
-
+            return PrintList(AllCards) + "\nmurderer " + CardMurderer;
         }
-        /*
-        public abstract List<string> RemainingCards { get; set; }
-        public abstract string PrintList();
-        public abstract override string ToString();
-        public abstract string ToStringMurderer();
-
-        
-        public abstract Player CardDistribution();
-        */
+        public static string PrintList(List<Card> list)
+        {
+            string res = "";
+            foreach (var line in list)
+            {
+                res = res + line + " / ";
+            }
+            return res;
+        }
     }
 }

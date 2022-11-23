@@ -17,7 +17,7 @@ namespace FinalProject
             Game();
             //test
             /*GameBoard board = new GameBoard();
-            List<string> remainingCards = CardsManager.Initialization();
+            List<Card> remainingCards = CardsManager.Initialization();
             List<Player> players = PlayerManager.Initialization(2, remainingCards, board);
             players[0].NextMove(8,board);
             Console.WriteLine(players[0].Pos.ToString());
@@ -59,7 +59,7 @@ namespace FinalProject
 
 
             //Initialisation du jeu...
-            List<string> remainingCards = CardsManager.Initialization();
+            List<Card> remainingCards = CardsManager.Initialization();
             int nbPlayers = 0;
             do
             {
@@ -87,7 +87,7 @@ namespace FinalProject
                 }
                 else { runningOrder[round].NextMove(resultDices, board); }
                 bool insideARoom = board.InsideRoom(runningOrder[round].Pos);
-                if(insideARoom ==true)
+                (insideARoom ==true)
                 {
                     Console.WriteLine(runningOrder[round].ToString());
                     int choice=0;

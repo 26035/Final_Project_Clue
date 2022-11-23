@@ -21,15 +21,15 @@ namespace FinalProject
         /// draw of the murder's 3 cards 
         /// </summary>
         /// <returns></returns>
-        public static List<string> Initialization()
+        public static List<Card> Initialization()
         {
-            cardsSuspects.NameMurderer = cardsSuspects.Suspects[Program.random.Next(cardsSuspects.Suspects.Count)];
-            cardsWeapons.MurderWeapon = cardsWeapons.Weapons[Program.random.Next(cardsWeapons.Weapons.Count)];
-            cardsRooms.CrimeScene = cardsRooms.Rooms[Program.random.Next(cardsRooms.Rooms.Count)];
-            List<string> remainingCards = cardsSuspects.Suspects.Concat(cardsWeapons.Weapons.Concat(cardsRooms.Rooms.ToList())).ToList();
-            remainingCards.Remove(cardsSuspects.NameMurderer);
-            remainingCards.Remove(cardsWeapons.MurderWeapon);
-            remainingCards.Remove(cardsRooms.CrimeScene);
+            cardsSuspects.CardMurderer = cardsSuspects.AllCards[Program.random.Next(cardsSuspects.AllCards.Count)];
+            cardsWeapons.CardMurderer = cardsWeapons.AllCards[Program.random.Next(cardsWeapons.AllCards.Count)];
+            cardsRooms.CardMurderer = cardsRooms.AllCards[Program.random.Next(cardsRooms.AllCards.Count)];
+            List<Card> remainingCards = cardsSuspects.AllCards.Concat(cardsWeapons.AllCards.Concat(cardsRooms.AllCards.ToList())).ToList();
+            remainingCards.Remove(cardsSuspects.CardMurderer);
+            remainingCards.Remove(cardsWeapons.CardMurderer);
+            remainingCards.Remove(cardsRooms.CardMurderer);
             return remainingCards;
         }
 
@@ -41,12 +41,12 @@ namespace FinalProject
         /// <param name="p"></param>
         /// <param name="remainingCards"></param>
         /// <returns></returns>
-        public static List <string> CardsDistribution(Player p, List<string> remainingCards)
+        public static List <Card> CardsDistribution(Player p, List<Card> remainingCards)
         {
             for (int i = 0; i < p.NumberOfCards; i++)
             {
                 int index = Program.random.Next(remainingCards.Count());
-                string card = remainingCards[index];
+                Card card = remainingCards[index];
                 p.Handtrail.Add(card);
                 p.StillSuspected.Remove(card);
                 remainingCards.Remove(card);

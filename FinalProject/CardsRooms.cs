@@ -6,31 +6,16 @@ using System.Threading.Tasks;
 
 namespace FinalProject
 {
-    public class CardsRooms : Cards
+    class CardsRooms : Cards
     {
-        #region attributes
-        protected List<string> rooms;
-        protected string crimeScene;
-        #endregion
+        
         #region properties
-        public override string Name => this.name = "rooms";
-        public string CrimeScene
+        public override List<Card> AllCards
         {
-            get { return crimeScene; }
-            set { crimeScene = value; }
-        }
-        public List<string> Rooms
-        {
-            get { return rooms; }
-            set { rooms = value; }
+            get { return new List<Card> { new Card("Kitchen"), new Card("Lounge"), new Card("Ballroom"), new Card("Dinning Room"), new Card("Hall"), new Card("Billard Room"), new Card("Library"), new Card("Study"), new Card("Greehouse") }; }
         }
         #endregion
-        #region constructor 
-        public CardsRooms()
-        {
-            this.rooms = new List<string> { "Kitchen", "Lounge", "Ballroom", "Dinning Room", "Hall", "Billard Room", "Library", "Study", "Greehouse" };
-        }
-        #endregion
+
 
     }
 }

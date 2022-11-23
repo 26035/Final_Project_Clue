@@ -8,11 +8,11 @@ namespace FinalProject
     {
         string name;
         int numberOfCards;
-        List<string> handtrail;
+        List<Card> handtrail;
         Position pos;
         GameBoard game;
-        List<string> stillSuspected;
-        List<List<string>> allHypothesis;
+        List<Card> stillSuspected;
+        List<List<Card>> allHypothesis;
         bool accusation;
         //Constructor
         public Player(string name,int player,int nbPlayers,GameBoard game)
@@ -22,7 +22,7 @@ namespace FinalProject
             else if (nbPlayers == 3) this.numberOfCards = 6;
             else if (((nbPlayers == 4 || nbPlayers == 5) && (player == 1 || player == 2)) || (nbPlayers == 5 && player == 3)) this.numberOfCards = 4;
             else this.numberOfCards = 3;
-            this.handtrail = new List<string>(numberOfCards);
+            this.handtrail = new List<Card>(numberOfCards);
             this.game = game;
             for(int i = 0; i < 24; i++)
             {
@@ -38,18 +38,18 @@ namespace FinalProject
                 }
             }
             this.stillSuspected = CardsManager.Initialization();
-            this.allHypothesis = new List<List<string>>();
+            this.allHypothesis = new List<List<Card>>();
             this.accusation = false;
 
         }
         public Player() { }
         //Properties
         public string Name => name;
-        public List<string> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
+        public List<Card> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
         public Position Pos { get { return this.pos; } }
-        public List<string> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
-        public List<List<string>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
+        public List<Card> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
+        public List<List<Card>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
         //Methods
         public void NextMove(int move, GameBoard board)
         {
@@ -124,7 +124,7 @@ namespace FinalProject
             }
             return stuck;
         }
-        public string PrintList(List<string> list)
+        public string PrintList(List<Card> list)
         {
             string res = "";
             foreach (var line in list)
