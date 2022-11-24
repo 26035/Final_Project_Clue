@@ -28,24 +28,13 @@ namespace FinalProject
             cardsWeapons.CardMurderer = cardsWeapons.FamilyCards[Program.random.Next(cardsWeapons.FamilyCards.Count)];
             cardsRooms.CardMurderer = cardsRooms.FamilyCards[Program.random.Next(cardsRooms.FamilyCards.Count)];
             List<Card> remainingCards = cardsWeapons.FamilyCards.Concat(cardsSuspects.FamilyCards.Concat(cardsRooms.FamilyCards.ToList())).ToList();
-            int a = 0;
-            for(int i =0;i<21-a;i++)
-            {
-                if(remainingCards[i].ID == cardsSuspects.CardMurderer.ID || remainingCards[i].ID == cardsWeapons.CardMurderer.ID || remainingCards[i].ID == cardsRooms.CardMurderer.ID)
-                {
-                    remainingCards.RemoveAt(i);
-                    a++;
-                    
-                }
-            }
-            /*remainingCards.RemoveAt(cardsSuspects.CardMurderer.ID-1);
-            remainingCards.RemoveAt(cardsWeapons.CardMurderer.ID-1);
-            remainingCards.RemoveAt(cardsRooms.CardMurderer.ID-1);*/
+            RemoveCardAt(remainingCards, cardsSuspects.CardMurderer);
+            RemoveCardAt(remainingCards, cardsWeapons.CardMurderer);
+            RemoveCardAt(remainingCards, cardsRooms.CardMurderer);
             return remainingCards;
         }
 
         //distributions of cards 
-
         /// <summary>
         /// for each player in param, distribution of the cards for his handtrail
         /// </summary>
@@ -59,32 +48,23 @@ namespace FinalProject
                 int index = Program.random.Next(remainingCards.Count());
                 Card card = remainingCards[index];
                 p.Handtrail.Add(card);
-                for (int j = 0; j < remainingCards.Count; j++)
-                {
-                    if (card.ID == remainingCards[j].ID)
-                    {
-                        
-                        remainingCards.RemoveAt(j);
-                    }
-                }
-                
-                for(int j =0;j<p.StillSuspected.Count;j++)
-                {
-                    if (card.ID == p.StillSuspected[j].ID)
-                    {
-                        p.StillSuspected.RemoveAt(j);
-                       
-                    }
-                }
-                
-                
+                RemoveCardAt(remainingCards, card);
+                RemoveCardAt(p.StillSuspected, card);
             }
-            
             return remainingCards;
-            
         }
 
-        
+        public static void RemoveCardAt(List<Card> ListCards, Card card)
+        {
+            for(int i = 0; i < ListCards.Count(); i++)
+            {
+                if(card.ID==ListCards[i].ID)
+                {
+                    ListCards.RemoveAt(i);
+                    break;
+                }
+            }
+        }
         //methodes tests
         public static string PrintList(List<string> list)
         {
@@ -95,16 +75,10 @@ namespace FinalProject
             }
             return res;
         }
-        /*public static override string ToString()
+        public static string ToStringMurderer()
         {
-            return "Suspects : " + PrintList(suspects) +
-                    "\nWeapons : " + PrintList(weapons) +
-                    "\nCrime scenes : " + PrintList(rooms);
+            return cardsSuspects.CardMurderer.Name + " killed the victim with a " + cardsWeapons.CardMurderer.Name + " in the " + cardsRooms.CardMurderer.Name;
         }
-        public override string ToStringMurderer()
-        {
-            return this.nameMurderer + " killed the victim with a " + this.murderWeapon + " int the " + this.crimeScene;
-        }*/
 
 
         

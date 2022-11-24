@@ -15,7 +15,7 @@ namespace FinalProject
         static void Main(string[] args)
         {
             Game();
-           /* GameBoard board = new GameBoard();
+            /*GameBoard board = new GameBoard();
             board.PrintBoard();
 
 
@@ -28,7 +28,9 @@ namespace FinalProject
                 nbPlayers = Convert.ToInt32(Console.ReadLine());
             } while (nbPlayers < 2 || nbPlayers >= 7);
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();*/
+            //List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
+            Console.WriteLine(players[0].ToString());
+            Console.WriteLine(players[1].ToString());*/
             //...jusqu'à distribution des cartes
             #region test 2
             /*GameBoard board = new GameBoard();
@@ -225,14 +227,15 @@ namespace FinalProject
                                     if (response == 0)
                                     {
                                         Console.WriteLine("the card is {0}", CardsSuspectedPresentInTheOtherPlayerHandrail[i].Name);
-                                        for (int n =0;n<runningOrder[round].StillSuspected.Count;n++)
+                                        /*for (int n =0;n<runningOrder[round].StillSuspected.Count;n++)
                                         {
                                             if(runningOrder[round].StillSuspected[n].ID ==CardsSuspectedPresentInTheOtherPlayerHandrail[i].ID)
                                             {
                                                 runningOrder[round].StillSuspected.RemoveAt(n);
                                                 break;
                                             }
-                                        }
+                                        }*/
+                                        CardsManager.RemoveCardAt(runningOrder[round].StillSuspected, CardsSuspectedPresentInTheOtherPlayerHandrail[i]);//Fonction permettant de retirer une carte à vérifier par Lauryne
                                         break;
                                     }
                                 }

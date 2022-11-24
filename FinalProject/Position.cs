@@ -31,13 +31,8 @@ namespace FinalProject
         //Methods
         public override string ToString()
         {
-            return "You are at : column = "+(this.column+1)+" row = " + (this.row+1);
+            return "You are at :  row = " + (this.row+1)+ " column = "+(this.column+1);
         }
-        public string toString()
-        {
-            return  (this.column + 1) + " ; " + (this.row + 1);
-        }
-
         public bool IsEquals(Position pos)
         {
             bool same = false;
