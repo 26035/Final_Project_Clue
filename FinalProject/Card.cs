@@ -9,13 +9,15 @@ namespace FinalProject
     class Card
     {
         protected string name;
+        protected int iD;
         //properties
-        public string Name { get { return this.name; } }
-
+        public string Name => this.name;
+        public int ID => this.iD;
         //Constructor 
-        public Card(string name)
+        public Card(string name, int ID)
         {
             this.name = name;
+            this.iD = ID;
         }
     }
 }

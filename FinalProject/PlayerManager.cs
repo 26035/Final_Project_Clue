@@ -30,7 +30,7 @@ namespace FinalProject
                     Console.WriteLine("What's your piece player {0} (0 : Col Mustard, 1 : Mr Green, 2 : Prof Plum, 3 : Mrs Blue, 4 : Miss Scarlet, 5 : Mrs White)?", round);
                     piece = Convert.ToInt32(Console.ReadLine());
                 } while (piece<0||piece>5);
-                Player p = new Player(CardsManager.cardsSuspects.AllCards[piece].Name, round, nbPlayers, board);
+                Player p = new Player(CardsManager.cardsSuspects.FamilyCards[piece].Name, round, nbPlayers, board);
                 remainingCards = CardsManager.CardsDistribution(p, remainingCards);
                 players.Add(p);
                 round++;
@@ -44,33 +44,33 @@ namespace FinalProject
             int nbOfTheRoom;
             do
             {
-                Console.WriteLine("In which room do you want to go? \n 0: Billard Room " +
-                    "\n1: Kitchen" +
-                    "\n2: Greenhouse" +
-                    "\n3: Lounge" +
-                    "\n4: Hall" +
-                    "\n5: Library" +
-                    "\n6: Study" +
-                    "\n7: Dinning Room" +
-                    "\n8: Ball Room");
+                Console.WriteLine("In which room do you want to go? \n 1: Billard Room " +
+                    "\n2: Kitchen" +
+                    "\n3: Greenhouse" +
+                    "\n4: Lounge" +
+                    "\n5: Hall" +
+                    "\n6: Library" +
+                    "\n7: Study" +
+                    "\n8: Dinning Room" +
+                    "\n9: Ball Room");
                 nbOfTheRoom = Convert.ToInt32(Console.ReadLine());
-            } while (nbOfTheRoom < 0 || nbOfTheRoom >= 9);
+            } while (nbOfTheRoom < 1 || nbOfTheRoom >= 10);
             int position;
             switch (nbOfTheRoom)
             {
-                case 0:
-                    nextPosition = board.Rooms[0][0];
-                    break;
                 case 1:
-                    nextPosition = board.Rooms[1][0];
+                    nextPosition = board.PositionRooms[0][0];
                     break;
                 case 2:
-                    nextPosition = board.Rooms[2][0];
+                    nextPosition = board.PositionRooms[1][0];
                     break;
                 case 3:
-                    nextPosition = board.Rooms[3][0];
+                    nextPosition = board.PositionRooms[2][0];
                     break;
                 case 4:
+                    nextPosition = board.PositionRooms[3][0];
+                    break;
+                case 5:
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
@@ -79,9 +79,9 @@ namespace FinalProject
                             "\n2: (7,14)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 3);
-                    nextPosition = board.Rooms[4][position];
+                    nextPosition = board.PositionRooms[4][position];
                     break;
-                case 5:
+                case 6:
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
@@ -89,9 +89,9 @@ namespace FinalProject
                             "\n1: (11,3)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 2);
-                    nextPosition = board.Rooms[5][position];
+                    nextPosition = board.PositionRooms[5][position];
                     break;
-                case 6:
+                case 7:
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
@@ -99,9 +99,9 @@ namespace FinalProject
                             "\n1: (16,6)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 2);
-                    nextPosition = board.Rooms[6][position];
+                    nextPosition = board.PositionRooms[6][position];
                     break;
-                case 7:
+                case 8:
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
@@ -109,9 +109,9 @@ namespace FinalProject
                             "\n1: (13,17)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 2);
-                    nextPosition = board.Rooms[7][position];
+                    nextPosition = board.PositionRooms[7][position];
                     break;
-                case 8:
+                case 9:
                     do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
@@ -121,7 +121,7 @@ namespace FinalProject
                             "\n3: (20,16)");
                         position = Convert.ToInt32(Console.ReadLine());
                     } while (position < 0 || position >= 4);
-                    nextPosition = board.Rooms[8][position];
+                    nextPosition = board.PositionRooms[8][position];
                     break;
 
             }

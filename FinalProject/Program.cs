@@ -14,7 +14,70 @@ namespace FinalProject
         public static int nbAccusations = 0;
         static void Main(string[] args)
         {
-            Game();
+            //Game();
+            GameBoard board = new GameBoard();
+            board.PrintBoard();
+
+
+            //Initialisation du jeu...
+            List<Card> remainingCards = CardsManager.Initialization();
+            int nbPlayers = 0;
+            do
+            {
+                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
+                nbPlayers = Convert.ToInt32(Console.ReadLine());
+            } while (nbPlayers < 2 || nbPlayers >= 7);
+            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
+            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
+            //...jusqu'à distribution des cartes
+            #region test 2
+            /*GameBoard board = new GameBoard();
+            board.PrintBoard();
+            List<Card> remainingCards = CardsManager.Initialization();
+            int nbPlayers = 0;
+            do
+            {
+                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
+                nbPlayers = Convert.ToInt32(Console.ReadLine());
+            } while (nbPlayers < 2 || nbPlayers >= 7);
+            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
+            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
+            Console.WriteLine(Cards.PrintList(remainingCards));
+            Console.WriteLine("handrail 1: " + Cards.PrintList(runningOrder[0].Handtrail) + "\n handrail 2 : " + Cards.PrintList(runningOrder[1].Handtrail));*/
+            #endregion
+            /*Console.WriteLine(Cards.PrintList(CardsManager.Initialization()));
+            Console.WriteLine(Cards.PrintList(CardsManager.AllCards));*/
+            #region test1
+            /*List<Card> CardsSuspectedByTheCurrentPlayer = new List<Card>();
+            //suspect person of the current player
+            Console.WriteLine("which person do you suspected?Tape the ID of the card that you choose");
+            Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
+            int cardSuspectHypothesis = Convert.ToInt32(Console.ReadLine());
+            //suspect weapon of the current player
+            Console.WriteLine("which weapon do you suspected?");
+            int cardWeaponHypothesis = Convert.ToInt32(Console.ReadLine());
+            var r = from suspect in CardsManager.AllCards
+                    where suspect.ID == cardSuspectHypothesis || suspect.ID == cardWeaponHypothesis
+                    select suspect;
+            foreach (var i in r)
+            {
+                CardsSuspectedByTheCurrentPlayer.Add(i);
+            }
+            foreach (var i in CardsSuspectedByTheCurrentPlayer)
+            {
+                Console.WriteLine(i.Name);
+            }*/
+            #endregion
+            Console.ReadKey();
+            /*Console.WriteLine("which person do you suspected?Tape the ID of the card that you choose");
+            Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
+            int cardSuspected = Convert.ToInt32(Console.ReadLine());
+            var r = from suspect in CardsManager.cardsSuspects.FamilyCards
+                    where suspect.ID == cardSuspected
+                    select suspect;
+            r.Select(0);*/
+
+            //CardsSuspectedByTheCurrentPlayer.Add();
             //test
             /*GameBoard board = new GameBoard();
             List<Card> remainingCards = CardsManager.Initialization();
@@ -79,7 +142,7 @@ namespace FinalProject
                 Console.ReadKey();
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
-                Console.WriteLine(resultDices);
+                Console.WriteLine("you obtain a" + resultDices + "to your thrown");
                 //if 66 or 11, player can choose his room 
                 if(((dices.DieOne ==dices.DieTwo)&& (dices.DieOne==6))||((dices.DieOne==dices.DieTwo)&&(dices.DieOne==1)))
                 {
@@ -87,7 +150,7 @@ namespace FinalProject
                 }
                 else { runningOrder[round].NextMove(resultDices, board); }
                 bool insideARoom = board.InsideRoom(runningOrder[round].Pos);
-                (insideARoom ==true)
+                if (insideARoom ==true)
                 {
                     Console.WriteLine(runningOrder[round].ToString());
                     int choice=0;
@@ -96,51 +159,58 @@ namespace FinalProject
                         Console.WriteLine("Do you want to do a \n1: An hypothesis \n2: An accusation");
                         choice = Convert.ToInt32(Console.ReadLine());
                     } while (choice < 1 || choice >= 3);
-                    List<string> CardsSuspectedByTheCurrentPlayer = new List<string>();
-                    List<string> CardsSuspectedPresentInTheOtherPlayerHandrail = new List<string>();
+                    List<Card> CardsSuspectedByTheCurrentPlayer = new List<Card>();
+                    List<Card> CardsSuspectedPresentInTheOtherPlayerHandrail = new List<Card>();
                     if(choice ==1)
                     {
                         //cards Suspected by the current player
                         //find the room of the player
                         for(int i =0;i<9;i++)
                         {
-                            foreach(var j in board.Rooms[i])
+                            foreach(var j in board.PositionRooms[i])
                             {
                                 if(runningOrder[round].Pos == j)
                                 {
-                                    string currentRoom = board.NameOfTheRoom[i];
+                                    Card currentRoom = CardsManager.cardsRooms.FamilyCards[i + 1];
                                     CardsSuspectedByTheCurrentPlayer.Add(currentRoom);
                                     break;
                                 }
                             }
                         }
                         //suspect person of the current player
-                        Console.WriteLine("which person do you suspected?");
-                        string cardSuspected = Console.ReadLine();
-                        CardsSuspectedByTheCurrentPlayer.Add(cardSuspected);
+                        Console.WriteLine("which person do you suspected?Tape the ID of the card that you choose");
+                        Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
+                        int cardSuspectHypothesis = Convert.ToInt32(Console.ReadLine());
                         //suspect weapon of the current player
                         Console.WriteLine("which weapon do you suspected?");
-                        cardSuspected = Console.ReadLine();
-                        CardsSuspectedByTheCurrentPlayer.Add(cardSuspected);
-
+                        Console.WriteLine(Cards.PrintList(CardsManager.cardsWeapons.FamilyCards));
+                        int cardWeaponHypothesis = Convert.ToInt32 (Console.ReadLine());
+                        //creation of a list of hypothesis from the selection of the current player
+                        var r = from suspect in CardsManager.AllCards
+                                where suspect.ID == cardSuspectHypothesis || suspect.ID ==cardWeaponHypothesis
+                                select suspect;
+                        foreach (var i in r)
+                        {
+                            CardsSuspectedByTheCurrentPlayer.Add(i);
+                        }
                         //search of the cards in handrail of each player to find the suspect card to show at the current player
                         foreach(Player p in players)
                         {
                             if(p != runningOrder[round])
                             {
-                                foreach(string nameCards in p.Handtrail)
+                                foreach(Card card in p.Handtrail)
                                 {
-                                    foreach (string hypothesesCards in CardsSuspectedByTheCurrentPlayer)
+                                    foreach (Card hypothesesCards in CardsSuspectedByTheCurrentPlayer)
                                     {
-                                        if (nameCards == hypothesesCards)
+                                        if (card.ID == hypothesesCards.ID)
                                         {
                                             CardsSuspectedPresentInTheOtherPlayerHandrail.Add(hypothesesCards);
                                         }
                                     }
                                 }
-                                foreach(string card in CardsSuspectedPresentInTheOtherPlayerHandrail)
+                                foreach(Card card in CardsSuspectedPresentInTheOtherPlayerHandrail)
                                 {
-                                    Console.WriteLine(card + " ");
+                                    Console.WriteLine(card.Name + "-" + card.ID);
                                 }
                                 int nbOfCardsSuspectedInYourPossession = CardsSuspectedPresentInTheOtherPlayerHandrail.Count;
                                 int response = 0;
@@ -157,7 +227,7 @@ namespace FinalProject
                                         Console.WriteLine("the card is {0}", CardsSuspectedPresentInTheOtherPlayerHandrail[i]);
                                         for (int n =0;n<runningOrder[round].StillSuspected.Count;n++)
                                         {
-                                            if(runningOrder[round].StillSuspected[n] ==CardsSuspectedPresentInTheOtherPlayerHandrail[i])
+                                            if(runningOrder[round].StillSuspected[n].ID ==CardsSuspectedPresentInTheOtherPlayerHandrail[i].ID)
                                             {
                                                 runningOrder[round].StillSuspected.RemoveAt(n);
                                                 break;
@@ -166,6 +236,7 @@ namespace FinalProject
                                         break;
                                     }
                                 }
+                                Console.WriteLine(Cards.PrintList(runningOrder[round].StillSuspected));
                             }
                         }
                     }

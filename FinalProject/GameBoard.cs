@@ -11,8 +11,7 @@ namespace FinalProject
     {
         //Attribut
         Square[,] board;
-        List<List<Position>> rooms;
-        List<string> nameOfTheRoom; 
+        List<List<Position>> positionRooms;
         //Constructor
         public GameBoard()
         {
@@ -26,9 +25,8 @@ namespace FinalProject
                     this.board[i, j] = new Square(game[i, j], room[i, j]);
                 }
             }
-            rooms = new List<List<Position>>();
+            positionRooms = new List<List<Position>>();
             InitializationRooms();
-            nameOfTheRoom = new List<string> { "billardRoom", "kitchen", "greenhouse", "lounge", "hall", "library", "study", "dinningRoom", "ballRoom" };
            
         }
         //Properties
@@ -43,8 +41,7 @@ namespace FinalProject
                 board = value;
             }
         }
-        public List<List<Position>> Rooms => this.rooms;
-        public List<string> NameOfTheRoom => this.nameOfTheRoom;
+        public List<List<Position>> PositionRooms => this.positionRooms;
 
         //Methods
         public char[,] ReadFile(string fileName)
@@ -66,15 +63,15 @@ namespace FinalProject
         }
         public void InitializationRooms()
         {
-            rooms.Add(new List<Position> { new Position(3, 5) });
-            rooms.Add(new List<Position> { new Position(4, 18) });
-            rooms.Add(new List<Position> { new Position(20, 5) });
-            rooms.Add(new List<Position> { new Position(18, 20) });
-            rooms.Add(new List<Position> { new Position(4, 9), new Position(5, 12), new Position(6, 13) });
-            rooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });
-            rooms.Add(new List<Position> { new Position(12, 2), new Position(15, 5) });
-            rooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
-            rooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
+            positionRooms.Add(new List<Position> { new Position(3, 5) });
+            positionRooms.Add(new List<Position> { new Position(4, 18) });
+            positionRooms.Add(new List<Position> { new Position(20, 5) });
+            positionRooms.Add(new List<Position> { new Position(18, 20) });
+            positionRooms.Add(new List<Position> { new Position(4, 9), new Position(5, 12), new Position(6, 13) });
+            positionRooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });
+            positionRooms.Add(new List<Position> { new Position(12, 2), new Position(15, 5) });
+            positionRooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
+            positionRooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
         }
         
         public void PrintBoard()

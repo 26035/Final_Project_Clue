@@ -10,10 +10,12 @@ namespace FinalProject
     {
 
         #region properties
-        public override List<Card> AllCards
+        public override List<Card> FamilyCards
         {
-            get { return new List<Card> { new Card("Col Mustard"), new Card("Mr Green"), new Card("Prof Plum"), new Card("Mrs Blue"), new Card("Miss Scarlet"), new Card("Mrs White") }; }
+            get { return new List<Card> { new Card("Col Mustard",10), new Card("Mr Green",11), new Card("Prof Plum",12), new Card("Mrs Blue",13), new Card("Miss Scarlet",14), new Card("Mrs White",15) }; }
         }
+        public override Card CardMurderer { get => this.cardMurderer; set => cardMurderer=value; }
+
 
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 
 namespace FinalProject
 {
@@ -37,7 +38,7 @@ namespace FinalProject
                     
                 }
             }
-            this.stillSuspected = CardsManager.Initialization();
+            this.stillSuspected = CardsManager.cardsSuspects.FamilyCards.Concat(CardsManager.cardsWeapons.FamilyCards.Concat(CardsManager.cardsRooms.FamilyCards.ToList())).ToList();
             this.allHypothesis = new List<List<Card>>();
             this.accusation = false;
 
@@ -129,7 +130,7 @@ namespace FinalProject
             string res = "";
             foreach (var line in list)
             {
-                res = res + line + " / ";
+                res = res + line.Name + " / ";
             }
             return res;
         }
