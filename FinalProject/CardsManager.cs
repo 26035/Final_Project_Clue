@@ -63,11 +63,11 @@ namespace FinalProject
                 {
                     if (card.ID == remainingCards[j].ID)
                     {
-                        //p.StillSuspected.RemoveAt(j);
+                        
                         remainingCards.RemoveAt(j);
                     }
                 }
-                //Console.WriteLine(p.StillSuspected.Count);
+                
                 for(int j =0;j<p.StillSuspected.Count;j++)
                 {
                     if (card.ID == p.StillSuspected[j].ID)
@@ -77,13 +77,9 @@ namespace FinalProject
                     }
                 }
                 
-                /*p.StillSuspected.RemoveAt(card.ID - 1 - p.NumberOfCards);
-                remainingCards.RemoveAt(card.ID - 1 - p.NumberOfCards);*/
+                
             }
-            foreach (var i in p.StillSuspected)
-            {
-                Console.WriteLine(i.Name + "-" + i.ID);
-            }
+            
             return remainingCards;
             
         }

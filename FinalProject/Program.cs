@@ -14,8 +14,8 @@ namespace FinalProject
         public static int nbAccusations = 0;
         static void Main(string[] args)
         {
-            //Game();
-            GameBoard board = new GameBoard();
+            Game();
+           /* GameBoard board = new GameBoard();
             board.PrintBoard();
 
 
@@ -28,7 +28,7 @@ namespace FinalProject
                 nbPlayers = Convert.ToInt32(Console.ReadLine());
             } while (nbPlayers < 2 || nbPlayers >= 7);
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
+            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();*/
             //...jusqu'à distribution des cartes
             #region test 2
             /*GameBoard board = new GameBoard();
@@ -208,10 +208,10 @@ namespace FinalProject
                                         }
                                     }
                                 }
-                                foreach(Card card in CardsSuspectedPresentInTheOtherPlayerHandrail)
+                                /*foreach(Card card in CardsSuspectedPresentInTheOtherPlayerHandrail)
                                 {
                                     Console.WriteLine(card.Name + "-" + card.ID);
-                                }
+                                }*/
                                 int nbOfCardsSuspectedInYourPossession = CardsSuspectedPresentInTheOtherPlayerHandrail.Count;
                                 int response = 0;
                                 for (int i = 0; i < nbOfCardsSuspectedInYourPossession; i++)
@@ -219,12 +219,12 @@ namespace FinalProject
 
                                     do
                                     {
-                                        Console.WriteLine("Do you want to show the card {0}? \n0:yes \n1:no", CardsSuspectedPresentInTheOtherPlayerHandrail[i]);
+                                        Console.WriteLine("Do you want to show the card {0}? \n0:yes \n1:no", CardsSuspectedPresentInTheOtherPlayerHandrail[i].Name);
                                         response = Convert.ToInt32(Console.ReadLine());
                                     } while (response < 0 || response >= 2);
                                     if (response == 0)
                                     {
-                                        Console.WriteLine("the card is {0}", CardsSuspectedPresentInTheOtherPlayerHandrail[i]);
+                                        Console.WriteLine("the card is {0}", CardsSuspectedPresentInTheOtherPlayerHandrail[i].Name);
                                         for (int n =0;n<runningOrder[round].StillSuspected.Count;n++)
                                         {
                                             if(runningOrder[round].StillSuspected[n].ID ==CardsSuspectedPresentInTheOtherPlayerHandrail[i].ID)
