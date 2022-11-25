@@ -142,11 +142,12 @@ namespace FinalProject
                 Console.WriteLine("it's up to {0}", runningOrder[round].Name);
                 Console.WriteLine("press enter to continue");
                 Console.ReadKey();
+                Console.Clear();
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
-                Console.WriteLine("you obtain a" + resultDices + "to your thrown");
+                Console.WriteLine("you obtain a " + resultDices + " to your thrown");
                 //if 66 or 11, player can choose his room 
-                if(((dices.DieOne ==dices.DieTwo)&& (dices.DieOne==6))||((dices.DieOne==dices.DieTwo)&&(dices.DieOne==1)))
+                if (((dices.DieOne == dices.DieTwo) && (dices.DieOne == 6)) || ((dices.DieOne == dices.DieTwo) && (dices.DieOne == 1)))
                 {
                     PlayerManager.ChooseRoom(runningOrder[round], board);
                 }
@@ -171,10 +172,11 @@ namespace FinalProject
                         {
                             foreach(var j in board.PositionRooms[i])
                             {
-                                if(runningOrder[round].Pos == j)
+                                if (runningOrder[round].Pos.IsEquals(j))
                                 {
-                                    Card currentRoom = CardsManager.cardsRooms.FamilyCards[i + 1];
+                                    Card currentRoom = CardsManager.cardsRooms.FamilyCards[i];
                                     CardsSuspectedByTheCurrentPlayer.Add(currentRoom);
+                                    //CardsSuspectedByTheCurrentPlayer.Add(j);
                                     break;
                                 }
                             }
@@ -195,6 +197,7 @@ namespace FinalProject
                         {
                             CardsSuspectedByTheCurrentPlayer.Add(i);
                         }
+                        Console.WriteLine(Cards.PrintList(CardsSuspectedByTheCurrentPlayer));
                         //search of the cards in handrail of each player to find the suspect card to show at the current player
                         foreach(Player p in players)
                         {
@@ -241,6 +244,16 @@ namespace FinalProject
                                 }
                                 Console.WriteLine(Cards.PrintList(runningOrder[round].StillSuspected));
                             }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Are you sure to be in the room of the murder? \n1: yes \n2: no");
+                        int response = Convert.ToInt32(Console.ReadLine());
+                        //List<Card> Accusation = 
+                        if(response ==1)
+                        {
+
                         }
                     }
                     

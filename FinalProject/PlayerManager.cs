@@ -125,7 +125,9 @@ namespace FinalProject
                     break;
 
             }
+            
             board.MarkMove(currentPos, nextPosition);
+            p.Pos = nextPosition;
         }
 
     }

@@ -63,15 +63,22 @@ namespace FinalProject
         }
         public void InitializationRooms()
         {
-            positionRooms.Add(new List<Position> { new Position(3, 5) });
             positionRooms.Add(new List<Position> { new Position(4, 18) });
-            positionRooms.Add(new List<Position> { new Position(20, 5) });
             positionRooms.Add(new List<Position> { new Position(18, 20) });
+            positionRooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
+            positionRooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
             positionRooms.Add(new List<Position> { new Position(4, 9), new Position(5, 12), new Position(6, 13) });
+            positionRooms.Add(new List<Position> { new Position(3, 5) });
             positionRooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });
             positionRooms.Add(new List<Position> { new Position(12, 2), new Position(15, 5) });
-            positionRooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
-            positionRooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
+            positionRooms.Add(new List<Position> { new Position(20, 5) });
+
+            
+            
+            
+
+            
+            
         }
         
         public void PrintBoard()
@@ -239,25 +246,28 @@ namespace FinalProject
             Position newRoom = new Position();
             do
             {
-                Console.WriteLine("Where do you want to go? (1 : Billard Room, 2 : Kitchen, 3 : Greenhouse, 4 : Lounge");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                switch (choice)
+                int choice;
+                do
                 {
-                    case 1:
-                        newRoom = new Position(0, 6);
-                        break;
-                    case 2:
-                        newRoom = new Position(0, 17);
-                        break;
-                    case 3:
-                        newRoom = new Position(23, 6);
-                        break;
-                    case 4:
-                        newRoom = new Position(23, 18);
-                        break;
-                    default:
-                        break;
-                }
+                    Console.WriteLine("Where do you want to go? (6: Billard Room, 1: Kitchen,  9: Greenhouse, 2: Lounge)");
+                    choice = Convert.ToInt32(Console.ReadLine());
+                } while (choice != 6 && choice != 1 && choice != 9 && choice != 2);
+                switch (choice)
+                    {
+                        case 6:
+                            newRoom = new Position(0, 6);
+                            break;
+                        case 1:
+                            newRoom = new Position(0, 17);
+                            break;
+                        case 9:
+                            newRoom = new Position(23, 6);
+                            break;
+                        case 2:
+                            newRoom = new Position(23, 18);
+                            break;
+                    }
+                
                 if (IsOccupied(newRoom) == true)
                 {
                     Console.WriteLine("You can't go inside the room : it's occupied");

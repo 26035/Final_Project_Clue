@@ -48,7 +48,7 @@ namespace FinalProject
         public string Name => name;
         public List<Card> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
-        public Position Pos { get { return this.pos; } }
+        public Position Pos { get { return this.pos; }set { this.pos = value; } }
         public List<Card> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
         public List<List<Card>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
         //Methods
