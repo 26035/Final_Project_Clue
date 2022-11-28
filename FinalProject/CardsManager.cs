@@ -80,7 +80,20 @@ namespace FinalProject
             return cardsSuspects.CardMurderer.Name + " killed the victim with a " + cardsWeapons.CardMurderer.Name + " in the " + cardsRooms.CardMurderer.Name;
         }
 
-
+        public static bool ComparisonAccusationAndMurder(List<Card> Accusation)
+        {
+            bool rightAccusation = true;
+            for(int i =0;i<3;i++)
+            {
+                if(Accusation[0].ID!=CardsManager.cardsRooms.CardMurderer.ID || 
+                    Accusation[1].ID!= CardsManager.cardsSuspects.CardMurderer.ID|| 
+                    Accusation[2].ID!= CardsManager.cardsWeapons.CardMurderer.ID)
+                {
+                    rightAccusation = false;
+                }
+            }
+            return rightAccusation;
+        }
         
         
     }

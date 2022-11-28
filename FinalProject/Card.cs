@@ -14,7 +14,7 @@ namespace FinalProject
         public string Name => this.name;
         public int ID => this.iD;
         //Constructor 
-        public Card(string name, int ID)
+        public Card(string name="", int ID=-1)
         {
             this.name = name;
             this.iD = ID;

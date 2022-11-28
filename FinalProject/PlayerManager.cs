@@ -22,10 +22,32 @@ namespace FinalProject
         {
             int round = 1;
             List<Player> players = new List<Player>();
-            int piece;
+            List<Card> piece = new List<Card>(CardsManager.cardsSuspects.FamilyCards);
+            //int piece;
             do
             {
+                bool available = false;
+                int choice = 0;
+                int indice;
                 do
+                {
+                    indice = 10;
+                    Console.WriteLine("What's your piece player {0}" + Cards.PrintList(piece), round);
+                    choice = Convert.ToInt32(Console.ReadLine());
+                    for (int i =0;i<piece.Count;i++)
+                    {
+                        if (piece[i].ID == choice) { available = true;
+                            indice = i;
+                            break; }
+                    }
+                    if(available == false) { Console.WriteLine("Warning ! The player that you want has already been selected"); }
+                } while (available == false);
+                piece.RemoveAt(indice);
+                Player p = new Player(CardsManager.cardsSuspects.FamilyCards[choice - 10].Name, round, nbPlayers, board);
+                remainingCards = CardsManager.CardsDistribution(p, remainingCards);
+                players.Add(p);
+                round++;
+                /*do
                 {
                     Console.WriteLine("What's your piece player {0} (0 : Col Mustard, 1 : Mr Green, 2 : Prof Plum, 3 : Mrs Blue, 4 : Miss Scarlet, 5 : Mrs White)?", round);
                     piece = Convert.ToInt32(Console.ReadLine());
@@ -33,7 +55,7 @@ namespace FinalProject
                 Player p = new Player(CardsManager.cardsSuspects.FamilyCards[piece].Name, round, nbPlayers, board);
                 remainingCards = CardsManager.CardsDistribution(p, remainingCards);
                 players.Add(p);
-                round++;
+                round++;*/
             } while (round <= nbPlayers);
             return players;
         }

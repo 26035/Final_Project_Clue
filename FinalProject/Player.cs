@@ -51,6 +51,7 @@ namespace FinalProject
         public Position Pos { get { return this.pos; }set { this.pos = value; } }
         public List<Card> StillSuspected { get { return this.stillSuspected; } set { this.stillSuspected = value; } }
         public List<List<Card>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
+        public bool Accusation { get { return this.accusation; } set { this.accusation = value; } }
         //Methods
         public void NextMove(int move, GameBoard board)
         {
