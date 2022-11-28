@@ -280,6 +280,26 @@ namespace FinalProject
             return newRoom;
            
         }
+        public void DeleteMark(Position pos)
+        {
+            if ((board[pos.Row, pos.Column].Path == 'Y' ||
+                board[pos.Row, pos.Column].Path == 'G' ||
+                board[pos.Row, pos.Column].Path == 'P' ||
+                board[pos.Row, pos.Column].Path == 'B' ||
+                board[pos.Row, pos.Column].Path == 'R' ||
+                board[pos.Row, pos.Column].Path == 'W') && board[pos.Row, pos.Column].RoomName=='?'){
+                this.board[pos.Row, pos.Column].Path = '.';
+            }
+            if ((board[pos.Row, pos.Column].Path == 'Y' ||
+                board[pos.Row, pos.Column].Path == 'G' ||
+                board[pos.Row, pos.Column].Path == 'P' ||
+                board[pos.Row, pos.Column].Path == 'B' ||
+                board[pos.Row, pos.Column].Path == 'R' ||
+                board[pos.Row, pos.Column].Path == 'W') && board[pos.Row, pos.Column].RoomName != '?')
+            {
+                this.board[pos.Row, pos.Column].Path = '_';
+            }
+        }
         public override string ToString()
         {
             string test = "";
