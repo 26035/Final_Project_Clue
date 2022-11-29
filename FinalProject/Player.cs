@@ -9,6 +9,7 @@ namespace FinalProject
     {
         string name;
         int numberOfCards;
+        int id;
         List<Card> handtrail;
         Position pos;
         GameBoard game;
@@ -46,6 +47,7 @@ namespace FinalProject
         public Player() { }
         //Properties
         public string Name => name;
+        public int Id => id;
         public List<Card> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
         public Position Pos { get { return this.pos; }set { this.pos = value; } }
