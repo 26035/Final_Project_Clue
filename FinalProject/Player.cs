@@ -13,7 +13,6 @@ namespace FinalProject
         int id;
         List<Card> handtrail;
         Position pos;
-        GameBoard game;
         List<Card> stillSuspected;
         List<List<Card>> allHypothesis;
         bool accusation;
@@ -27,7 +26,6 @@ namespace FinalProject
             else if (((nbPlayers == 4 || nbPlayers == 5) && (player == 1 || player == 2)) || (nbPlayers == 5 && player == 3)) this.numberOfCards = 4;
             else this.numberOfCards = 3;
             this.handtrail = new List<Card>(numberOfCards);
-            this.game = game;
             for(int i = 0; i < 24; i++)
             {
                 for(int j=0;j<24;j++)
@@ -115,12 +113,17 @@ namespace FinalProject
         public List<List<Card>> AllHypothesis { get { return this.allHypothesis; } set { this.allHypothesis = value; } }
         public bool Accusation { get { return this.accusation; } set { this.accusation = value; } }
         //Methods
-        public void NextMove(int move, GameBoard board)
+        /// <summary>
+        /// Used to move the player's pawn using the result of his die rolls
+        /// </summary>
+        /// <param name="move">integer that represents the result of his rolls die</param>
+        /// <param name="board">represents the board</param>
+        public void NextMove(int move, GameBoard game)
         {
             char direction;
             int choice;
             Position next=new Position();//Voir constructeur vide
-            if (Stuck()==true)
+            if (Stuck(game)==true)
             {
                 Console.WriteLine("You're stuck ! You have to wait for the next round to move");
             }
@@ -129,7 +132,7 @@ namespace FinalProject
                
                 for (int i = 0; i < move; i++)
                 {
-                    board.PrintBoard();
+                    game.PrintBoard();
                     do
                     {
 
@@ -152,9 +155,14 @@ namespace FinalProject
                         Console.WriteLine("You're in a room");
                         if (game.IsSecretPassage(this.pos) == true)
                         {
-                            board.PrintBoard();
-                            Console.WriteLine("Do you want to use it? (1: yes, 2 : no)");
-                            choice = Convert.ToInt32(Console.ReadLine());
+                            game.PrintBoard();
+                            choice = Program.VerificationInputConsole("There is a secret passage in this room\nDo you want to use it? (1: yes, 2 : no)",1,2);
+                            /*do
+                            {
+                                Console.WriteLine("There is a secret passage in this room");
+                                Console.WriteLine("Do you want to use it? (1: yes, 2 : no)");
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            } while (choice != 1 && choice != 2);*/
                             if (choice == 1)
                             {
                                 next = game.MoveSecretPassage(this.pos);
@@ -169,11 +177,15 @@ namespace FinalProject
                 }
             }
             Console.Clear();
-            board.PrintBoard();
+            game.PrintBoard();
 
         }
-        
-        public bool Stuck()
+        /// <summary>
+        /// Used to know if the square around the player are avaiblable to him to move
+        /// </summary>
+        /// <param name="game">represents game board</param>
+        /// <returns>bool that represent the status of the player (stuck or free to move)</returns>
+        public bool Stuck(GameBoard game)
         {
             bool stuck = false;
             Position up = new Position(this.pos.Row - 1, this.pos.Column);
@@ -188,6 +200,11 @@ namespace FinalProject
             }
             return stuck;
         }
+        /// <summary>
+        /// Used to print a list of Card
+        /// </summary>
+        /// <param name="list">list of Card</param>
+        /// <returns>string that represent used to print the list</returns>
         public string PrintList(List<Card> list)
         {
             string res = "";

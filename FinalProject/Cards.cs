@@ -8,10 +8,13 @@ namespace FinalProject
 {
     abstract class Cards
     {
+        //Attributes
         protected List<Card> familyCards;
         protected Card cardMurderer;
+        //Properties
         public abstract List<Card> FamilyCards { get; }
         public abstract Card CardMurderer { get; set; }
+        //Methods
         public override string ToString()
         {
             return PrintList(familyCards) + "\nmurderer " + CardMurderer;

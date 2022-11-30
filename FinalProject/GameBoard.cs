@@ -10,7 +10,7 @@ namespace FinalProject
     class GameBoard
     {
         //Attribut
-        Square[,] board;
+        Square[,] board; 
         List<List<Position>> positionRooms;
         //Constructor
         public GameBoard()
@@ -59,6 +59,11 @@ namespace FinalProject
         public List<List<Position>> PositionRooms => this.positionRooms;
 
         //Methods
+        /// <summary>
+        /// Used to create the board game by reading a predefined file
+        /// </summary>
+        /// <param name="fileName">string that represents the file's name</param>
+        /// <returns>matrix of caractere created by reading the file</returns>
         public char[,] ReadFile(string fileName)
         {
             char[,] file = new char[24, 24];
@@ -76,6 +81,9 @@ namespace FinalProject
             }
             return file;
         }
+        /// <summary>
+        /// Used to initializes the list of each door's postion for every room
+        /// </summary>
         public void InitializationRooms()
         {
             positionRooms.Add(new List<Position> { new Position(4, 18) });
@@ -87,15 +95,10 @@ namespace FinalProject
             positionRooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });
             positionRooms.Add(new List<Position> { new Position(12, 2), new Position(15, 5) });
             positionRooms.Add(new List<Position> { new Position(20, 5) });
-
-            
-            
-            
-
-            
-            
         }
-        
+        /// <summary>
+        /// Used to print the game board 
+        /// </summary>
         public void PrintBoard()
         {
             Console.BackgroundColor = ConsoleColor.White;
@@ -189,17 +192,25 @@ namespace FinalProject
             }
             Console.ResetColor();
         }
-
+        /// <summary>
+        /// Used to know if there is a secret passage in the room
+        /// </summary>
+        /// <param name="pos">position of the player's pawn</param>
+        /// <returns>bool that represents the status of the room (with secret passage or mot) </returns>
         public bool IsSecretPassage(Position pos)
         {
             bool res = false;
             if (pos.IsEquals(new Position(3, 5)) == true || pos.IsEquals(new Position(20, 5)) == true || pos.IsEquals(new Position(4, 18)) == true || pos.IsEquals(new Position(18, 20)) == true)
             {
                 res = true;
-                Console.WriteLine("There is a secret passage in this room");
             }
             return res;
         }
+        /// <summary>
+        /// Used to know if the square is occupied by another player
+        /// </summary>
+        /// <param name="pos">position of the player</param>
+        /// <returns>bool that represents the status of the square (occupied or not)</returns>
         public bool IsOccupied(Position pos)
         {
             bool occupied = false;
@@ -210,6 +221,11 @@ namespace FinalProject
             }
             return occupied;
         }
+        /// <summary>
+        /// Used to know if the square is a wall or stairs
+        /// </summary>
+        /// <param name="pos">position of the player</param>
+        /// <returns>bool that represents the status of the square (path or not)</returns>
         public bool IsWallOrStairs(Position pos)
         {
             bool blocked = false;
@@ -219,6 +235,11 @@ namespace FinalProject
             }
             return blocked;
         }
+        /// <summary>
+        /// Used to know if the square is a door of a room
+        /// </summary>
+        /// <param name="pos">position of the player</param>
+        /// <returns>bool that represents the status of the square</returns>
         public bool InsideRoom(Position pos)
         {
             bool inside = false;
@@ -228,9 +249,16 @@ namespace FinalProject
             }
             return inside;
         }
+        /// <summary>
+        /// Function with lambda expression that permits to know if the position if outside the game board
+        /// </summary>
 
         public Func<Position, bool> ValidPos = (pos) => (pos.Row<24)&&(pos.Row>=0)&& (pos.Column < 24)&&(pos.Column>=0);
-        
+        /// <summary>
+        /// Used to mark the player's pawn by changing the matrix of the game board
+        /// </summary>
+        /// <param name="currentPos">current position of the player </param>
+        /// <param name="futurePos">future position of the player </param>
         public void MarkMove(Position currentPos, Position futurePos)
         {
             this.board[futurePos.Row, futurePos.Column].Path = this.board[currentPos.Row, currentPos.Column].Path;
@@ -256,6 +284,11 @@ namespace FinalProject
             
             
         }
+        /// <summary>
+        /// Used by player to move from a room to another by using secret passage
+        /// </summary>
+        /// <param name="current">
+        /// <returns>position of the player</returns>
         public Position MoveSecretPassage(Position current)
         {
             Position newRoom = new Position();
@@ -295,6 +328,10 @@ namespace FinalProject
             return newRoom;
            
         }
+        /// <summary>
+        /// Used to delete the mark of the pawn's player once he has made a false accusation
+        /// </summary>
+        /// <param name="pos">last position of the player</param></param>
         public void DeleteMark(Position pos)
         {
             if ((board[pos.Row, pos.Column].Path == 'Y' ||

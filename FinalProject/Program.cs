@@ -16,7 +16,7 @@ namespace FinalProject
         public static Player winner = null;
         static void Main(string[] args)
         {
-            Game();
+            //Game();
             #region test initialisation joueur
             /*GameBoard board = new GameBoard();
             board.PrintBoard();
@@ -38,7 +38,7 @@ namespace FinalProject
             Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
             List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();*/
             #endregion
-            /*GameBoard board = new GameBoard();
+           /* GameBoard board = new GameBoard();
             board.PrintBoard();
 
 
@@ -51,9 +51,10 @@ namespace FinalProject
                 nbPlayers = Convert.ToInt32(Console.ReadLine());
             } while (nbPlayers < 2 || nbPlayers >= 7);
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
+            Register.SaveMurderCards("MurderCards");*/
             //List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
-            Console.WriteLine(players[0].ToString());
-            Console.WriteLine(players[1].ToString());*/
+            //Console.WriteLine(players[0].ToString());
+            //Console.WriteLine(players[1].ToString());
             //...jusqu'à distribution des cartes
             #region test 2
             /*GameBoard board = new GameBoard();
@@ -373,7 +374,14 @@ namespace FinalProject
             
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="runningOrder"></param>
+        /// <param name="round"></param>
+        /// <param name="CardsSuspectedByTheCurrentPlayer"></param>
+        /// <returns></returns>
         static List<Card> Hypothesis(GameBoard board, List<Player> runningOrder, int round, List<Card> CardsSuspectedByTheCurrentPlayer)
         {
             //cards Suspected by the current player
@@ -414,17 +422,32 @@ namespace FinalProject
             runningOrder[round].AllHypothesis.Add(CardsSuspectedByTheCurrentPlayer);
             return CardsSuspectedByTheCurrentPlayer;
         }
-
-        static int VerificationInputConsole(string input, int min, int max)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static int VerificationInputConsole(string input, int min, int max)
         {
             int choice;
             do
             {
                 Console.WriteLine(input);
                 choice = Convert.ToInt32(Console.ReadLine());
+                //Console.Clear();
             } while (choice < min || choice > max);
             return choice;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="players"></param>
+        /// <param name="runningOrder"></param>
+        /// <param name="round"></param>
+        /// <param name="CardsSuspectedPresentInTheOtherPlayerHandrail"></param>
+        /// <param name="CardsSuspectedByTheCurrentPlayer"></param>
         static void ShowAllCardsOfARound(List<Player> players, List<Player> runningOrder,int round,List<Card> CardsSuspectedPresentInTheOtherPlayerHandrail, List<Card> CardsSuspectedByTheCurrentPlayer)
         {
             foreach (Player p in players)
@@ -505,6 +528,10 @@ namespace FinalProject
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="runningOrder"></param>
         static void EndOfTheGame(List<Player> runningOrder)
         {
             if(runningOrder.Count==1)
@@ -519,6 +546,13 @@ namespace FinalProject
             Console.ReadKey();
             Console.Clear();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="players"></param>
+        /// <param name="runningOrder"></param>
+        /// <param name="round"></param>
         static void SaveGame(GameBoard board,List<Player> players,List<Player> runningOrder, int round)
         {
             string fileNameBoard = "savedBoard";
@@ -528,7 +562,7 @@ namespace FinalProject
             Register.SavePlayer(filePlayeri,runningOrder[round]);
             Register.SaveRound(fileRound,round,players,runningOrder);
         }
-        static (GameBoard,List<Player> players, List<Player> runningOrder, int round) ResumptionGame()
+        /*static (GameBoard,List<Player> players, List<Player> runningOrder, int round) ResumptionGame()
         {
             GameBoard board = new GameBoard("savedBoard.csv");
             //recuperer nb de joueurs pour faire un for et les réinitialiser un par un
@@ -536,8 +570,8 @@ namespace FinalProject
             List<Player> players = new List<Player>();
             int round;
             (runningOrder, players, round)  = PlayerManager.ResumptionRoundPlayers();
-
-        }
+        
+        }*/
         /*static void Main(string[] args)
         {
             //Game();

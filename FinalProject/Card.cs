@@ -8,6 +8,7 @@ namespace FinalProject
 {
     class Card
     {
+        //Attributes
         protected string name;
         protected int iD;
         //properties

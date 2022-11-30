@@ -18,10 +18,9 @@ namespace FinalProject
 
         // initialisation of cards 
         /// <summary>
-        /// initialization of cardsSuspects, cardsWeapons, cardsrooms
-        /// draw of the murder's 3 cards 
+        /// Used to randomly define the 3 murder cards and create a deck without the 3 murder cards
         /// </summary>
-        /// <returns></returns>
+        /// <returns>list of card without the 3 murder cards</returns>
         public static List<Card> Initialization()
         {
             cardsSuspects.CardMurderer = cardsSuspects.FamilyCards[Program.random.Next(cardsSuspects.FamilyCards.Count)];
@@ -36,11 +35,11 @@ namespace FinalProject
 
         //distributions of cards 
         /// <summary>
-        /// for each player in param, distribution of the cards for his handtrail
+        /// Used to create a player’s handtrail by distributing cards randomly
         /// </summary>
-        /// <param name="p"></param>
-        /// <param name="remainingCards"></param>
-        /// <returns></returns>
+        /// <param name="p">player</param>
+        /// <param name="remainingCards">list of card that represents the deck</param>
+        /// <returns>list of card that represents the player's handtrail</returns>
         public static List <Card> CardsDistribution(Player p, List<Card> remainingCards)
         {
             for (int i = 0; i < p.NumberOfCards; i++)
@@ -53,7 +52,11 @@ namespace FinalProject
             }
             return remainingCards;
         }
-
+        /// <summary>
+        /// Used to remove a specific card from a list of card 
+        /// </summary>
+        /// <param name="ListCards">list of car to remove the card from</param>
+        /// <param name="card">card to remove</param>
         public static void RemoveCardAt(List<Card> ListCards, Card card)
         {
             for(int i = 0; i < ListCards.Count(); i++)
@@ -79,7 +82,11 @@ namespace FinalProject
         {
             return cardsSuspects.CardMurderer.Name + " killed the victim with a " + cardsWeapons.CardMurderer.Name + " in the " + cardsRooms.CardMurderer.Name;
         }
-
+        /// <summary>
+        /// used to know if the player’s accusation is correct
+        /// </summary>
+        /// <param name="Accusation">list of the 3 accused card </param>
+        /// <returns>bool that represent the status of the accusation (correct or not)</returns>
         public static bool ComparisonAccusationAndMurder(List<Card> Accusation)
         {
             bool rightAccusation = true;

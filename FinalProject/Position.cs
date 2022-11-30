@@ -8,6 +8,7 @@ namespace FinalProject
 {
     public class Position
     {
+        //Attributes
         int row;
         int column;
         //Constructor
@@ -33,6 +34,11 @@ namespace FinalProject
         {
             return "You are at :  row = " + (this.row+1)+ " column = "+(this.column+1);
         }
+        /// <summary>
+        /// Used to know if two positions are equals
+        /// </summary>
+        /// <param name="pos">position to compare</param>
+        /// <returns>bool that represents the equality of two position</returns>
         public bool IsEquals(Position pos)
         {
             bool same = false;

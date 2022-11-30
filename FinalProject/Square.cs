@@ -8,13 +8,16 @@ namespace FinalProject
 {
     class Square
     {
+        //Attributes
         char path;
         char roomName;
+        //Constructor
         public Square(char path, char room)
         {
             this.path = path;
             this.roomName = room;
         }
+        //Properties
         public char Path
         {
             get { return this.path; }
