@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 
 namespace FinalProject
 {
@@ -125,7 +126,14 @@ namespace FinalProject
             // Début de partie : affichage plateau
             GameBoard board = new GameBoard();
             board.PrintBoard();
-
+            //initialisation list AllPlayers
+            List<string> piece = new List<string>() { "Col Mustard", "Mr Green", "Prof Plum", "Mrs Blue", "Miss Scarlet", "Mrs White" };
+            for(int i =0;i<6;i++)
+            {
+                Player p = new Player(piece[i], i + 1, 6, board);
+                PlayerManager.AllPlayers.Add(p);
+            }
+            
 
             //Initialisation du jeu...
             List<Card> remainingCards = CardsManager.Initialization();
@@ -140,11 +148,12 @@ namespace FinalProject
 
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
             List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
+            
             //...jusqu'à distribution des cartes
 
             //break si nbAccusations == nbplayers ou player.accusation == true à chaque round du joueur
             int round = 0;
-            while(nbAccusations<players.Count-1 && winner==null)
+            while (nbAccusations<players.Count-1 && winner==null)
             {
                 Console.WriteLine("it's up to {0}", runningOrder[round].Name);
                 Console.WriteLine("press enter to continue");
@@ -349,13 +358,14 @@ namespace FinalProject
                     }
                     
                 }
+                SaveGame(board, players, runningOrder, round);
 
-               
-                if(round<runningOrder.Count-1)
+                if (round<runningOrder.Count-1)
                 {
                     round++;
                 }
                 else { round = 0; }
+                
             }
             EndOfTheGame(runningOrder);
             
@@ -508,6 +518,25 @@ namespace FinalProject
                 winner.Name, CardsManager.cardsRooms.CardMurderer.Name, CardsManager.cardsSuspects.CardMurderer.Name, CardsManager.cardsWeapons.CardMurderer.Name);
             Console.ReadKey();
             Console.Clear();
+        }
+        static void SaveGame(GameBoard board,List<Player> players,List<Player> runningOrder, int round)
+        {
+            string fileNameBoard = "savedBoard";
+            string filePlayeri = string.Concat("Player_", runningOrder[round].Id);
+            string fileRound = "Players_RunningOrder_round";
+            Register.SaveBoard(fileNameBoard, board);
+            Register.SavePlayer(filePlayeri,runningOrder[round]);
+            Register.SaveRound(fileRound,round,players,runningOrder);
+        }
+        static (GameBoard,List<Player> players, List<Player> runningOrder, int round) ResumptionGame()
+        {
+            GameBoard board = new GameBoard("savedBoard.csv");
+            //recuperer nb de joueurs pour faire un for et les réinitialiser un par un
+            List<Player> runningOrder = new List<Player>();
+            List<Player> players = new List<Player>();
+            int round;
+            (runningOrder, players, round)  = PlayerManager.ResumptionRoundPlayers();
+
         }
         /*static void Main(string[] args)
         {

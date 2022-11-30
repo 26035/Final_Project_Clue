@@ -20,6 +20,7 @@ namespace FinalProject
         public Player(string name,int player,int nbPlayers,GameBoard game)
         {
             this.name = name;
+            this.id = player;
             if (nbPlayers == 2) this.numberOfCards = 9;
             else if (nbPlayers == 3) this.numberOfCards = 6;
             else if (((nbPlayers == 4 || nbPlayers == 5) && (player == 1 || player == 2)) || (nbPlayers == 5 && player == 3)) this.numberOfCards = 4;

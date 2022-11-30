@@ -56,11 +56,12 @@ namespace FinalProject
                 playersId = playersId + players[i].Id + ";";
             }
             string currentPlayersId = "";
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < runningOrder.Count; i++)
             {
-                currentPlayersId = currentPlayersId + players[i].Id + ";";
+                currentPlayersId = currentPlayersId + runningOrder[i].Id + ";";
             }
-            string save = round + ";\n" + playersId + "\n" + runningOrder;
+            string save = round + ";\n" + playersId + "\n" + currentPlayersId;
+            Console.WriteLine(players.Count + " " + runningOrder.Count);
             File.WriteAllText(FilePath(fileName), save);
         }
         //Register.CreateFileCsv("Joueur"+Convert.ToString(1));
