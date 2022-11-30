@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace FinalProject
 {
@@ -10,6 +11,7 @@ namespace FinalProject
     //fonction : chercher les cartes possibles et choisir quelle carte montrer 
     static class PlayerManager
     {
+        public static List<Player> AllPlayers = new List<Player>();
         /// <summary>
         /// Creation of a list of Players 
         /// distribution of cards for each player
@@ -151,6 +153,43 @@ namespace FinalProject
             board.MarkMove(currentPos, nextPosition);
             p.Pos = nextPosition;
         }
+
+        public static (List<Player> runningOrder, List<Player> players, int round) ResumptionRoundPlayers()
+        {
+            var file = new StreamReader(File.OpenRead("Players_RunningOrder_round.csv"));
+            List<string> line = new List<string>();
+            for(int i =0;i<3;i++)
+            {
+                line[i] = file.ReadLine();
+            }
+            int round = Convert.ToInt32( line[0]);
+            var values = line[1].Split(';');
+            List<Player> players = new List<Player>();
+            for(int i =0;i<values.Length; i ++)
+            {
+                for(int j = 10;j<15;j++)
+                {
+                    if(Convert.ToInt32(values[i])== PlayerManager.AllPlayers[j-10].Id)
+                    {
+                        players.Add(PlayerManager.AllPlayers[j - 10]);
+                    }
+                }
+            }
+            values = line[2].Split(';');
+            List<Player> runningOrder = new List<Player>();
+            for(int i =0;i<values.Length;i++)
+            {
+                for(int j =10;j<15;j++)
+                {
+                    if(Convert.ToInt32(values[i])==PlayerManager.AllPlayers[j-10].Id)
+                    {
+                        runningOrder.Add(PlayerManager.AllPlayers[j - 10]);
+                    }
+                }
+            }
+            return (runningOrder, players, round);
+        }
+
 
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using System.IO;
 
 namespace FinalProject
 {
@@ -46,6 +47,64 @@ namespace FinalProject
 
         }
         public Player() { }
+        public Player(string fileName)
+        {
+            var file = new StreamReader(File.OpenRead(fileName));
+            List<string> line = new List<string>(7);
+            //List < List<string> > values = new List<List<string>>();
+            for(int i =0;i<(7+allHypothesis.Count); i ++)
+            {
+                line[i] = file.ReadLine();
+            }
+            this.name = line[0];
+            this.id = Convert.ToInt32(line[1]);
+            var values = line[2].Split(';');
+            this.pos.Row = Convert.ToInt32( values[0]); this.pos.Column = Convert.ToInt32(values[1]);
+            this.numberOfCards = Convert.ToInt32(line[3]);
+            values = line[4].Split(';');
+            for(int i =0; i<values.Length;i++)
+            {
+                for(int j=0;j<21;j++)
+                {
+                    if(Convert.ToInt32(values[i])== CardsManager.AllCards[j].ID)
+                    {
+                        handtrail.Add(CardsManager.AllCards[j]);
+                        break;
+                    }
+                }
+            }
+            values = line[5].Split(';');
+            for(int i =0;i<values.Length;i++)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    if (Convert.ToInt32(values[i]) == CardsManager.AllCards[j].ID)
+                    {
+                        stillSuspected.Add(CardsManager.AllCards[j]);
+                        break;
+                    }
+                }
+            }
+            for(int i =6;i<line.Count-1;i++)
+            {
+                values = line[i].Split(';');
+                for(int r = 0;r<3;r++)
+                {
+                    for(int j =0;j<21;j++)
+                    {
+                        if(Convert.ToInt32(values[r])==CardsManager.AllCards[j].ID)
+                        {
+                            allHypothesis[i - 6].Add(CardsManager.AllCards[j]);
+                            break;
+                        }
+                    }
+                }
+            }
+            this.accusation = Convert.ToBoolean(line[line.Count - 1]);
+
+
+
+        }
         //Properties
         public string Name => name;
         public int Id => id;

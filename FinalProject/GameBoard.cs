@@ -29,6 +29,21 @@ namespace FinalProject
             InitializationRooms();
            
         }
+        public GameBoard(string fileName)
+        {
+            char[,] game = ReadFile(fileName);
+            char[,] room = ReadFile("RoomNames.csv");
+            this.board = new Square[24, 24];
+            for (int i = 0; i < 24; i++)
+            {
+                for (int j = 0; j < 24; j++)
+                {
+                    this.board[i, j] = new Square(game[i, j], room[i, j]);
+                }
+            }
+            positionRooms = new List<List<Position>>();
+            InitializationRooms();
+        }
         //Properties
         public Square[,] Board
         {
