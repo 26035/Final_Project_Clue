@@ -190,22 +190,20 @@ namespace FinalProject
         /// <returns></returns>
         public static (List<Player> runningOrder, List<Player> players, int round) ResumptionRoundPlayers()
         {
-            var file = new StreamReader(File.OpenRead("Players_RunningOrder_round.csv"));
-            List<string> line = new List<string>();
-            for(int i =0;i<3;i++)
-            {
-                line[i] = file.ReadLine();
-            }
-            int round = Convert.ToInt32( line[0]);
-            var values = line[1].Split(';');
+            string[] line = File.ReadAllLines("Players_RunningOrder_round.csv");
+            string[] values = line[0].Split(';');
+            int round = Convert.ToInt32( values[0]);
+            values = line[1].Split(';');
             List<Player> players = new List<Player>();
             for(int i =0;i<values.Length; i ++)
             {
                 for(int j = 10;j<15;j++)
                 {
-                    if(Convert.ToInt32(values[i])== PlayerManager.AllPlayers[j-10].Id)
+                    //Console.WriteLine((values[i])+ " " + PlayerManager.AllPlayers[j - 10].Id);
+                    if(Convert.ToInt32(values[i]) == PlayerManager.AllPlayers[j-10].Id)
                     {
                         players.Add(PlayerManager.AllPlayers[j - 10]);
+                        break;
                     }
                 }
             }

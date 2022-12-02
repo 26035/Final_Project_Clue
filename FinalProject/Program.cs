@@ -16,7 +16,30 @@ namespace FinalProject
         public static Player winner = null;
         static void Main(string[] args)
         {
-            //Game();
+            Game();
+            #region lecture + sauvegarde fichier test 
+            /*var (board, players,runningOrder,round ) = ResumptionGame();
+            board.PrintBoard();
+            Console.Write("\n...\n");
+            for (int i=0;i<players.Count;i++)
+            {
+                Console.WriteLine(players[i].Name);
+                Console.WriteLine(players[i].ToString());
+                
+            }
+            Console.Write("\n...\n");
+            for (int i = 0; i < runningOrder.Count; i++)
+            {
+                Console.WriteLine(runningOrder[i].Name);
+                Console.WriteLine(runningOrder[i].ToString());
+
+            }
+            
+            Console.Write("\n...\n");
+            Console.WriteLine(round);*/
+            
+
+            #endregion
             #region test initialisation joueur
             /*GameBoard board = new GameBoard();
             board.PrintBoard();
@@ -38,20 +61,20 @@ namespace FinalProject
             Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
             List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();*/
             #endregion
-           /* GameBoard board = new GameBoard();
-            board.PrintBoard();
+            /* GameBoard board = new GameBoard();
+             board.PrintBoard();
 
 
-            //Initialisation du jeu...
-            List<Card> remainingCards = CardsManager.Initialization();
-            int nbPlayers = 0;
-            do
-            {
-                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
-                nbPlayers = Convert.ToInt32(Console.ReadLine());
-            } while (nbPlayers < 2 || nbPlayers >= 7);
-            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            Register.SaveMurderCards("MurderCards");*/
+             //Initialisation du jeu...
+             List<Card> remainingCards = CardsManager.Initialization();
+             int nbPlayers = 0;
+             do
+             {
+                 Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
+                 nbPlayers = Convert.ToInt32(Console.ReadLine());
+             } while (nbPlayers < 2 || nbPlayers >= 7);
+             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
+             Register.SaveMurderCards("MurderCards");*/
             //List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
             //Console.WriteLine(players[0].ToString());
             //Console.WriteLine(players[1].ToString());
@@ -124,36 +147,16 @@ namespace FinalProject
         /// </summary>
        static void Game()
         {
-            // Début de partie : affichage plateau
+            int option = VerificationInputConsole("Do you want to \n1: begin a new game \n2: continue the saved part? ", 1, 2);
             GameBoard board = new GameBoard();
-            board.PrintBoard();
-            //initialisation list AllPlayers
-            List<string> piece = new List<string>() { "Col Mustard", "Mr Green", "Prof Plum", "Mrs Blue", "Miss Scarlet", "Mrs White" };
-            for(int i =0;i<6;i++)
-            {
-                Player p = new Player(piece[i], i + 1, 6, board);
-                PlayerManager.AllPlayers.Add(p);
-            }
-            
-
-            //Initialisation du jeu...
-            List<Card> remainingCards = CardsManager.Initialization();
-            int nbPlayers = 0;
-            nbPlayers = VerificationInputConsole("How many players are going to play (2,3,4,5,6) ?", 2, 6);
-
-            /*do
-            {
-                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
-                nbPlayers = Convert.ToInt32(Console.ReadLine());
-            } while (nbPlayers < 2 || nbPlayers >= 7);*/
-
-            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
-            
-            //...jusqu'à distribution des cartes
-
-            //break si nbAccusations == nbplayers ou player.accusation == true à chaque round du joueur
+            List<Player> players = new List<Player>();
+            List<Player> runningOrder = new List<Player>();
             int round = 0;
+            if (option ==1)
+            {
+                (board, players, runningOrder, round) = NewGame();
+            }
+            else { (board, players, runningOrder, round) = ResumptionGame(); }
             while (nbAccusations<players.Count-1 && winner==null)
             {
                 Console.WriteLine("it's up to {0}", runningOrder[round].Name);
@@ -162,10 +165,12 @@ namespace FinalProject
                 Console.Clear();
                 Die dices = new Die();
                 int resultDices = dices.ResultDices();
+                bool accusation = false;
                 Console.WriteLine("you obtain a " + resultDices + " to your thrown");
                 //if 66 or 11, player can choose his room 
                 if (((dices.DieOne == dices.DieTwo) && (dices.DieOne == 6)) || ((dices.DieOne == dices.DieTwo) && (dices.DieOne == 1)))
                 {
+                    Console.WriteLine("double 6 or double 1");
                     PlayerManager.ChooseRoom(runningOrder[round], board);
                 }
                 else { runningOrder[round].NextMove(resultDices, board); }
@@ -277,7 +282,7 @@ namespace FinalProject
                             Console.WriteLine("Are you sure to be in the room of the murder? \n1: yes \n2: no");
                             response = Convert.ToInt32(Console.ReadLine());
                         } while (response < 1 || response > 2);*/
-
+                        
                         List<Card> Accusation = new List<Card>();
                         if (response == 1)
                         {
@@ -332,8 +337,10 @@ namespace FinalProject
                                 Console.WriteLine("you can't play but you will have to show your card so stay connected :)");
                                 runningOrder[round].Accusation = true;
                                 nbAccusations++;
+                                SaveGame(board, players, runningOrder, round);
                                 board.DeleteMark(runningOrder[round].Pos);
                                 runningOrder.RemoveAt(round);
+                                accusation = true;
 
                             }
                         }
@@ -360,15 +367,19 @@ namespace FinalProject
                     
                 }
                 SaveGame(board, players, runningOrder, round);
-
-                if (round<runningOrder.Count-1)
+                if (accusation != true)
                 {
-                    round++;
+                    if (round < runningOrder.Count - 1)
+                    {
+                        round++;
+                    }
+                    else { round = 0; }
                 }
-                else { round = 0; }
+                else { accusation = true; }
+                
                 
             }
-            EndOfTheGame(runningOrder);
+            EndOfTheGame(runningOrder, players);
             
 
             
@@ -432,12 +443,26 @@ namespace FinalProject
         public static int VerificationInputConsole(string input, int min, int max)
         {
             int choice;
+            Console.WriteLine(input);
+            try
+            {
+                choice = Convert.ToInt32(Console.ReadLine());
+                if(choice >= min || choice <= max)
+                {
+                    return choice;
+                }
+                else { VerificationInputConsole(input, min, max); }
+            }catch (Exception e)
+            {
+                return VerificationInputConsole(input,min,max);
+            }
+            /*int choice;
             do
             {
                 Console.WriteLine(input);
                 choice = Convert.ToInt32(Console.ReadLine());
                 //Console.Clear();
-            } while (choice < min || choice > max);
+            } while (choice < min || choice > max);*/
             return choice;
         }
         /// <summary>
@@ -532,19 +557,19 @@ namespace FinalProject
         /// 
         /// </summary>
         /// <param name="runningOrder"></param>
-        static void EndOfTheGame(List<Player> runningOrder)
+        static void EndOfTheGame(List<Player> runningOrder, List<Player> players)
         {
             if(runningOrder.Count==1)
             {
                 winner = runningOrder[0];
-                
-
             }
             Console.WriteLine("Game is over \n {0} won" +
                 "\nThe 3 murder cards were : {1} ; {2} ; {3} \n Congratulations ! \n press enter to quit the game", 
                 winner.Name, CardsManager.cardsRooms.CardMurderer.Name, CardsManager.cardsSuspects.CardMurderer.Name, CardsManager.cardsWeapons.CardMurderer.Name);
             Console.ReadKey();
             Console.Clear();
+            DeleteGame(players);
+
         }
         /// <summary>
         /// 
@@ -556,22 +581,125 @@ namespace FinalProject
         static void SaveGame(GameBoard board,List<Player> players,List<Player> runningOrder, int round)
         {
             string fileNameBoard = "savedBoard";
-            string filePlayeri = string.Concat("Player_", runningOrder[round].Id);
+            for(int r =0;r<players.Count;r++)
+            {
+                if(players[r].Id==runningOrder[round].Id)
+                {
+                    string filePlayerr = string.Concat("Player_", players[r].Id);
+                    string fileRound = "Players_RunningOrder_round";
+                    Register.SaveBoard(fileNameBoard, board);
+                    Register.SavePlayer(filePlayerr, players[r]);
+                    Register.SaveRound(fileRound, round, players, runningOrder);
+                    break;
+                }
+            }
+            Register.SaveMurderCards("cardsMurderer");
+            /*for(int i =0;i<players.Count; i++)
+            {
+                if(players[i].Id==runningOrder[round].Id)
+                {
+                    string filePlayeri = string.Concat("Player_",players[i].Id);
+                    string fileRound = "Players_RunningOrder_round";
+                    Register.SaveBoard(fileNameBoard, board);
+                    Register.SavePlayer(filePlayeri, players[i]);
+                    Register.SaveRound(fileRound, round, players, runningOrder);
+                }
+                break;
+            }*/
+            /*string filePlayeri = string.Concat("Player_", runningOrder[round].Id);
             string fileRound = "Players_RunningOrder_round";
             Register.SaveBoard(fileNameBoard, board);
             Register.SavePlayer(filePlayeri,runningOrder[round]);
-            Register.SaveRound(fileRound,round,players,runningOrder);
+            Register.SaveRound(fileRound,round,players,runningOrder);*/
         }
-        /*static (GameBoard,List<Player> players, List<Player> runningOrder, int round) ResumptionGame()
+        static (GameBoard board, List<Player> players, List<Player> runningOrder, int round) NewGame()
         {
+            // Début de partie : affichage plateau
+            GameBoard board = new GameBoard();
+            board.PrintBoard();
+            InitializationAllPlayers(board);
+            //initialisation list AllPlayers
+            List<string> piece = new List<string>() { "Col Mustard", "Mr Green", "Prof Plum", "Mrs Blue", "Miss Scarlet", "Mrs White" };
+            for (int i = 0; i < 6; i++)
+            {
+                Player p = new Player(piece[i], i + 1, 6, board);
+                PlayerManager.AllPlayers.Add(p);
+            }
+
+
+            //Initialisation du jeu...
+            List<Card> remainingCards = CardsManager.Initialization();
+            int nbPlayers = 0;
+            nbPlayers = VerificationInputConsole("How many players are going to play (2,3,4,5,6) ?", 2, 6);
+            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
+            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
+            int round = 0;
+            //...jusqu'à distribution des cartes
+            return (board, players, runningOrder, round);
+        }
+        static (GameBoard board,List<Player> players, List<Player> runningOrder, int round) ResumptionGame()
+        {
+            //initialization of the board
             GameBoard board = new GameBoard("savedBoard.csv");
-            //recuperer nb de joueurs pour faire un for et les réinitialiser un par un
+            InitializationAllPlayers(board);
+            
             List<Player> runningOrder = new List<Player>();
             List<Player> players = new List<Player>();
             int round;
+            //initialization of the list of players/runningOrder/round
             (runningOrder, players, round)  = PlayerManager.ResumptionRoundPlayers();
+            //initialization of all players
+            for (int i = 0;i<players.Count;i++)
+            {
+                string[] line = File.ReadAllLines(string.Concat("Player_", Convert.ToString(i+1),".csv"));
+                string[] values = line[1].Split(';');
+                //var file = new StreamReader(File.OpenRead(string.Concat("Player_",i)));
+                //Console.WriteLine(values[0]);
+                int ID  = Convert.ToInt32(values[0]);
+                Player p = new Player();
+                for(int j =0;j<players.Count;j++)
+                {
+                    if(ID==players[j].Id)
+                    {
+
+                        p = new Player(string.Concat("Player_", i+1));
+                        players[j] = p;
+                    }
+                }
+                for(int j =0;j<runningOrder.Count;j++)
+                {
+                    if(ID==runningOrder[j].Id)
+                    {
+                        runningOrder[j] = p;
+                    }
+                }
+
+            }
+            //initialization of the cardsMurderer
+            CardsManager.ResumptionCardsMurderer();
+            return (board, players, runningOrder, round);
+
         
-        }*/
+        }
+        static void DeleteGame(List<Player> players)
+        {
+            for(int i =0;i<players.Count; i ++)
+            {
+                Register.DeleteFile(string.Concat("Player_", i + 1));
+            }
+            Register.DeleteFile("savedBoard.csv");
+            Register.DeleteFile("Players_RunningOrder_round.csv");
+            Register.DeleteFile("cardsMurderer.csv");
+        }
+        static void InitializationAllPlayers(GameBoard board)
+        {
+            List<string> piece = new List<string>() { "Col Mustard", "Mr Green", "Prof Plum", "Mrs Blue", "Miss Scarlet", "Mrs White" };
+            for (int i = 0; i < 6; i++)
+            {
+                Player p = new Player(piece[i], i + 1, 6, board);
+                PlayerManager.AllPlayers.Add(p);
+            }
+        }
         /*static void Main(string[] args)
         {
             //Game();

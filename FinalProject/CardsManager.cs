@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 namespace FinalProject
 {
     // a faire ici 
@@ -101,7 +101,37 @@ namespace FinalProject
             }
             return rightAccusation;
         }
-        
+        public static void ResumptionCardsMurderer()
+        {
+            List<Card> cardsMurderer= new List<Card>();
+            string[] line = File.ReadAllLines("cardsMurderer.csv");
+            string[] values = line[0].Split(';');
+            
+            for(int i =0;i<9;i++)
+            {
+                if(Convert.ToInt32(values[0])==cardsRooms.FamilyCards[i].ID)
+                {
+                    cardsMurderer.Add(cardsRooms.FamilyCards[i]);
+                }
+            }
+            for (int i =0;i<6;i++)
+            {
+                if (Convert.ToInt32(values[1]) == cardsSuspects.FamilyCards[i].ID)
+                {
+                    cardsMurderer.Add(cardsSuspects.FamilyCards[i]);
+                }
+            }
+            for(int i =0;i<6;i++)
+            {
+                if (Convert.ToInt32(values[2]) == cardsWeapons.FamilyCards[i].ID)
+                {
+                    cardsMurderer.Add(cardsWeapons.FamilyCards[i]);
+                }
+            }
+            cardsRooms.CardMurderer = cardsMurderer[0];
+            cardsSuspects.CardMurderer = cardsMurderer[1];
+            cardsWeapons.CardMurderer = cardsMurderer[2];
+        }
         
     }
 }

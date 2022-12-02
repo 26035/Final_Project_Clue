@@ -38,23 +38,35 @@ namespace FinalProject
             string handtrail = "";
             for (int i = 0; i < player.Handtrail.Count; i++)
             {
-                handtrail = handtrail + player.Handtrail[i].ID + ";";
+                handtrail = handtrail + player.Handtrail[i].ID;
+                if(player.Handtrail.Count-1!=i)
+                {
+                    handtrail += ";";
+                }
             }
             string stillSuspected = "";
             for (int i = 0; i < player.StillSuspected.Count; i++)
             {
-                stillSuspected = stillSuspected + player.StillSuspected[i].ID + ";";
+                stillSuspected = stillSuspected + player.StillSuspected[i].ID;
+                if(player.StillSuspected.Count-1!=i)
+                {
+                    stillSuspected += ";";
+                }
             }
             string allHypothesis = "";
             for (int i = 0; i < player.AllHypothesis.Count; i++)
             {
                 for (int j = 0; j < player.AllHypothesis[i].Count; j++)
                 {
-                    allHypothesis = allHypothesis + player.AllHypothesis[i][j].ID + ";";
+                    allHypothesis = allHypothesis + player.AllHypothesis[i][j].ID;
+                    if(player.AllHypothesis[i].Count-1!=j)
+                    {
+                        allHypothesis += ";";
+                    }
                 }
-                allHypothesis = "\n";
+                allHypothesis += "\n";
             }
-            string save = player.Name + ";\n" + player.Id.ToString() + ";\n" + position + ";\n" + player.NumberOfCards + ";\n" + handtrail + "\n" + stillSuspected + "\n" + allHypothesis + player.Accusation.ToString() + ";";
+            string save = player.Name + "\n" + Convert.ToString(player.Id) + "\n" + position + "\n" + player.NumberOfCards + "\n" + handtrail + "\n" + stillSuspected + "\n" + allHypothesis + player.Accusation.ToString();
             File.WriteAllText(FilePath(fileName), save);
         }
         /// <summary>
@@ -69,14 +81,23 @@ namespace FinalProject
             string playersId = "";
             for (int i = 0; i < players.Count; i++)
             {
-                playersId = playersId + players[i].Id + ";";
+                playersId = playersId + players[i].Id;
+                if(players.Count-1!=i)
+                {
+                    playersId += ";";
+                }
             }
+
             string currentPlayersId = "";
             for (int i = 0; i < runningOrder.Count; i++)
             {
-                currentPlayersId = currentPlayersId + runningOrder[i].Id + ";";
+                currentPlayersId = currentPlayersId + runningOrder[i].Id;
+                if(runningOrder.Count-1!=i)
+                {
+                    currentPlayersId += ";";
+                }
             }
-            string save = round + ";\n" + playersId + "\n" + currentPlayersId;
+            string save = round + "\n" + playersId + "\n" + currentPlayersId;
             File.WriteAllText(FilePath(fileName), save);
         }
         /// <summary>
@@ -86,8 +107,7 @@ namespace FinalProject
         public static void SaveMurderCards(string fileName)
         {
             
-            string save = CardsManager.cardsSuspects.CardMurderer.ID + ";" + CardsManager.cardsRooms.CardMurderer.ID + ";" + CardsManager.cardsWeapons.CardMurderer.ID;
-            Console.WriteLine(save);
+            string save =  CardsManager.cardsRooms.CardMurderer.ID + ";" + CardsManager.cardsSuspects.CardMurderer.ID  + ";" + CardsManager.cardsWeapons.CardMurderer.ID;
             File.WriteAllText(FilePath(fileName), save);
         }
         /// <summary>

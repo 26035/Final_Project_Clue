@@ -45,21 +45,31 @@ namespace FinalProject
 
         }
         public Player() { }
+        public Player(int id,string name)
+        {
+            this.id = id;
+            this.name = name;
+        }
         public Player(string fileName)
         {
-            var file = new StreamReader(File.OpenRead(fileName));
-            List<string> line = new List<string>(7);
+            string[] line = File.ReadAllLines(fileName+".csv");
+            //var file = new StreamReader(File.OpenRead(fileName));
+            //List<string> line = new List<string>(7);
             //List < List<string> > values = new List<List<string>>();
-            for(int i =0;i<(7+allHypothesis.Count); i ++)
+            /*for(int i =0;i<(7+allHypothesis.Count); i ++)
             {
                 line[i] = file.ReadLine();
-            }
+            }*/
             this.name = line[0];
             this.id = Convert.ToInt32(line[1]);
-            var values = line[2].Split(';');
-            this.pos.Row = Convert.ToInt32( values[0]); this.pos.Column = Convert.ToInt32(values[1]);
+            string[] values = line[2].Split(';');
+            this.pos = new Position(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]));
+            //Console.WriteLine(values[0] + " " + values[1]);
+            //this.pos.Row = Convert.ToInt32(values[0]);
+            //this.pos.Column = Convert.ToInt32(values[1]);
             this.numberOfCards = Convert.ToInt32(line[3]);
             values = line[4].Split(';');
+            handtrail = new List<Card>();
             for(int i =0; i<values.Length;i++)
             {
                 for(int j=0;j<21;j++)
@@ -72,6 +82,7 @@ namespace FinalProject
                 }
             }
             values = line[5].Split(';');
+            stillSuspected = new List<Card>();
             for(int i =0;i<values.Length;i++)
             {
                 for (int j = 0; j < 21; j++)
@@ -83,7 +94,9 @@ namespace FinalProject
                     }
                 }
             }
-            for(int i =6;i<line.Count-1;i++)
+            allHypothesis = new List<List<Card>>();
+            List<Card> cards = new List<Card>();
+            for(int i =6;i<line.Length-1;i++)
             {
                 values = line[i].Split(';');
                 for(int r = 0;r<3;r++)
@@ -92,13 +105,17 @@ namespace FinalProject
                     {
                         if(Convert.ToInt32(values[r])==CardsManager.AllCards[j].ID)
                         {
-                            allHypothesis[i - 6].Add(CardsManager.AllCards[j]);
+                            cards.Add(CardsManager.AllCards[j]);
+                            
+                            //allHypothesis.Add(CardsManager.AllCards[j]);
                             break;
                         }
                     }
                 }
+                allHypothesis.Add(cards);
+                allHypothesis.Clear();
             }
-            this.accusation = Convert.ToBoolean(line[line.Count - 1]);
+            this.accusation = Convert.ToBoolean(line[line.Length - 1]);
 
 
 
@@ -132,6 +149,7 @@ namespace FinalProject
                
                 for (int i = 0; i < move; i++)
                 {
+                    Console.WriteLine(this.name + "\n"+ (move-i) + "move left");
                     game.PrintBoard();
                     do
                     {
