@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 
 namespace FinalProject
 {
@@ -33,8 +34,7 @@ namespace FinalProject
                 do
                 {
                     indice = 10;
-                    Console.WriteLine("What's your piece player {0} " + Cards.PrintList(piece), round);
-                    choice = Convert.ToInt32(Console.ReadLine());
+                    choice = Program.VerificationInputConsole("What's your piece player "+round+" ? " + Cards.PrintList(piece),10,15);
                     for (int i =0;i<piece.Count;i++)
                     {
                         if (piece[i].ID == choice) { available = true;
@@ -70,15 +70,15 @@ namespace FinalProject
             Position currentPos = p.Pos;
             Position nextPosition = new Position(); 
             int nbOfTheRoom;
-            nbOfTheRoom = Program.VerificationInputConsole("In which room do you want to go? \n 1: Billard Room " +
-                    "\n2: Kitchen" +
-                    "\n3: Greenhouse" +
-                    "\n4: Lounge" +
+            nbOfTheRoom = Program.VerificationInputConsole("In which room do you want to go? \n 1: Kitchen" +
+                    "\n2: Lounge" +
+                    "\n3: Ball Room" +
+                    "\n4: Dinning Room" +
                     "\n5: Hall" +
-                    "\n6: Library" +
-                    "\n7: Study" +
-                    "\n8: Dinning Room" +
-                    "\n9: Ball Room",1,9);
+                    "\n6: Billard Room" +
+                    "\n7: Library" +
+                    "\n8: Study" +
+                    "\n9: Greenhouse", 1,9);
             /*do
             {
                 Console.WriteLine("In which room do you want to go? \n 1: Billard Room " +
@@ -110,8 +110,8 @@ namespace FinalProject
                 case 5:
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
                             "\n0: (5,10)" +
-                            "\n1: (6,13)" +
-                            "\n2: (7,14)", 0, 2);
+                            "\n1: (6,12)" +
+                            "\n2: (6,13)", 0, 2);
                     /*do
                     {
                         Console.WriteLine("By which door do you want to enter in the room ?" +
@@ -180,9 +180,16 @@ namespace FinalProject
                     break;
 
             }
-            
-            board.MarkMove(currentPos, nextPosition);
-            p.Pos = nextPosition;
+            if(board.IsOccupied(nextPosition))
+            {
+                ChooseRoom(p, board);
+            }
+            else
+            {
+                board.MarkMove(currentPos, nextPosition);
+                p.Pos = nextPosition;
+            }
+            board.PrintBoard();
         }
         /// <summary>
         /// 
@@ -222,6 +229,173 @@ namespace FinalProject
             return (runningOrder, players, round);
         }
 
+        public static void ChooseRoomSocket(Player p, GameBoard board)
+        {
+            Position currentPos = p.Pos;
+            Position nextPosition = new Position();
+            int nbOfTheRoom;
+            nbOfTheRoom = GameMultiPlayer.VerificationInputConsoleSocket("In which room do you want to go? \n 1: Kitchen" +
+                    "\n2: Lounge" +
+                    "\n3: Ball Room" +
+                    "\n4: Dinning Room" +
+                    "\n5: Hall" +
+                    "\n6: Billard Room" +
+                    "\n7: Library" +
+                    "\n8: Study" +
+                    "\n9: Greenhouse", 1, 9, p.PlayerSocket);
+            /*= Program.VerificationInputConsole("In which room do you want to go? \n 1: Billard Room " +
+                "\n2: Kitchen" +
+                "\n3: Greenhouse" +
+                "\n4: Lounge" +
+                "\n5: Hall" +
+                "\n6: Library" +
+                "\n7: Study" +
+                "\n8: Dinning Room" +
+                "\n9: Ball Room", 1, 9);*/
+            /*do
+            {
+                Console.WriteLine("In which room do you want to go? \n 1: Billard Room " +
+                    "\n2: Kitchen" +
+                    "\n3: Greenhouse" +
+                    "\n4: Lounge" +
+                    "\n5: Hall" +
+                    "\n6: Library" +
+                    "\n7: Study" +
+                    "\n8: Dinning Room" +
+                    "\n9: Ball Room");
+                nbOfTheRoom = Convert.ToInt32(Console.ReadLine());
+            } while (nbOfTheRoom < 1 || nbOfTheRoom >= 10);*/
+            int position;
+            switch (nbOfTheRoom)
+            {
+                case 1:
+                    nextPosition = board.PositionRooms[0][0];
+                    break;
+                case 2:
+                    nextPosition = board.PositionRooms[1][0];
+                    break;
+                case 3:
+                    nextPosition = board.PositionRooms[2][0];
+                    break;
+                case 4:
+                    nextPosition = board.PositionRooms[3][0];
+                    break;
+                case 5:
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (5,10)" +
+                            "\n1: (6,13)" +
+                            "\n2: (7,14)", 0, 2, p.PlayerSocket);
+                    /*do
+                    {
+                        Console.WriteLine("By which door do you want to enter in the room ?" +
+                            "\n0: (5,10)" +
+                            "\n1: (6,13)" +
+                            "\n2: (7,14)");
+                        position = Convert.ToInt32(Console.ReadLine());
+                    } while (position < 0 || position >= 3);*/
+                    nextPosition = board.PositionRooms[4][position];
+                    break;
+                case 6:
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (9,7)" +
+                            "\n1: (11,3)", 0, 1, p.PlayerSocket);
+                    /*do
+                    {
+                        Console.WriteLine("By which door do you want to enter in the room ?" +
+                            "\n0: (9,7)" +
+                            "\n1: (11,3)");
+                        position = Convert.ToInt32(Console.ReadLine());
+                    } while (position < 0 || position >= 2);*/
+                    nextPosition = board.PositionRooms[5][position];
+                    break;
+                case 7:
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (13,3)" +
+                            "\n1: (16,6)", 0, 1, p.PlayerSocket);
+                    /*do
+                    {
+                        Console.WriteLine("By which door do you want to enter in the room ?" +
+                            "\n0: (13,3)" +
+                            "\n1: (16,6)");
+                        position = Convert.ToInt32(Console.ReadLine());
+                    } while (position < 0 || position >= 2);*/
+                    nextPosition = board.PositionRooms[6][position];
+                    break;
+                case 8:
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (9,18)" +
+                            "\n1: (13,17)", 0, 1, p.PlayerSocket);
+                    /*do
+                    {
+                        Console.WriteLine("By which door do you want to enter in the room ?" +
+                            "\n0: (9,18)" +
+                            "\n1: (13,17)");
+                        position = Convert.ToInt32(Console.ReadLine());
+                    } while (position < 0 || position >= 2);*/
+                    nextPosition = board.PositionRooms[7][position];
+                    break;
+                case 9:
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (18,11)" +
+                            "\n1: (18,14)" +
+                            "\n2: (20,9)" +
+                            "\n3: (20,16)", 0, 3, p.PlayerSocket);
+                    /*do
+                    {
+                        Console.WriteLine("By which door do you want to enter in the room ?" +
+                            "\n0: (18,11)" +
+                            "\n1: (18,14)" +
+                            "\n2: (20,9)" +
+                            "\n3: (20,16)");
+                        position = Convert.ToInt32(Console.ReadLine());
+                    } while (position < 0 || position >= 4);*/
+                    nextPosition = board.PositionRooms[8][position];
+                    break;
 
+            }
+
+            board.MarkMove(currentPos, nextPosition);
+            p.Pos = nextPosition;
+        }
+        public static List<Player> InitializationSocket(int nbPlayers, List<Card> remainingCards, GameBoard board)
+        {
+            int round = 1;
+            List<Player> players = new List<Player>();
+            List<Card> piece = new List<Card>(CardsManager.cardsSuspects.FamilyCards);
+            //int piece;
+            do
+            {
+                bool available = false;
+                int choice = 0;
+                int indice;
+
+                do
+                {
+                    indice = 10;
+                    //Server.SendToClient("1What's your piece player "+round+" ? "+Cards.PrintList(piece),Server.allClients[round-1]);
+                    //Console.WriteLine("What's your piece player {0}" + Cards.PrintList(piece), round);
+                    choice = GameMultiPlayer.VerificationInputConsoleSocket("Enter your pawn's ID player " + round + " : " + Cards.PrintList(piece), 10, 15, Server.allClients[round - 1]);
+                    Thread.Sleep(1000);
+                    for (int i = 0; i < piece.Count; i++)
+                    {
+                        if (piece[i].ID == choice)
+                        {
+                            available = true;
+                            indice = i;
+                            break;
+                        }
+                    }
+                    if (available == false) { Server.SendToClient(2, "Warning ! The player that you want has already been selected", Server.allClients[round - 1]); }
+                } while (available == false);
+                piece.RemoveAt(indice);
+                Player p = new Player(CardsManager.cardsSuspects.FamilyCards[choice - 10].Name, round, nbPlayers, board, Server.allClients[round - 1]);
+                remainingCards = CardsManager.CardsDistribution(p, remainingCards);
+                players.Add(p);
+                round++;
+            } while (round <= nbPlayers);
+            Console.WriteLine(players[0].ToString());
+            Console.WriteLine(players[1].ToString());
+            return players;
+        }
     }
 }

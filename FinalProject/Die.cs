@@ -16,11 +16,9 @@ namespace FinalProject
 
         public Die()
         {
-            //dieOne = 6;
-            //dieTwo = 6;
 
-            dieOne = Program.random.Next(1,7);
-            dieTwo = Program.random.Next(1,7);
+           dieOne = Program.random.Next(1,7);
+           dieTwo = Program.random.Next(1,7);
            
 
         }

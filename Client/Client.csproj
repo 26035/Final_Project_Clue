@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{66B15480-0FBC-4EAE-8D0D-7DDB604849B1}</ProjectGuid>
+    <ProjectGuid>{1A1B5E56-16ED-46F1-93A0-0C91C65D63DE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>FinalProject</RootNamespace>
-    <AssemblyName>FinalProject</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>Client</RootNamespace>
+    <AssemblyName>Client</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -43,24 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Card.cs" />
-    <Compile Include="Cards.cs" />
-    <Compile Include="CardsManager.cs" />
-    <Compile Include="CardsRooms.cs" />
-    <Compile Include="CardsSuspects.cs" />
-    <Compile Include="CardsWeapons.cs" />
-    <Compile Include="Die.cs" />
-    <Compile Include="GameBoard.cs" />
-    <Compile Include="GameMultiPlayer.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayerManager.cs" />
-    <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Register.cs" />
-    <Compile Include="Server.cs" />
-    <Compile Include="Square.cs" />
-    <Compile Include="Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

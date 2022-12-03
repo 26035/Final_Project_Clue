@@ -16,7 +16,17 @@ namespace FinalProject
         public static Player winner = null;
         static void Main(string[] args)
         {
-            Game();
+            int response = VerificationInputConsole("How do you want to play ? \n\t1: with only one computer \n\t2: with multiple computers", 1, 2);
+            if (response==1)
+            {
+                Game();
+            }
+            else
+            {
+                Console.Title = "Server";
+                GameMultiPlayer.Run();
+            }
+            
             #region lecture + sauvegarde fichier test 
             /*var (board, players,runningOrder,round ) = ResumptionGame();
             board.PrintBoard();
@@ -439,7 +449,8 @@ namespace FinalProject
             {
                 CardsSuspectedByTheCurrentPlayer.Add(i);
             }
-            Console.WriteLine(" you ask for this 3 cards : " + Cards.PrintList(CardsSuspectedByTheCurrentPlayer));
+            Console.WriteLine(" you ask for this 3 cards : " + Cards.PrintList(CardsSuspectedByTheCurrentPlayer)+"\nPress enter to continue");
+            Console.ReadKey();
             runningOrder[round].AllHypothesis.Add(CardsSuspectedByTheCurrentPlayer);
             return CardsSuspectedByTheCurrentPlayer;
         }

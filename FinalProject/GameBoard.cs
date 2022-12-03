@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net.Sockets;
 
 namespace FinalProject
 {
@@ -88,15 +89,15 @@ namespace FinalProject
         /// </summary>
         public void InitializationRooms()
         {
-            positionRooms.Add(new List<Position> { new Position(4, 18) });
-            positionRooms.Add(new List<Position> { new Position(18, 20) });
+            positionRooms.Add(new List<Position> { new Position(4, 18), new Position(0, 17) });
+            positionRooms.Add(new List<Position> { new Position(18, 20), new Position(23, 18) });
             positionRooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
             positionRooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
-            positionRooms.Add(new List<Position> { new Position(4, 9), new Position(5, 12), new Position(6, 13) });
-            positionRooms.Add(new List<Position> { new Position(3, 5) });
+            positionRooms.Add(new List<Position> { new Position(4, 9), new Position(5, 11), new Position(5, 12) });
+            positionRooms.Add(new List<Position> { new Position(3, 5), new Position(0, 6) });
             positionRooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });
-            positionRooms.Add(new List<Position> { new Position(12, 2), new Position(15, 5) });
-            positionRooms.Add(new List<Position> { new Position(20, 5) });
+            positionRooms.Add(new List<Position> { new Position(12, 1), new Position(15, 5) });
+            positionRooms.Add(new List<Position> { new Position(20, 5), new Position(23, 6) });
         }
         /// <summary>
         /// Used to print the game board 
@@ -294,9 +295,10 @@ namespace FinalProject
         public Position MoveSecretPassage(Position current)
         {
             Position newRoom = new Position();
+            int choice;
             do
             {
-                int choice;
+                
                 do
                 {
                     Console.WriteLine("Where do you want to go? (6: Billard Room, 1: Kitchen,  9: Greenhouse, 2: Lounge)");
@@ -322,14 +324,27 @@ namespace FinalProject
                 {
                     Console.WriteLine("You can't go inside the room : it's occupied");
                 }
-                else if (current.IsEquals(newRoom) == true)
+                else if (AlreadyInTheRoom(current,choice))
                 {
                     Console.WriteLine("Choose another room : you're already inside this room");
                 }
-            } while (current.IsEquals(newRoom) == true || IsOccupied(newRoom) == true);
+            } while (AlreadyInTheRoom(current, choice) == true || IsOccupied(newRoom) == true);
             return newRoom;
            
         }
+        public bool AlreadyInTheRoom(Position current, int choice)
+        {
+            bool response = false;
+            for(int i=0;i<positionRooms[choice-1].Count;i++)
+            {
+                if(positionRooms[choice-1][i].IsEquals(current))
+                {
+                    response = true;
+                }
+            }
+            return response;
+        }
+
         /// <summary>
         /// Used to delete the mark of the pawn's player once he has made a false accusation
         /// </summary>
@@ -353,6 +368,46 @@ namespace FinalProject
             {
                 this.board[pos.Row, pos.Column].Path = '_';
             }
+        }
+        public Position MoveSecretPassageSocket(Position current, Socket client)
+        {
+            Position newRoom = new Position();
+            Console.WriteLine(current.ToString());
+            do
+            {
+                int choice;
+                do
+                {
+                    Server.SendToClient(1, "Where do you want to go ? (6: Billard Room, 1: Kitchen,  9: Greenhouse, 2: Lounge)", client);
+                    choice = Convert.ToInt32(Server.ReceiveFromClient(client));
+                } while (choice != 6 && choice != 1 && choice != 9 && choice != 2);
+                switch (choice)
+                {
+                    case 6:
+                        newRoom = new Position(0, 6);
+                        break;
+                    case 1:
+                        newRoom = new Position(0, 17);
+                        break;
+                    case 9:
+                        newRoom = new Position(23, 5);
+                        break;
+                    case 2:
+                        newRoom = new Position(23, 18);
+                        break;
+                }
+
+                if (IsOccupied(newRoom) == true)
+                {
+                    Server.SendToClient(2, "You can't go inside the room : it's occupied", client);
+                }
+                else if (current.IsEquals(newRoom) == true)
+                {
+                    Server.SendToClient(2, "Choose another room : you're already inside this room", client);
+                }
+            } while (current.IsEquals(newRoom) == true || IsOccupied(newRoom) == true);
+            return newRoom;
+
         }
         public override string ToString()
         {

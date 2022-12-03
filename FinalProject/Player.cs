@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using System.IO;
+using System.Net.Sockets;
 
 namespace FinalProject
 {
     class Player
     {
         string name;
+        Socket playerSocket;
         int numberOfCards;
         int id;
         List<Card> handtrail;
@@ -18,8 +20,9 @@ namespace FinalProject
         bool accusation;
         #region constructors
         //constructor of a new player
-        public Player(string name,int player,int nbPlayers,GameBoard game)
+        public Player(string name,int player,int nbPlayers,GameBoard game, Socket client=null)
         {
+            this.playerSocket = client;
             this.name = name;
             this.id = player;
             if (nbPlayers == 2) this.numberOfCards = 9;
@@ -127,6 +130,7 @@ namespace FinalProject
         #endregion
         //Properties
         public string Name => name;
+        public Socket PlayerSocket => playerSocket;
         public int Id => id;
         public List<Card> Handtrail { get { return this.handtrail; } set { this.handtrail = value; } }
         public int NumberOfCards { get { return this.numberOfCards; } }
@@ -236,6 +240,69 @@ namespace FinalProject
         /// </summary>
         /// <param name="list">list of Card</param>
         /// <returns>string that represent used to print the list</returns>
+        public void NextMoveSocket(int move, GameBoard game)
+        {
+            char direction;
+            int choice;
+            Position next = new Position();//Voir constructeur vide
+
+            if (Stuck(game) == true)
+            {
+                Thread.Sleep(100);
+                Server.SendToClient(2, "You're stuck ! You have to wait for the next round to move", this.playerSocket);//Console.WriteLine("You're stuck ! You have to wait for the next round to move");
+            }
+            else
+            {
+
+                for (int i = 0; i < move; i++)
+                {
+                    Thread.Sleep(100);
+                    Server.SendBoardToClients(game);//board.PrintBoard();
+                    Thread.Sleep(100);
+                    Server.SendToClient(2, this.name + "\n" + (move - i) + " move left", playerSocket);
+                    Thread.Sleep(100);
+                    do
+                    {
+                        Thread.Sleep(200);
+
+                        //Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left)");
+                        Server.SendToClient(3, "Where do you want to go ? (U = up, D = down, R = right, L = left)", this.playerSocket);
+                        direction = Server.ReceiveFromClient(this.playerSocket).ToUpper().ToCharArray()[0];
+                        if (direction == 'U') next = new Position(pos.Row - 1, pos.Column);
+                        else if (direction == 'D') next = new Position(pos.Row + 1, pos.Column);
+                        else if (direction == 'R') next = new Position(pos.Row, pos.Column + 1);
+                        else if (direction == 'L') next = new Position(pos.Row, pos.Column - 1);
+                        if (!game.ValidPos(next)) { Server.SendToClient(2, "You can't go there : it's outside the board game", this.playerSocket); }//Console.WriteLine("You can't go there : it's outside the board game")
+                        else if (game.IsOccupied(next)) { Server.SendToClient(2, "You can't go there : it's occupied", this.playerSocket); }//Console.WriteLine("You can't go there : it's occupied")
+                        else if (game.IsWallOrStairs(next)) { Server.SendToClient(2, "You can't go there : it's a wall or stairs", this.playerSocket); }//Console.WriteLine("You can't go there : it's a wall or stairs")
+                        else { Server.SendToClient(2, "Wrong input", this.playerSocket); }
+                    } while ((direction != 'U' && direction != 'D' && direction != 'R' && direction != 'L') || !game.ValidPos(next) || game.IsOccupied(next) || game.IsWallOrStairs(next));
+                    game.MarkMove(this.pos, next);
+                    this.pos = next;
+                    if (game.InsideRoom(this.pos) == true)
+                    {
+                        //Console.Clear();
+                        //Console.WriteLine("You're in a room");
+                        if (game.IsSecretPassage(this.pos) == true)
+                        {
+                            Server.SendBoardToClients(game);//board.PrintBoard();
+
+                            //Console.WriteLine("Do you want to use it? (1: yes, 2 : no)");
+                            choice = Convert.ToInt32(GameMultiPlayer.VerificationInputConsoleSocket("There is a secret passage in this room\nDo you want to use it (1: yes, 2: no)", 1, 2, this.playerSocket));
+                            if (choice == 1)
+                            {
+                                next = game.MoveSecretPassageSocket(this.pos, this.playerSocket);
+                                game.MarkMove(this.pos, next);
+                                this.pos = next;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            Server.SendBoardToClients(game);//board.PrintBoard();
+
+        }
         public string PrintList(List<Card> list)
         {
             string res = "";
