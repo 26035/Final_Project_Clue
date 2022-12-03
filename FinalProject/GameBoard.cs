@@ -67,6 +67,8 @@ namespace FinalProject
         public char[,] ReadFile(string fileName)
         {
             char[,] file = new char[24, 24];
+            
+            
             StreamReader lecture = new StreamReader(fileName);
             int i = 0;
             while (!lecture.EndOfStream)
@@ -309,7 +311,7 @@ namespace FinalProject
                             newRoom = new Position(0, 17);
                             break;
                         case 9:
-                            newRoom = new Position(23, 6);
+                            newRoom = new Position(23, 5);
                             break;
                         case 2:
                             newRoom = new Position(23, 18);

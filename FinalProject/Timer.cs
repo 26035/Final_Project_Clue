@@ -32,7 +32,21 @@ namespace FinalProject
             }
         }
 
-        
+        public static void PrintTime()
+        {
+            Console.WriteLine(TimeConversion());
+        }
+        public static string TimeConversion()
+        {
+            string time = "";
+            int hour = Time / 60;
+            int rest = Time % 60;
+            int min = rest / 60;
+            rest = rest % 60;
+            int second = rest;
+            time = time + hour + ":" + min + ":" + second;
+            return time;
+        }
 
     }
 }

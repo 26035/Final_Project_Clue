@@ -138,7 +138,9 @@ namespace FinalProject
         public void NextMove(int move, GameBoard game)
         {
             char direction;
+            string UpperDirection;
             int choice;
+            ConsoleKeyInfo key;
             Position next=new Position();//Voir constructeur vide
             if (Stuck(game)==true)
             {
@@ -149,13 +151,19 @@ namespace FinalProject
                
                 for (int i = 0; i < move; i++)
                 {
-                    Console.WriteLine(this.name + "\n"+ (move-i) + "move left");
+                    Console.WriteLine(this.name + "\n"+ (move-i) + " move left");
                     game.PrintBoard();
                     do
                     {
 
-                        Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left)");
-                        direction = Convert.ToChar(Console.ReadLine().ToUpper());
+                        do
+                        {
+                            Console.WriteLine("Where do you want to go ? (U = up, D = down, R = right, L = left) \n");
+                            key = Console.ReadKey();
+                        } while (key.Key != ConsoleKey.U && key.Key != ConsoleKey.D && key.Key != ConsoleKey.R && key.Key != ConsoleKey.L);
+                        UpperDirection = Convert.ToString(key.KeyChar).ToUpper();
+                        direction = Convert.ToChar(UpperDirection);
+                        //direction = Convert.ToChar(Console.ReadLine().ToUpper());
                         if (direction == 'U') next = new Position(pos.Row - 1, pos.Column);
                         if (direction == 'D') next = new Position(pos.Row + 1, pos.Column);
                         if (direction == 'R') next = new Position(pos.Row, pos.Column + 1);

@@ -148,6 +148,7 @@ namespace FinalProject
        static void Game()
         {
             int option = VerificationInputConsole("Do you want to \n1: begin a new game \n2: continue the saved part? ", 1, 2);
+            
             GameBoard board = new GameBoard();
             List<Player> players = new List<Player>();
             List<Player> runningOrder = new List<Player>();
@@ -157,6 +158,10 @@ namespace FinalProject
                 (board, players, runningOrder, round) = NewGame();
             }
             else { (board, players, runningOrder, round) = ResumptionGame(); }
+            //initialization of the timer 
+            Console.Clear();
+            Timer.Init();
+            Timer.PrintTime();
             while (nbAccusations<players.Count-1 && winner==null)
             {
                 Console.WriteLine("it's up to {0}", runningOrder[round].Name);
@@ -373,7 +378,12 @@ namespace FinalProject
                     {
                         round++;
                     }
-                    else { round = 0; }
+                    else { round = 0;
+                        Console.Clear();
+                        Timer.PrintTime();
+                        Thread.Sleep(3000);
+                        Console.Clear();  
+                    }
                 }
                 else { accusation = true; }
                 
@@ -442,28 +452,49 @@ namespace FinalProject
         /// <returns></returns>
         public static int VerificationInputConsole(string input, int min, int max)
         {
+            #region try catch
             int choice;
             Console.WriteLine(input);
             try
             {
                 choice = Convert.ToInt32(Console.ReadLine());
-                if(choice >= min || choice <= max)
+                if(choice >= min && choice <= max)
                 {
                     return choice;
                 }
-                else { VerificationInputConsole(input, min, max); }
-            }catch (Exception e)
+                else { return VerificationInputConsole(input, min, max); }
+            }catch 
             {
                 return VerificationInputConsole(input,min,max);
             }
+            return choice;
+            #endregion
+            #region ConsoleReadKey
+            /*Console.WriteLine(input);
+            var key = Console.ReadKey();*/
+            /*ConsoleKeyInfo key = new ConsoleKeyInfo();
+            int choice;
+            do
+            {
+                Console.WriteLine(input);
+                key = Console.ReadKey();
+                choice = Convert.ToInt32(key.KeyChar);
+            } while (choice < min || choice > max);
+            return Convert.ToInt32(key.KeyChar);*/
+            /*if()
+            {
+                return (int) key.KeyChar;
+            }
+            else { return VerificationInputConsole("try again", min, max); }*/
+            #endregion
             /*int choice;
             do
             {
                 Console.WriteLine(input);
                 choice = Convert.ToInt32(Console.ReadLine());
                 //Console.Clear();
-            } while (choice < min || choice > max);*/
-            return choice;
+            } while (choice < min || choice > max);
+            return choice;*/
         }
         /// <summary>
         /// 
@@ -629,7 +660,7 @@ namespace FinalProject
 
             //Initialisation du jeu...
             List<Card> remainingCards = CardsManager.Initialization();
-            int nbPlayers = 0;
+            int nbPlayers;
             nbPlayers = VerificationInputConsole("How many players are going to play (2,3,4,5,6) ?", 2, 6);
             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
             List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
@@ -687,9 +718,9 @@ namespace FinalProject
             {
                 Register.DeleteFile(string.Concat("Player_", i + 1));
             }
-            Register.DeleteFile("savedBoard.csv");
-            Register.DeleteFile("Players_RunningOrder_round.csv");
-            Register.DeleteFile("cardsMurderer.csv");
+            Register.DeleteFile("savedBoard");
+            Register.DeleteFile("Players_RunningOrder_round");
+            Register.DeleteFile("cardsMurderer");
         }
         static void InitializationAllPlayers(GameBoard board)
         {
