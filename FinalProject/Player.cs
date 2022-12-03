@@ -16,7 +16,8 @@ namespace FinalProject
         List<Card> stillSuspected;
         List<List<Card>> allHypothesis;
         bool accusation;
-        //Constructor
+        #region constructors
+        //constructor of a new player
         public Player(string name,int player,int nbPlayers,GameBoard game)
         {
             this.name = name;
@@ -44,12 +45,15 @@ namespace FinalProject
             this.accusation = false;
 
         }
+        // constructor by default
         public Player() { }
+        //constructor with partial informations
         public Player(int id,string name)
         {
             this.id = id;
             this.name = name;
         }
+        //constructor from file
         public Player(string fileName)
         {
             string[] line = File.ReadAllLines(fileName+".csv");
@@ -120,6 +124,7 @@ namespace FinalProject
 
 
         }
+        #endregion
         //Properties
         public string Name => name;
         public int Id => id;
