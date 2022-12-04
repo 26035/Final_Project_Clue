@@ -258,9 +258,10 @@ namespace FinalProject
                     }
                     
                 }
-                SaveGame(board, players, runningOrder, round);
+                //SaveGame(board, players, runningOrder, round);
                 if (accusation != true)
                 {
+                    SaveGame(board, players, runningOrder, round);
                     if (round < runningOrder.Count - 1)
                     {
                         round++;

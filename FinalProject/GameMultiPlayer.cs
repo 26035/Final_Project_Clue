@@ -204,9 +204,9 @@ namespace FinalProject
                 }
                 else { round = 0; }*/
             }
-                EndOfTheGameSocket(runningOrder);
+            EndOfTheGameSocket(runningOrder);
 
-            }
+        }
         
         static List<Card> HypothesisSocket(GameBoard board, List<Player> runningOrder, int round, List<Card> CardsSuspectedByTheCurrentPlayer)
         {
