@@ -145,7 +145,6 @@ namespace FinalProject
                                     board.DeleteMark(runningOrder[round].Pos);
                                     runningOrder.RemoveAt(round);
                                     accusation = true;
-                                    //break;
                                 }
                             }
                             else
@@ -178,8 +177,8 @@ namespace FinalProject
                             }*/
 
                             //Console.WriteLine("press enter to continue");
-                            Console.ReadKey();
-                            Console.Clear();
+                            //Console.ReadKey();
+                            //Console.Clear();
                         }
 
                     }
