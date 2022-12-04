@@ -24,11 +24,12 @@ namespace FinalProject
                 Server.SetUpServer(nbPlayers);
 
                 List<Player> players = PlayerManager.InitializationSocket(nbPlayers, remainingCards, board);
-                List<Player> runningOrder = players.OrderBy(item => Program.random.Next()).ToList();
+                List<Player> runningOrder = new List<Player>(players);
+                runningOrder.OrderBy(item => Program.random.Next()).ToList();
                 //...jusqu'à distribution des cartes
 
-                //break si nbAccusations == nbplayers ou player.accusation == true à chaque round du joueur
-                int round = 0;
+            //break si nbAccusations == nbplayers ou player.accusation == true à chaque round du joueur
+            int round = 0;
                 while (nbAccusations < players.Count - 1 && winner == null)
                 {
                     Server.SendBoardToClients(board);
@@ -137,12 +138,14 @@ namespace FinalProject
                                     Console.WriteLine("you can't play but you will have to show your card so stay connected :)");
                                     runningOrder[round].Accusation = true;*/
                                     Server.SendToAll(2, "Unfortunately, the accusation is wrong...");
+                                    Thread.Sleep(1000);
                                     Server.SendToClient(2, "You can't play anymore but you still have to show your card, so stay connected !", runningOrder[round].PlayerSocket);
                                     runningOrder[round].Accusation = true;
                                     nbAccusations++;
                                     board.DeleteMark(runningOrder[round].Pos);
                                     runningOrder.RemoveAt(round);
                                     accusation = true;
+                                    //break;
                                 }
                             }
                             else
