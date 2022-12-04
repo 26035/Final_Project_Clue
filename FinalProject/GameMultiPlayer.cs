@@ -158,7 +158,7 @@ namespace FinalProject
 
                                 }
                             }
-                            if (accusation != true)
+                            /*if (accusation != true)
                             {
                                 if (round < runningOrder.Count - 1)
                                 {
@@ -172,7 +172,7 @@ namespace FinalProject
                             else
                             {
                                 accusation = true;
-                            }
+                            }*/
 
                             //Console.WriteLine("press enter to continue");
                             Console.ReadKey();
@@ -181,13 +181,27 @@ namespace FinalProject
 
                     }
 
-
+                if (accusation != true)
+                {
                     if (round < runningOrder.Count - 1)
                     {
                         round++;
                     }
-                    else { round = 0; }
+                    else
+                    {
+                        round = 0;
+                    }
                 }
+                else
+                {
+                    accusation = true;
+                }
+                /*if (round < runningOrder.Count - 1)
+                {
+                    round++;
+                }
+                else { round = 0; }*/
+            }
                 EndOfTheGameSocket(runningOrder);
 
             }
@@ -349,8 +363,6 @@ namespace FinalProject
             if (runningOrder.Count == 1)
             {
                 winner = runningOrder[0];
-
-
             }
             Server.SendToAll(2, "Game is over !\nThe 3 murder cards were : " +
                 CardsManager.cardsRooms.CardMurderer.Name + " ; " +

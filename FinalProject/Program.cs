@@ -17,6 +17,7 @@ namespace FinalProject
         static void Main(string[] args)
         {
             int response = VerificationInputConsole("How do you want to play ? \n\t1: with only one computer \n\t2: with multiple computers", 1, 2);
+            Console.Clear();
             if (response==1)
             {
                 Game();
@@ -26,134 +27,10 @@ namespace FinalProject
                 Console.Title = "Server";
                 GameMultiPlayer.Run();
             }
-            
-            #region lecture + sauvegarde fichier test 
-            /*var (board, players,runningOrder,round ) = ResumptionGame();
-            board.PrintBoard();
-            Console.Write("\n...\n");
-            for (int i=0;i<players.Count;i++)
-            {
-                Console.WriteLine(players[i].Name);
-                Console.WriteLine(players[i].ToString());
-                
-            }
-            Console.Write("\n...\n");
-            for (int i = 0; i < runningOrder.Count; i++)
-            {
-                Console.WriteLine(runningOrder[i].Name);
-                Console.WriteLine(runningOrder[i].ToString());
-
-            }
-            
-            Console.Write("\n...\n");
-            Console.WriteLine(round);*/
-            
-
-            #endregion
-            #region test initialisation joueur
-            /*GameBoard board = new GameBoard();
-            board.PrintBoard();
-
-
-            //Initialisation du jeu...
-            List<Card> remainingCards = CardsManager.Initialization();
-            int nbPlayers = 0;
-            do
-            {
-                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
-                nbPlayers = Convert.ToInt32(Console.ReadLine());
-            } while (nbPlayers < 2 || nbPlayers >= 7);
-            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            foreach(Player player in players)
-            {
-                Console.WriteLine(player.ToString());
-            }
-            Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
-            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();*/
-            #endregion
-            /* GameBoard board = new GameBoard();
-             board.PrintBoard();
-
-
-             //Initialisation du jeu...
-             List<Card> remainingCards = CardsManager.Initialization();
-             int nbPlayers = 0;
-             do
-             {
-                 Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
-                 nbPlayers = Convert.ToInt32(Console.ReadLine());
-             } while (nbPlayers < 2 || nbPlayers >= 7);
-             List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-             Register.SaveMurderCards("MurderCards");*/
-            //List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
-            //Console.WriteLine(players[0].ToString());
-            //Console.WriteLine(players[1].ToString());
-            //...jusqu'à distribution des cartes
-            #region test 2
-            /*GameBoard board = new GameBoard();
-            board.PrintBoard();
-            List<Card> remainingCards = CardsManager.Initialization();
-            int nbPlayers = 0;
-            do
-            {
-                Console.WriteLine("How many players are going to play (2,3,4,5,6) ?");
-                nbPlayers = Convert.ToInt32(Console.ReadLine());
-            } while (nbPlayers < 2 || nbPlayers >= 7);
-            List<Player> players = PlayerManager.Initialization(nbPlayers, remainingCards, board);
-            List<Player> runningOrder = players.OrderBy(item => random.Next()).ToList();
-            Console.WriteLine(Cards.PrintList(remainingCards));
-            Console.WriteLine("handrail 1: " + Cards.PrintList(runningOrder[0].Handtrail) + "\n handrail 2 : " + Cards.PrintList(runningOrder[1].Handtrail));*/
-            #endregion
-            /*Console.WriteLine(Cards.PrintList(CardsManager.Initialization()));
-            Console.WriteLine(Cards.PrintList(CardsManager.AllCards));*/
-            #region test1
-            /*List<Card> CardsSuspectedByTheCurrentPlayer = new List<Card>();
-            //suspect person of the current player
-            Console.WriteLine("which person do you suspected?Tape the ID of the card that you choose");
-            Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
-            int cardSuspectHypothesis = Convert.ToInt32(Console.ReadLine());
-            //suspect weapon of the current player
-            Console.WriteLine("which weapon do you suspected?");
-            int cardWeaponHypothesis = Convert.ToInt32(Console.ReadLine());
-            var r = from suspect in CardsManager.AllCards
-                    where suspect.ID == cardSuspectHypothesis || suspect.ID == cardWeaponHypothesis
-                    select suspect;
-            foreach (var i in r)
-            {
-                CardsSuspectedByTheCurrentPlayer.Add(i);
-            }
-            foreach (var i in CardsSuspectedByTheCurrentPlayer)
-            {
-                Console.WriteLine(i.Name);
-            }*/
-            #endregion
-            Console.ReadKey();
-            /*Console.WriteLine("which person do you suspected?Tape the ID of the card that you choose");
-            Console.WriteLine(Cards.PrintList(CardsManager.cardsSuspects.FamilyCards));
-            int cardSuspected = Convert.ToInt32(Console.ReadLine());
-            var r = from suspect in CardsManager.cardsSuspects.FamilyCards
-                    where suspect.ID == cardSuspected
-                    select suspect;
-            r.Select(0);*/
-
-            //CardsSuspectedByTheCurrentPlayer.Add();
-            //test
-            /*GameBoard board = new GameBoard();
-            List<Card> remainingCards = CardsManager.Initialization();
-            List<Player> players = PlayerManager.Initialization(2, remainingCards, board);
-            players[0].NextMove(8,board);
-            Console.WriteLine(players[0].Pos.ToString());
-            Console.ReadKey();*/
-
         }
         /// <summary>
-        /// Code distribuer les cartes après avoir enlevé les cartes du meurtier
-        /// </summary>
-        
-        
-        
-        /// <summary>
-        /// Code début du jeu
+        /// game body 
+        /// Steps of the game
         /// </summary>
        static void Game()
         {
