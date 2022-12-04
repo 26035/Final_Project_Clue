@@ -19,6 +19,10 @@ namespace FinalProject
         static IPEndPoint ep = new IPEndPoint(ip, port);
         public static List<Socket> allClients = new List<Socket>();
         static Socket client = default(Socket);
+        /// <summary>
+        /// used to set up the server
+        /// </summary>
+        /// <param name="nb">integer that represent the number of player</param>
         public static void SetUpServer(int nb)
         {
             ServerListener.Bind(ep);
@@ -26,6 +30,11 @@ namespace FinalProject
             Console.WriteLine("Server listening...");
             allClients = AcceptConnection(nb);
         }
+        /// <summary>
+        /// used to accept a predefine number of connection
+        /// </summary>
+        /// <param name="nb">integer that represent the number of player (or connection)</param>
+        /// <returns>List of socket used by every player connected</returns>
         public static List<Socket> AcceptConnection(int nb)
         {
             int counter = 0;
@@ -43,6 +52,12 @@ namespace FinalProject
             return allClients;
 
         }
+        /// <summary>
+        /// used to send informations to all players except one
+        /// </summary>
+        /// <param name="type">integer that represent the type of information</param>
+        /// <param name="text">string that is sent to the player</param>
+        /// <param name="client">socket of the player that is not receiving the informations</param>
         public static void SendToOtherClients(int type, string text, Socket client)
         {
             for (int i = 0; i < allClients.Count; i++)
@@ -53,6 +68,11 @@ namespace FinalProject
                 }
             }
         }
+        /// <summary>
+        /// used to send informations to every player
+        /// </summary>
+        /// <param name="type">integer that represent the type of informations</param>
+        /// <param name="text">string that is sent to the player</param>
         public static void SendToAll(int type, string text)
         {
             foreach (Socket client in allClients)
@@ -60,6 +80,10 @@ namespace FinalProject
                 Server.SendToClient(type, text, client);
             }
         }
+        /// <summary>
+        /// used to send the informationof the board to every player
+        /// </summary>
+        /// <param name="board">that represent the board</param>
         public static void SendBoardToClients(GameBoard board)
         {
             foreach (Socket client in allClients)
@@ -67,6 +91,12 @@ namespace FinalProject
                 Server.SendToClient(0, board.ToString(), client);
             }
         }
+        /// <summary>
+        /// Used to send information to only one player
+        /// </summary>
+        /// <param name="type">integer that represents the type of information</param>
+        /// <param name="text">string that represents the information</param>
+        /// <param name="client">socket of the player receiving informations</param>
         public static void SendToClient(int type, string text, Socket client)
         {
 
@@ -75,6 +105,11 @@ namespace FinalProject
             Console.WriteLine("Sent text");
 
         }
+        /// <summary>
+        /// Used to receive informations from players
+        /// </summary>
+        /// <param name="client">socket of the player sending information</param>
+        /// <returns>string that represents the informations sent by a player</returns>
         public static string ReceiveFromClient(Socket client)
         {
             string textServer = "";

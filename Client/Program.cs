@@ -24,10 +24,12 @@ namespace Client
             ReceiveFromServer();
             Console.ReadKey();
         }
+        /// <summary>
+        /// used to connect to the server
+        /// </summary>
         static void ConnectToServer()
         {
             Console.Title = "Client";
-            //Console.WriteLine("Enter the server IP address");
             string IpAddress=null;
             Console.WriteLine("What is the server IP Address ?\n\t1: 10.0.76.255\n\t2: 10.10.3.114\n\t3: Other");
             int choice = Convert.ToInt32(Console.ReadLine());
@@ -64,7 +66,9 @@ namespace Client
             }
             Console.Clear();
         }
-
+        /// <summary>
+        /// used to send information to the server
+        /// </summary>
         static void SendToServer()
         {
             Console.WriteLine("Send a response :");
@@ -73,6 +77,9 @@ namespace Client
             client.Send(buffer, 0, buffer.Length, SocketFlags.None);
             Console.Clear();
         }
+        /// <summary>
+        /// used to send direction move to the server
+        /// </summary>
         static void SendDirectionToServer()
         {
             ConsoleKeyInfo answer = Console.ReadKey(true);
@@ -108,7 +115,9 @@ namespace Client
                 SendDirectionToServer();
             }
         }
-
+        /// <summary>
+        /// used to receive informations from the server
+        /// </summary>
         static void ReceiveFromServer()
         {
             byte[] buffer = new byte[1024];
@@ -147,7 +156,11 @@ namespace Client
                 Array.Clear(buffer, 0, buffer.Length);
             }
         }
-        
+        /// <summary>
+        /// used to read a csv file and create a matrix thank to the file
+        /// </summary>
+        /// <param name="fileName">string that represents the name of the file</param>
+        /// <returns>matrix of char that represents the board information (secret passage, door or letter of the room)</returns>
         public static char[,] ReadFile(string fileName)
         {
             char[,] file = new char[24, 24];
@@ -165,6 +178,11 @@ namespace Client
             }
             return file;
         }
+        /// <summary>
+        /// used to Create a matrix from a string
+        /// </summary>
+        /// <param name="text">string that composes the matrix</param>
+        /// <returns>matrix of char that represents the board informations (pawn, empty path, wall or stair)</returns>
         static char[,] CreateMatrix(string text)
         {
             int count = 0;
@@ -180,6 +198,10 @@ namespace Client
             }
             return board;
         }
+        /// <summary>
+        /// used to create a colorful print of the board
+        /// </summary>
+        /// <param name="textBoard">string that represents the board informations (pawn, empty path, wall or stair)</param>
         public static void PrintBoard(string textBoard)
         {
 

@@ -356,6 +356,7 @@ namespace FinalProject
 
             board.MarkMove(currentPos, nextPosition);
             p.Pos = nextPosition;
+            Server.SendBoardToClients(board);
         }
         public static List<Player> InitializationSocket(int nbPlayers, List<Card> remainingCards, GameBoard board)
         {

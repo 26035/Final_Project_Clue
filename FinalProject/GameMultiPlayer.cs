@@ -12,6 +12,9 @@ namespace FinalProject
     {
         public static Player winner = null;
         public static int nbAccusations = 0;
+        /// <summary>
+        /// game body to play with multiple computers
+        /// </summary>
         public static void Run()
         {
             
