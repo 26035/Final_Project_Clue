@@ -28,9 +28,23 @@ namespace Client
         {
             Console.Title = "Client";
             //Console.WriteLine("Enter the server IP address");
-            //string IpAddress = Console.ReadLine();
-            string IpAddress = "10.10.3.114";
-            //string IpAddress = "10.0.76.255";
+            string IpAddress=null;
+            Console.WriteLine("What is the server IP Address ?\n\t1: 10.0.76.255\n\t2: 10.10.3.114\n\t3: Other");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    IpAddress = "10.0.76.255";
+                    break;
+                case 2:
+                    IpAddress = "10.10.3.114";
+                    break;
+                case 3:
+                    Console.WriteLine("Enter the server IP Address");
+                    IpAddress = Console.ReadLine();
+                    break;
+
+            }
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(IpAddress), port);
 
             byte[] buffer = new byte[1024];
@@ -48,6 +62,7 @@ namespace Client
                     Console.WriteLine("Trying to connect...");
                 }
             }
+            Console.Clear();
         }
 
         static void SendToServer()

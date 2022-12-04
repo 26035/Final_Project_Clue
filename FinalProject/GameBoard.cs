@@ -372,10 +372,10 @@ namespace FinalProject
         public Position MoveSecretPassageSocket(Position current, Socket client)
         {
             Position newRoom = new Position();
-            Console.WriteLine(current.ToString());
+            int choice;
             do
             {
-                int choice;
+                
                 do
                 {
                     Server.SendToClient(1, "Where do you want to go ? (6: Billard Room, 1: Kitchen,  9: Greenhouse, 2: Lounge)", client);
@@ -399,13 +399,13 @@ namespace FinalProject
 
                 if (IsOccupied(newRoom) == true)
                 {
-                    Server.SendToClient(2, "You can't go inside the room : it's occupied", client);
+                    Console.WriteLine("You can't go inside the room : it's occupied");
                 }
-                else if (current.IsEquals(newRoom) == true)
+                else if (AlreadyInTheRoom(current, choice))
                 {
-                    Server.SendToClient(2, "Choose another room : you're already inside this room", client);
+                    Console.WriteLine("Choose another room : you're already inside this room");
                 }
-            } while (current.IsEquals(newRoom) == true || IsOccupied(newRoom) == true);
+            } while (AlreadyInTheRoom(current, choice) == true || IsOccupied(newRoom) == true);
             return newRoom;
 
         }
