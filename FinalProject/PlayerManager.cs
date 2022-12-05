@@ -59,7 +59,7 @@ namespace FinalProject
         public static void ChooseRoom(Player p, GameBoard board)
         {
             Position currentPos = p.Pos;
-            Position nextPosition = new Position(); 
+            Position nextPosition = new Position();
             int nbOfTheRoom;
             nbOfTheRoom = Program.VerificationInputConsole("In which room do you want to go? \n 1: Kitchen" +
                     "\n2: Lounge" +
@@ -69,58 +69,58 @@ namespace FinalProject
                     "\n6: Billard Room" +
                     "\n7: Library" +
                     "\n8: Study" +
-                    "\n9: Greenhouse", 1,9);
+                    "\n9: Greenhouse", 1, 9);
             int position;
             switch (nbOfTheRoom)
             {
-                case 1:
+                case 1://kitchen
                     nextPosition = board.PositionRooms[0][0];
                     break;
-                case 2:
+                case 2://lounge
                     nextPosition = board.PositionRooms[1][0];
                     break;
-                case 3:
-                    nextPosition = board.PositionRooms[2][0];
+                case 3://ball room
+                    position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
+                            "\n0: (18,11)" +
+                            "\n1: (18,14)" +
+                            "\n2: (20,9)" +
+                            "\n3: (20,16)", 0, 3);
+                    nextPosition = board.PositionRooms[2][position];
                     break;
-                case 4:
-                    nextPosition = board.PositionRooms[3][0];
+                case 4://dinning room
+                    position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
+                            "\n0: (9,18)" +
+                            "\n1: (13,17)", 0, 1);
+                    nextPosition = board.PositionRooms[3][position];
                     break;
-                case 5:
+                case 5://hall
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
                             "\n0: (5,10)" +
                             "\n1: (6,12)" +
                             "\n2: (6,13)", 0, 2);
                     nextPosition = board.PositionRooms[4][position];
                     break;
-                case 6:
+                case 6://billard
+                    nextPosition = board.PositionRooms[5][0];
+                    break;
+                case 7://library
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
                             "\n0: (9,7)" +
                             "\n1: (11,3)", 0, 1);
-                    nextPosition = board.PositionRooms[5][position];
-                    break;
-                case 7:
-                    position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
-                            "\n0: (13,3)" +
-                            "\n1: (16,6)",0,1);
                     nextPosition = board.PositionRooms[6][position];
                     break;
-                case 8:
+                case 8://study
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
-                            "\n0: (9,18)" +
-                            "\n1: (13,17)", 0, 1);
+                           "\n0: (13,2)" +
+                           "\n1: (16,6)", 0, 1);
                     nextPosition = board.PositionRooms[7][position];
                     break;
                 case 9:
-                    position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
-                            "\n0: (18,11)" +
-                            "\n1: (18,14)" +
-                            "\n2: (20,9)" +
-                            "\n3: (20,16)", 0, 3);
-                    nextPosition = board.PositionRooms[8][position];
+                    nextPosition = board.PositionRooms[8][0];
                     break;
 
             }
-            if(board.IsOccupied(nextPosition))
+            if (board.IsOccupied(nextPosition))
             {
                 ChooseRoom(p, board);
             }
@@ -194,50 +194,51 @@ namespace FinalProject
             int position;
             switch (nbOfTheRoom)
             {
-                case 1:
+                case 1://kitchen
                     nextPosition = board.PositionRooms[0][0];
                     break;
-                case 2:
+                case 2://lounge
                     nextPosition = board.PositionRooms[1][0];
                     break;
-                case 3:
-                    nextPosition = board.PositionRooms[2][0];
+                case 3://ball room
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (18,11)" +
+                            "\n1: (18,14)" +
+                            "\n2: (20,9)" +
+                            "\n3: (20,16)", 0, 3, p.PlayerSocket);
+                    nextPosition = board.PositionRooms[2][position];
                     break;
-                case 4:
-                    nextPosition = board.PositionRooms[3][0];
+                case 4://dinning room
+                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
+                            "\n0: (9,18)" +
+                            "\n1: (13,17)", 0, 1, p.PlayerSocket);
+                    nextPosition = board.PositionRooms[3][position];
                     break;
-                case 5:
+                case 5://hall
                     position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
                             "\n0: (5,10)" +
                             "\n1: (6,13)" +
                             "\n2: (7,14)", 0, 2, p.PlayerSocket);
                     nextPosition = board.PositionRooms[4][position];
                     break;
-                case 6:
+                case 6://billard
+                    nextPosition = board.PositionRooms[5][0];
+                    break;
+                case 7://library
                     position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
                             "\n0: (9,7)" +
                             "\n1: (11,3)", 0, 1, p.PlayerSocket);
-                    nextPosition = board.PositionRooms[5][position];
+                    
+                    nextPosition = board.PositionRooms[6][position];
                     break;
-                case 7:
+                case 8://study
                     position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
                             "\n0: (13,3)" +
                             "\n1: (16,6)", 0, 1, p.PlayerSocket);
-                    nextPosition = board.PositionRooms[6][position];
-                    break;
-                case 8:
-                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
-                            "\n0: (9,18)" +
-                            "\n1: (13,17)", 0, 1, p.PlayerSocket);
                     nextPosition = board.PositionRooms[7][position];
                     break;
-                case 9:
-                    position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
-                            "\n0: (18,11)" +
-                            "\n1: (18,14)" +
-                            "\n2: (20,9)" +
-                            "\n3: (20,16)", 0, 3, p.PlayerSocket);
-                    nextPosition = board.PositionRooms[8][position];
+                case 9://greenhouse
+                    nextPosition = board.PositionRooms[8][0];
                     break;
 
             }

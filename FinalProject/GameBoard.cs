@@ -89,15 +89,15 @@ namespace FinalProject
         /// </summary>
         public void InitializationRooms()
         {
-            positionRooms.Add(new List<Position> { new Position(4, 18), new Position(0, 17) });
-            positionRooms.Add(new List<Position> { new Position(18, 20), new Position(23, 18) });
-            positionRooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });
-            positionRooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });
-            positionRooms.Add(new List<Position> { new Position(4, 9), new Position(5, 11), new Position(5, 12) });
-            positionRooms.Add(new List<Position> { new Position(3, 5), new Position(0, 6) });
-            positionRooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });
-            positionRooms.Add(new List<Position> { new Position(12, 1), new Position(15, 5) });
-            positionRooms.Add(new List<Position> { new Position(20, 5), new Position(23, 6) });
+            positionRooms.Add(new List<Position> { new Position(4, 18), new Position(0, 17) });//kitchen
+            positionRooms.Add(new List<Position> { new Position(18, 20), new Position(23, 18) });//lounge
+            positionRooms.Add(new List<Position> { new Position(17, 10), new Position(17, 13), new Position(19, 8), new Position(19, 15) });//ball room
+            positionRooms.Add(new List<Position> { new Position(8, 17), new Position(12, 16) });//dinning room
+            positionRooms.Add(new List<Position> { new Position(4, 9), new Position(5, 11), new Position(5, 12) });//hall
+            positionRooms.Add(new List<Position> { new Position(3, 5), new Position(0, 6) });//billard
+            positionRooms.Add(new List<Position> { new Position(8, 6), new Position(10, 2) });//library
+            positionRooms.Add(new List<Position> { new Position(12, 1), new Position(15, 5) });//study
+            positionRooms.Add(new List<Position> { new Position(20, 5), new Position(23, 6) });//greenhouse
         }
         /// <summary>
         /// Used to print the game board 
