@@ -13,7 +13,6 @@ namespace Client
     class Program
     {
         static int port = 13000;
-        //static string IpAddress = "10.0.76.255";
         static IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
         static IPAddress ip = ipHost.AddressList[0];
         static Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -201,7 +200,6 @@ namespace Client
                 for (int j = 0; j < 24; j++)
                 {
                     board[i, j] = text[count];
-                    //Console.Write(board[i, j]);
                     count++;
                 }
             }
