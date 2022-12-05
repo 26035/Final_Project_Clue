@@ -99,10 +99,18 @@ namespace FinalProject
         /// <param name="client">socket of the player receiving informations</param>
         public static void SendToClient(int type, string text, Socket client)
         {
+            try
+            {
+                byte[] buffer = Encoding.ASCII.GetBytes(type + text);
+                client.Send(buffer);
+                Console.WriteLine("Sent text");
+            }
+            catch (SocketException)
+            {
+                ServerListener.Close();
+                Environment.Exit(0);
+            }
 
-            byte[] buffer = Encoding.ASCII.GetBytes(type + text);
-            client.Send(buffer);
-            Console.WriteLine("Sent text");
 
         }
         /// <summary>
@@ -112,18 +120,29 @@ namespace FinalProject
         /// <returns>string that represents the informations sent by a player</returns>
         public static string ReceiveFromClient(Socket client)
         {
-            string textServer = "";
-            while (client.Connected && textServer == "")
+            try
             {
-                byte[] buffer = new byte[1024];
-                client.Receive(buffer);
-                if (buffer.Length != 0)
+                string textServer = "";
+                while (client.Connected && textServer == "")
                 {
-                    Console.WriteLine("Text received");
-                    textServer = Encoding.ASCII.GetString(buffer);
+                    byte[] buffer = new byte[1024];
+                    client.Receive(buffer);
+                    if (buffer.Length != 0)
+                    {
+                        Console.WriteLine("Text received");
+                        textServer = Encoding.ASCII.GetString(buffer);
+                    }
                 }
+                return textServer;
             }
-            return textServer;
+            catch (SocketException)
+            {
+                ServerListener.Close();
+                Environment.Exit(0);
+                return "";
+            }
+                
+            
         }
     }
 }

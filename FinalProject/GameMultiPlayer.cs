@@ -25,7 +25,7 @@ namespace FinalProject
                 int nbPlayers = 0;
                 nbPlayers = Program.VerificationInputConsole("How many players are going to play (2,3,4,5,6) ?", 2, 6);
                 Server.SetUpServer(nbPlayers);
-
+                Server.SendToAll(2, "Waiting for other player to choose their pawn...");
                 List<Player> players = PlayerManager.InitializationSocket(nbPlayers, remainingCards, board);
                 List<Player> runningOrder = new List<Player>(players);
                 runningOrder.OrderBy(item => Program.random.Next()).ToList();
@@ -236,7 +236,7 @@ namespace FinalProject
 
             //suspect weapon of the current player
             //Console.WriteLine("which weapon do you suspected?");
-            int cardWeaponHypothesis = VerificationInputConsoleSocket(runningOrder[round].ToString() + "\nwhich weapon do you suspected? " + Cards.PrintList(CardsManager.cardsWeapons.FamilyCards), 16, 21, runningOrder[round].PlayerSocket);
+            int cardWeaponHypothesis = VerificationInputConsoleSocket(runningOrder[round].ToString() + "\n\nwhich weapon do you suspected? \n" + Cards.PrintList(CardsManager.cardsWeapons.FamilyCards), 16, 21, runningOrder[round].PlayerSocket);
             //Console.WriteLine(Cards.PrintList(CardsManager.cardsWeapons.FamilyCards));
             //int cardWeaponHypothesis = Convert.ToInt32(Console.ReadLine());
 
@@ -339,6 +339,7 @@ namespace FinalProject
                     if (CardsSuspectedPresentInTheOtherPlayerHandrail.Count != 0)
                     {
                         Server.SendToClient(2, "The card of player " + p.Id + " is " + cardToShow.Name, runningOrder[round].PlayerSocket);
+                        Thread.Sleep(2000);
                         /*Console.WriteLine("{0} you will be able to see the card, press enter to continue", runningOrder[round].Name);
                         Console.ReadKey();
                         Console.Clear();

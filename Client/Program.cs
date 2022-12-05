@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Client
 {
@@ -56,7 +57,7 @@ namespace Client
                 {
                     client.Connect(ep);
 
-                    Console.WriteLine("You're connected!");
+                    
                 }
                 catch (SocketException)
                 {
@@ -65,6 +66,7 @@ namespace Client
                 }
             }
             Console.Clear();
+            Console.WriteLine("You're connected!\nWaiting for other player to join...");
         }
         /// <summary>
         /// used to send information to the server
@@ -121,40 +123,47 @@ namespace Client
         static void ReceiveFromServer()
         {
             byte[] buffer = new byte[1024];
-            while (client.Connected)
+            try
             {
-                client.Receive(buffer);
-                if (buffer.Length != 0)
+                while (client.Connected)
                 {
-                    //Console.WriteLine("Text received from serveur");
-                    string infoServer = Encoding.Default.GetString(buffer);
-                    char typeOfInfo = infoServer[0];
-                    string textServer = infoServer.Substring(1);
-                    //Console.WriteLine(typeOfInfo);
-                    switch (typeOfInfo)
+                    client.Receive(buffer);
+                    if (buffer.Length != 0)
                     {
-                        case '0'://print board game on client console
-                            Console.Clear();
-                            //CreateMatrix(textServer);
-                            PrintBoard(textServer);
-                            break;
-                        case '1'://print request and ask for answer
-                            Console.WriteLine(textServer);
-                            SendToServer();
-                            break;
-                        case '2'://print infos
-                                 //Console.WriteLine("Ok n°2");
-                            Console.WriteLine(textServer);
-                            break;
-                        case '3':
-                            Console.WriteLine(textServer);
-                            SendDirectionToServer();
-                            break;
-                    }
+                        string infoServer = Encoding.Default.GetString(buffer);
+                        char typeOfInfo = infoServer[0];
+                        string textServer = infoServer.Substring(1);
+                        switch (typeOfInfo)
+                        {
+                            case '0'://print board game on client console
+                                Console.Clear();
+                                PrintBoard(textServer);
+                                break;
+                            case '1'://print request and ask for answer
+                                Console.WriteLine(textServer);
+                                SendToServer();
+                                break;
+                            case '2'://print infos
+                                Console.WriteLine(textServer);
+                                break;
+                            case '3':
+                                Console.WriteLine(textServer);
+                                SendDirectionToServer();
+                                break;
+                        }
 
+                    }
+                    Array.Clear(buffer, 0, buffer.Length);
                 }
-                Array.Clear(buffer, 0, buffer.Length);
+
             }
+            catch (SocketException)
+            {
+                Console.WriteLine("Sever disconnected\nPresse enter to exit");
+                client.Close();
+            }
+            
+
         }
         /// <summary>
         /// used to read a csv file and create a matrix thank to the file
@@ -299,5 +308,7 @@ namespace Client
             }
             Console.ResetColor();
         }
+       
+        
     }
 }

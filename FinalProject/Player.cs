@@ -314,7 +314,7 @@ namespace FinalProject
         }
         public override string ToString()
         {
-            return "\tHandrail: "+ PrintList(this.handtrail)+"\nStill suspected : "+PrintList(this.stillSuspected);
+            return "\tHandrail: "+ PrintList(this.handtrail)+"\n\nStill suspected : "+PrintList(this.stillSuspected);
         }
     }
 }
