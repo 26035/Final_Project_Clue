@@ -259,19 +259,20 @@ namespace FinalProject
                         if (showOneCard == false && CardsSuspectedPresentInTheOtherPlayerHandrail.Count != 0)
                         {
                             Thread.Sleep(1000);
-                            Server.SendToClient(2, "You have to show one of your card", p.PlayerSocket)/*Console.WriteLine("{0} You have to show one of your card", p.Name)*/;
+                            Server.SendToClient(2, "You have to show one of your card", p.PlayerSocket);
                         }
                     } while (showOneCard == false && CardsSuspectedPresentInTheOtherPlayerHandrail.Count != 0);
                     Console.Clear();
                     if (CardsSuspectedPresentInTheOtherPlayerHandrail.Count != 0)
                     {
                         Server.SendToClient(2, "The card of player " + p.Id + " is " + cardToShow.Name, runningOrder[round].PlayerSocket);
-                        Thread.Sleep(2000);
+                        
                     }
                     else
                     {
                         Server.SendToClient(2, "Player " + p.Id + " have no card to show you", runningOrder[round].PlayerSocket);
                     }
+                    Thread.Sleep(2000);
                 }
             }
         }
