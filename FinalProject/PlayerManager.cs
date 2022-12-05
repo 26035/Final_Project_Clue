@@ -8,10 +8,10 @@ using System.Threading;
 
 namespace FinalProject
 {
-    //fonction : montrer les cartes du joueur qui lui sont encore inconnus
-    //fonction : chercher les cartes possibles et choisir quelle carte montrer 
+     
     static class PlayerManager
     {
+        //static variable of the class
         public static List<Player> AllPlayers = new List<Player>();
         /// <summary>
         /// Used to initializes the list of player with their handtrail
@@ -48,20 +48,11 @@ namespace FinalProject
                 remainingCards = CardsManager.CardsDistribution(p, remainingCards);
                 players.Add(p);
                 round++;
-                /*do
-                {
-                    Console.WriteLine("What's your piece player {0} (0 : Col Mustard, 1 : Mr Green, 2 : Prof Plum, 3 : Mrs Blue, 4 : Miss Scarlet, 5 : Mrs White)?", round);
-                    piece = Convert.ToInt32(Console.ReadLine());
-                } while (piece<0||piece>5);
-                Player p = new Player(CardsManager.cardsSuspects.FamilyCards[piece].Name, round, nbPlayers, board);
-                remainingCards = CardsManager.CardsDistribution(p, remainingCards);
-                players.Add(p);
-                round++;*/
             } while (round <= nbPlayers);
             return players;
         }
         /// <summary>
-        /// Used to allow a player to choose the piece of their choice if the dice result was double 6 or double
+        /// Used to allow a player to choose the piece of their choice if the dice result was double 6 or double 1
         /// </summary>
         /// <param name="p">represents the player</param>
         /// <param name="board">represents the board</param>
@@ -79,19 +70,6 @@ namespace FinalProject
                     "\n7: Library" +
                     "\n8: Study" +
                     "\n9: Greenhouse", 1,9);
-            /*do
-            {
-                Console.WriteLine("In which room do you want to go? \n 1: Billard Room " +
-                    "\n2: Kitchen" +
-                    "\n3: Greenhouse" +
-                    "\n4: Lounge" +
-                    "\n5: Hall" +
-                    "\n6: Library" +
-                    "\n7: Study" +
-                    "\n8: Dinning Room" +
-                    "\n9: Ball Room");
-                nbOfTheRoom = Convert.ToInt32(Console.ReadLine());
-            } while (nbOfTheRoom < 1 || nbOfTheRoom >= 10);*/
             int position;
             switch (nbOfTheRoom)
             {
@@ -112,53 +90,24 @@ namespace FinalProject
                             "\n0: (5,10)" +
                             "\n1: (6,12)" +
                             "\n2: (6,13)", 0, 2);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (5,10)" +
-                            "\n1: (6,13)" +
-                            "\n2: (7,14)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 3);*/
                     nextPosition = board.PositionRooms[4][position];
                     break;
                 case 6:
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
                             "\n0: (9,7)" +
                             "\n1: (11,3)", 0, 1);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (9,7)" +
-                            "\n1: (11,3)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 2);*/
                     nextPosition = board.PositionRooms[5][position];
                     break;
                 case 7:
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
                             "\n0: (13,3)" +
                             "\n1: (16,6)",0,1);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (13,3)" +
-                            "\n1: (16,6)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 2);*/
                     nextPosition = board.PositionRooms[6][position];
                     break;
                 case 8:
                     position = Program.VerificationInputConsole("By which door do you want to enter in the room ?" +
                             "\n0: (9,18)" +
                             "\n1: (13,17)", 0, 1);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (9,18)" +
-                            "\n1: (13,17)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 2);*/
                     nextPosition = board.PositionRooms[7][position];
                     break;
                 case 9:
@@ -167,15 +116,6 @@ namespace FinalProject
                             "\n1: (18,14)" +
                             "\n2: (20,9)" +
                             "\n3: (20,16)", 0, 3);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (18,11)" +
-                            "\n1: (18,14)" +
-                            "\n2: (20,9)" +
-                            "\n3: (20,16)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 4);*/
                     nextPosition = board.PositionRooms[8][position];
                     break;
 
@@ -192,7 +132,12 @@ namespace FinalProject
             board.PrintBoard();
         }
         /// <summary>
-        /// 
+        /// used to initialize the list of players, the running order and the round of a saved game
+        /// it read the file .csv
+        /// find the ID of the player in the file and associate it with the ID of the list allPlayers to create a player 
+        /// add the player to the list running order and the list players
+        /// take out the round number in the file to know where the game stopped
+        /// return the list running order, players and the integer round
         /// </summary>
         /// <returns></returns>
         public static (List<Player> runningOrder, List<Player> players, int round) ResumptionRoundPlayers()
@@ -206,7 +151,6 @@ namespace FinalProject
             {
                 for(int j = 10;j<15;j++)
                 {
-                    //Console.WriteLine((values[i])+ " " + PlayerManager.AllPlayers[j - 10].Id);
                     if(Convert.ToInt32(values[i]) == PlayerManager.AllPlayers[j-10].Id)
                     {
                         players.Add(PlayerManager.AllPlayers[j - 10]);
@@ -228,7 +172,11 @@ namespace FinalProject
             }
             return (runningOrder, players, round);
         }
-
+        /// <summary>
+        /// Used to allow a player to choose the piece of their choice if the dice result was double 6 or double 1
+        /// </summary>
+        /// <param name="p">represents the player</param>
+        /// <param name="board">represents the board</param>
         public static void ChooseRoomSocket(Player p, GameBoard board)
         {
             Position currentPos = p.Pos;
@@ -243,28 +191,6 @@ namespace FinalProject
                     "\n7: Library" +
                     "\n8: Study" +
                     "\n9: Greenhouse", 1, 9, p.PlayerSocket);
-            /*= Program.VerificationInputConsole("In which room do you want to go? \n 1: Billard Room " +
-                "\n2: Kitchen" +
-                "\n3: Greenhouse" +
-                "\n4: Lounge" +
-                "\n5: Hall" +
-                "\n6: Library" +
-                "\n7: Study" +
-                "\n8: Dinning Room" +
-                "\n9: Ball Room", 1, 9);*/
-            /*do
-            {
-                Console.WriteLine("In which room do you want to go? \n 1: Billard Room " +
-                    "\n2: Kitchen" +
-                    "\n3: Greenhouse" +
-                    "\n4: Lounge" +
-                    "\n5: Hall" +
-                    "\n6: Library" +
-                    "\n7: Study" +
-                    "\n8: Dinning Room" +
-                    "\n9: Ball Room");
-                nbOfTheRoom = Convert.ToInt32(Console.ReadLine());
-            } while (nbOfTheRoom < 1 || nbOfTheRoom >= 10);*/
             int position;
             switch (nbOfTheRoom)
             {
@@ -285,53 +211,24 @@ namespace FinalProject
                             "\n0: (5,10)" +
                             "\n1: (6,13)" +
                             "\n2: (7,14)", 0, 2, p.PlayerSocket);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (5,10)" +
-                            "\n1: (6,13)" +
-                            "\n2: (7,14)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 3);*/
                     nextPosition = board.PositionRooms[4][position];
                     break;
                 case 6:
                     position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
                             "\n0: (9,7)" +
                             "\n1: (11,3)", 0, 1, p.PlayerSocket);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (9,7)" +
-                            "\n1: (11,3)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 2);*/
                     nextPosition = board.PositionRooms[5][position];
                     break;
                 case 7:
                     position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
                             "\n0: (13,3)" +
                             "\n1: (16,6)", 0, 1, p.PlayerSocket);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (13,3)" +
-                            "\n1: (16,6)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 2);*/
                     nextPosition = board.PositionRooms[6][position];
                     break;
                 case 8:
                     position = GameMultiPlayer.VerificationInputConsoleSocket("By which door do you want to enter in the room ?" +
                             "\n0: (9,18)" +
                             "\n1: (13,17)", 0, 1, p.PlayerSocket);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (9,18)" +
-                            "\n1: (13,17)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 2);*/
                     nextPosition = board.PositionRooms[7][position];
                     break;
                 case 9:
@@ -340,15 +237,6 @@ namespace FinalProject
                             "\n1: (18,14)" +
                             "\n2: (20,9)" +
                             "\n3: (20,16)", 0, 3, p.PlayerSocket);
-                    /*do
-                    {
-                        Console.WriteLine("By which door do you want to enter in the room ?" +
-                            "\n0: (18,11)" +
-                            "\n1: (18,14)" +
-                            "\n2: (20,9)" +
-                            "\n3: (20,16)");
-                        position = Convert.ToInt32(Console.ReadLine());
-                    } while (position < 0 || position >= 4);*/
                     nextPosition = board.PositionRooms[8][position];
                     break;
 
@@ -358,12 +246,18 @@ namespace FinalProject
             p.Pos = nextPosition;
             Server.SendBoardToClients(board);
         }
+        /// <summary>
+        /// Used to initializes the list of player with their handtrail for the game with multi devices
+        /// </summary>
+        /// <param name="nbPlayers">integer that represents the number of players</param>
+        /// <param name="remainingCards">list of card that represent all the card without the 3 card murderer </param>
+        /// <param name="board">represents the board</param>
+        /// <returns>list of player with a handtrail initialized </returns>
         public static List<Player> InitializationSocket(int nbPlayers, List<Card> remainingCards, GameBoard board)
         {
             int round = 1;
             List<Player> players = new List<Player>();
             List<Card> piece = new List<Card>(CardsManager.cardsSuspects.FamilyCards);
-            //int piece;
             do
             {
                 bool available = false;
@@ -373,8 +267,6 @@ namespace FinalProject
                 do
                 {
                     indice = 10;
-                    //Server.SendToClient("1What's your piece player "+round+" ? "+Cards.PrintList(piece),Server.allClients[round-1]);
-                    //Console.WriteLine("What's your piece player {0}" + Cards.PrintList(piece), round);
                     choice = GameMultiPlayer.VerificationInputConsoleSocket("Enter your pawn's ID player " + round + " : " + Cards.PrintList(piece), 10, 15, Server.allClients[round - 1]);
                     Thread.Sleep(1000);
                     for (int i = 0; i < piece.Count; i++)

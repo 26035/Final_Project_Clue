@@ -13,7 +13,7 @@ namespace FinalProject
         //Attribut
         Square[,] board; 
         List<List<Position>> positionRooms;
-        //Constructor
+        //Constructors
         public GameBoard()
         {
             char[,] game = ReadFile("Game.csv");

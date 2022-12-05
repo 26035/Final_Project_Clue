@@ -8,12 +8,13 @@ namespace FinalProject
 {
     public class Die
     {
+        //attributes
         int dieOne;
         int dieTwo;
-
+        //properties
         public int DieOne => this.dieOne;
         public int DieTwo => this.dieTwo;
-
+        //constructor
         public Die()
         {
 
@@ -22,6 +23,7 @@ namespace FinalProject
            
 
         }
+        //methods
         /// <summary>
         /// Used to add up the results of the dice
         /// </summary>

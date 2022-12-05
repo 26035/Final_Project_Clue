@@ -10,10 +10,13 @@ namespace FinalProject
 {
     static class Timer
     {
-
+        //attributes
         public static int Time = 0;
         static Thread _thread = null;
-        
+        //methods
+        /// <summary>
+        /// used to initialize the timer
+        /// </summary>
         public static void Init()
         {
             if(_thread == null)
@@ -22,7 +25,9 @@ namespace FinalProject
                 _thread.Start();
             }
         }
-
+        /// <summary>
+        /// used to increment the Timer each second
+        /// </summary>
         private static void CTimer()
         {
             while (true)
@@ -31,11 +36,17 @@ namespace FinalProject
                 Thread.Sleep(1000);
             }
         }
-
+        /// <summary>
+        /// used to print the timer on the console
+        /// </summary>
         public static void PrintTime()
         {
             Console.WriteLine(TimeConversion());
         }
+        /// <summary>
+        /// used to do the conversion to second in hour, min and second
+        /// </summary>
+        /// <returns></returns>
         public static string TimeConversion()
         {
             string time = "";

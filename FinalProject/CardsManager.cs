@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 namespace FinalProject
 {
-    // a faire ici 
-    //initialisation cartes 
-    // distribution cards
+   
     static class CardsManager
     {
         public static CardsSuspects cardsSuspects = new CardsSuspects();
@@ -68,7 +66,7 @@ namespace FinalProject
                 }
             }
         }
-        //methodes tests
+        
         public static string PrintList(List<string> list)
         {
             string res = "";
@@ -101,6 +99,9 @@ namespace FinalProject
             }
             return rightAccusation;
         }
+        /// <summary>
+        /// used to initialize the cards murderer that come from a file
+        /// </summary>
         public static void ResumptionCardsMurderer()
         {
             List<Card> cardsMurderer= new List<Card>();
