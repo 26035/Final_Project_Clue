@@ -39,8 +39,8 @@ namespace FinalProject
         public static string TimeConversion()
         {
             string time = "";
-            int hour = Time / 60;
-            int rest = Time % 60;
+            int hour = Time / 3600;
+            int rest = Time % 3600;
             int min = rest / 60;
             rest = rest % 60;
             int second = rest;
